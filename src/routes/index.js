@@ -1,11 +1,15 @@
 // Pages here
 import App from '../views/app'
+import User from '../views/user'
+
 
 // Routes here
 const Routes = {
-    '/': App
+    '/auth': App,
+    '/user': User,
+    '/paciente': User,
 };
 
-const DefaultRoute = '/';
+const DefaultRoute = '/auth';
 
 export { Routes, DefaultRoute }
