@@ -1,10 +1,12 @@
 const App = {
-  view: () =>
-    m(
-      "main",
-      m("img", { src: require("../assets/logo.png") }),
-      m("h1", "Hello Mithril ")
-    )
+    view: () =>
+        m(".preloader", [
+            m(".preloader-inner", [
+                m(".loader-content", [
+                    m("span", { class: "icon-section-wave d-inline-block text-active  mt-3" }),
+                ]),
+            ]),
+        ])
 };
 
 export default App;

@@ -1,0 +1,624 @@
+Uri: https://medim.netlify.app/
+File Name: C:\Downloaded Web Sites\medim.netlify.app\index.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/assets/images/apple-touch-icon-32x32.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\apple-touch-icon-32x32.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/apple-touch-icon-72x72.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\apple-touch-icon-72x72.png
+Content Type: image/png
+
+Uri: https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:400,500
+File Name: C:\Downloaded Web Sites\medim.netlify.app\css.css
+Content Type: text/css
+
+Uri: https://medim.netlify.app/assets/css/plugins.css
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\css\plugins.css
+Content Type: text/css
+
+Uri: https://medim.netlify.app/style.css
+File Name: C:\Downloaded Web Sites\medim.netlify.app\style.css
+Content Type: text/css
+
+Uri: https://medim.netlify.app/index.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\index.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/index-2.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\index-2.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/index-3.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\index-3.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/index-4.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\index-4.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/about-1.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\about-1.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/about-2.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\about-2.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/service-1.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\service-1.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/service-2.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\service-2.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/service-single.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\service-single.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/faq.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\faq.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/coming-soon.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\coming-soon.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/department-1.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\department-1.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/department-2.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\department-2.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/appointment.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\appointment.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/timetable.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\timetable.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/doctors.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\doctors.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/doctor-single.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\doctor-single.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/error-page.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\error-page.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/testimonials.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\testimonials.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/gallery-4-column.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\gallery-4-column.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/gallery-2-column.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\gallery-2-column.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/gallery-3-column.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\gallery-3-column.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/pricing-plan.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\pricing-plan.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/blog-grid-1.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\blog-grid-1.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/blog-list-without-sidebar.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\blog-list-without-sidebar.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/blog-single-sidebar.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\blog-single-sidebar.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/blog-grid-style-2.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\blog-grid-style-2.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/blog-single-without-sidebar.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\blog-single-without-sidebar.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/contact.html
+File Name: C:\Downloaded Web Sites\medim.netlify.app\contact.html.htm
+Content Type: text/html
+
+Uri: https://medim.netlify.app/assets/images/logo.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\logo.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/banner-img.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\banner-img.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctor-img1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/js/jquery-2.2.4.min.js
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\js\jquery-2.2.4.min.js
+Content Type: application/javascript
+
+Uri: https://medim.netlify.app/assets/js/plugins.js
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\js\plugins.js
+Content Type: application/javascript
+
+Uri: https://medim.netlify.app/assets/js/main.js
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\js\main.js
+Content Type: application/javascript
+
+Uri: https://medim.netlify.app/assets/fonts/icomoon.woff?2by91r
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\icomoon.woff
+Content Type: application/font-woff
+
+Uri: https://medim.netlify.app/assets/fonts/icofont.woff2
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\icofont.woff2
+Content Type: font/woff2
+
+Uri: https://medim.netlify.app/assets/fonts/icofont.woff
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\icofont.woff
+Content Type: application/font-woff
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_444444_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_444444_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_555555_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_555555_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_ffffff_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_ffffff_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_777620_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_777620_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_cc0000_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_cc0000_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/ui-icons_777777_256x240.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\ui-icons_777777_256x240.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/fonts/fa-brands-400.woff2
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-brands-400.woff2
+Content Type: font/woff2
+
+Uri: https://medim.netlify.app/assets/fonts/fa-brands-400.woff
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-brands-400.woff
+Content Type: application/font-woff
+
+Uri: https://medim.netlify.app/assets/fonts/fa-solid-900.woff2
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-solid-900.woff2
+Content Type: font/woff2
+
+Uri: https://medim.netlify.app/assets/fonts/fa-solid-900.woff
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-solid-900.woff
+Content Type: application/font-woff
+
+Uri: https://medim.netlify.app/assets/fonts/fa-regular-400.woff2
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-regular-400.woff2
+Content Type: font/woff2
+
+Uri: https://medim.netlify.app/assets/fonts/fa-regular-400.woff
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\fonts\fa-regular-400.woff
+Content Type: application/font-woff
+
+Uri: https://medim.netlify.app/assets/images/banner-image7.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\banner-image7.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/intro-bg.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\intro-bg.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/logo-white.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\logo-white.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/banner-image2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\banner-image2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/icon/play.svg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\icon\play.svg
+Content Type: image/svg+xml
+
+Uri: https://medim.netlify.app/assets/images/Shape-3.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\Shape-3.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctor-img2.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img2.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/article-image-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/i-phone-img1.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\i-phone-img1.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/clin-img1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\clin-img1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/clin-img2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\clin-img2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/clin-img3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\clin-img3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/clin-img4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\clin-img4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/clin-img5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\clin-img5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctor-img3.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctor-img3.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctors-tab-img-1.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctors-tab-img-1.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctors-tab-img-2.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctors-tab-img-2.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctors-tab-img-3.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctors-tab-img-3.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctors-tab-img-4.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctors-tab-img-4.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/doctrs-tab-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctrs-tab-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctrs-tab-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctrs-tab-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctrs-tab-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctrs-tab-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctrs-tab-4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctrs-tab-4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/testimonial-img1.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\testimonial-img1.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/testimonial-img2.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\testimonial-img2.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/testimonial-img3.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\testimonial-img3.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/testimonial-img4.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\testimonial-img4.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/testimonial-img5.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\testimonial-img5.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/banenr-img6.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\banenr-img6.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/department-img1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/department-img2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/department-img3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/department-img4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/department-img5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/department-img6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-img6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/about-image3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\about-image3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image7.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image7.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/single-service-image8.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\single-service-image8.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/rocket.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\rocket.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/coming-soon-logo.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\coming-soon-logo.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/department-image.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\department-image.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/doctors-image5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\doctors-image5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/error-image.png
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\error-image.png
+Content Type: image/png
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-7.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-7.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-8.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-8.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-9.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-9.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-10.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-10.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-11.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-11.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-image-12.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-image-12.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-2-col-img-5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-2-col-img-5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-9.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-9.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-7.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-7.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/gallery-3-col-img-8.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\gallery-3-col-img-8.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-6.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/article-image-7.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\article-image-7.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/blog-image-1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\blog-image-1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/user-img1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\user-img1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/blog-image-2.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\blog-image-2.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/blog-image-3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\blog-image-3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/comment-image1.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\comment-image1.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img3.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img3.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img4.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img4.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img5.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img5.jpg
+Content Type: image/jpeg
+
+Uri: https://medim.netlify.app/assets/images/recent-post-sm-img6.jpg
+File Name: C:\Downloaded Web Sites\medim.netlify.app\assets\images\recent-post-sm-img6.jpg
+Content Type: image/jpeg
+
+Uri: https://www.youtube.com/watch?v=rrT6v5sOwJg&feature=youtu.be
+File Name: C:\Downloaded Web Sites\medim.netlify.app\watch.htm
+Content Type: text/html
+
