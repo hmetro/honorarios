@@ -1,15 +1,16 @@
 // Pages here
 import App from '../views/app'
-import User from '../views/user'
+import Login from '../views/login/login'
+import Inicio from '../views/inicio'
 
 
 // Routes here
 const Routes = {
-    '/auth': App,
-    '/user': User,
-    '/paciente': User,
+    '/': App,
+    '/inicio': Inicio,
+    '/auth': Login, // Login
 };
 
-const DefaultRoute = '/auth';
+const DefaultRoute = '/';
 
 export { Routes, DefaultRoute }
