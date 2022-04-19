@@ -14,6 +14,9 @@ const Login = {
     oncreate: () => {
         document.title = "Entrar | " + Login.title;
     },
+    onvalid: () => {
+        document.title = "Entrar | " + Login.title;
+    },
     view: () => {
         return [
             m(Head),

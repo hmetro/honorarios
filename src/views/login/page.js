@@ -1,4 +1,16 @@
+import Loader from '../loader';
+
+
 const Page = {
+    oncreate: () => {
+        document.onkeypress = function(e) {
+            if (!e) e = window.event;
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == "13") {
+                return Page.alertP();
+            }
+        };
+    },
     view: () => {
         return [
             m("section.m-pt-10.m-pb-90.m-bg-1",
@@ -20,14 +32,11 @@ const Page = {
                             ),
                             m("div.input-group.banenr-seach.bg-white.mb-0", [
                                 m("input.form-control[type='text'][placeholder='Usuario o Correo Electrónico'][aria-label='Usuario'][aria-describedby='button-addon2']"),
-
                             ]),
                             m("div.input-group.banenr-seach.bg-white.mb-0.m-mt-40", [
                                 m("input.form-control[type='text'][placeholder='Contraseña'][aria-label='Usuario'][aria-describedby='button-addon2']"),
                                 m("div.input-group-append",
-                                    m("button.btn[type='button'][id='button-addon2']",
-                                        "Entrar"
-                                    )
+                                    m("button.btn[type='button'][id='button-addon2']", { onclick: customAlert }, "Entrar")
                                 )
                             ]),
 
@@ -65,7 +74,22 @@ const Page = {
             ])
         ];
     },
-
+    alertP: () => {
+        return [
+            m.mount(document.body.querySelector('#app'), Loader),
+            setTimeout(function() { m.route.set('/') }, 300)
+        ];
+    },
 };
+
+
+
+function customAlert() {
+    // We don't want to add the class all the time, only the first time the element is created
+    Page.alertP();
+
+}
+
+
 
 export default Page;

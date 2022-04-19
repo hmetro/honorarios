@@ -1,4 +1,5 @@
 import Auth from '../models/auth';
+import Loader from './loader';
 
 
 const App = {
@@ -16,21 +17,9 @@ const App = {
             return m.route.set('/auth');
         }
     },
-    setLoader: () => {
-        return [
-            m(".preloader", [
-                m(".preloader-inner", [
-                    m(".loader-content", [
-                        m("span", { class: "icon-section-wave d-inline-block text-active  mt-3" }),
-                    ]),
-                ]),
-            ])
-        ];
-    },
     view: () => {
         return [
-            App.setLoader(),
-
+            m(Loader),
             setTimeout(function() { App.isAuth() }, 300)
         ];
     },

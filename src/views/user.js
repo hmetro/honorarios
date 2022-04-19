@@ -1,8 +1,8 @@
-import App from './app';
+import Loader from './loader';
 
 const User = {
     view: () => {
-        return App.setLoader();
+        return m(Loader);
     }
 
 };
