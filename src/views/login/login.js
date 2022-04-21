@@ -21,7 +21,7 @@ const Login = {
         return [
             m(HeaderPublic),
             m(FormLogin),
-            m(FooterPublic),
+            m(FooterPublic)
         ];
     },
 };
