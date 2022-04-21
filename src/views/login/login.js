@@ -1,11 +1,11 @@
 import Auth from '../../models/auth';
-import Head from './head';
-import Page from './page';
-
+import HeaderPublic from '../layout/header-public';
+import FooterPublic from '../layout/footer-public';
+import FormLogin from './page';
 
 
 const Login = {
-    title: "Metrovirtual para Médicos",
+    title: "MetroQ - Metrovirtual Quality",
     oninit: () => {
         if (Auth.isLogin()) {
             return m.route.set('/inicio');
@@ -19,8 +19,9 @@ const Login = {
     },
     view: () => {
         return [
-            m(Head),
-            m(Page)
+            m(HeaderPublic),
+            m(FormLogin),
+            m(FooterPublic),
         ];
     },
 };

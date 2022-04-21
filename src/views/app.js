@@ -3,7 +3,7 @@ import Loader from './loader';
 
 
 const App = {
-    title: "Metrovirtual para Médicos",
+    title: "metroQ - Metrovirtual Quality",
     oninit: () => {
         document.title = "Cargando...";
     },
