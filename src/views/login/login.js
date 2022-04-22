@@ -18,6 +18,10 @@ const Login = {
         document.title = "Entrar | " + Login.title;
     },
     view: () => {
+        Auth.statusHide = "d-none";
+        Auth.statusError = "warning";
+        Auth.messageError = "";
+        Auth.imputDisabled = false;
         return [
             m(HeaderPublic),
             m(FormLogin),

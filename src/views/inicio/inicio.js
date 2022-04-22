@@ -1,5 +1,6 @@
-import Auth from '../models/auth';
-import Header from './header';
+import Auth from '../../models/auth';
+import HeaderPrivate from '../layout/header-private';
+import FooterPublic from '../layout/footer-public';
 
 
 const Inicio = {
@@ -14,8 +15,9 @@ const Inicio = {
     },
     view: () => {
         return [
-            m(Header)
-
+            m(HeaderPrivate),
+            m('div'),
+            m(FooterPublic)
         ];
     },
 
