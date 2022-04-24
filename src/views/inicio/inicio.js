@@ -1,6 +1,7 @@
 import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
 import FooterPublic from '../layout/footer-public';
+import MenuPanel from '../menu/panel';
 
 
 const Inicio = {
@@ -16,7 +17,7 @@ const Inicio = {
     view: () => {
         return [
             m(HeaderPrivate),
-            m('div'),
+            m(MenuPanel),
             m(FooterPublic)
         ];
     },

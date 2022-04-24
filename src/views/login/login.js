@@ -1,7 +1,7 @@
 import Auth from '../../models/auth';
 import HeaderPublic from '../layout/header-public';
 import FooterPublic from '../layout/footer-public';
-import FormLogin from './page';
+import FormLogin from './formlogin';
 
 
 const Login = {
@@ -13,15 +13,12 @@ const Login = {
     },
     oncreate: () => {
         document.title = "Entrar | " + Login.title;
+        submitLogin();
     },
-    onvalid: () => {
-        document.title = "Entrar | " + Login.title;
-    },
+
     view: () => {
-        Auth.statusHide = "d-none";
-        Auth.statusError = "warning";
-        Auth.messageError = "";
-        Auth.imputDisabled = false;
+
+
         return [
             m(HeaderPublic),
             m(FormLogin),
@@ -29,5 +26,17 @@ const Login = {
         ];
     },
 };
+
+function submitLogin() {
+    document.onkeypress = function (e) {
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == "13") {
+            if (Auth.canSubmit()) {
+                $('button').click();
+            }
+        }
+    };
+}
 
 export default Login;

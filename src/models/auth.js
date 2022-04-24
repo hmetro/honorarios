@@ -1,4 +1,6 @@
 import App from '../views/app';
+import _Error_ from '../views/error';
+
 
 
 const Auth = {
@@ -8,7 +10,12 @@ const Auth = {
     statusHide: " d-none",
     statusError: "warning",
     imputDisabled: false,
-
+    oncreate: () => {
+        Auth.statusHide = "d-none";
+        Auth.statusError = "warning";
+        Auth.messageError = "";
+        Auth.imputDisabled = false;
+    },
     setUsername: (value) => {
         Auth.username = value
     },
@@ -16,7 +23,8 @@ const Auth = {
         Auth.password = value
     },
     canSubmit: () => {
-        return Auth.username !== "" && Auth.password !== ""
+
+        return Auth.username !== "" && Auth.password !== "";
     },
     setError: (message) => {
         Auth.statusHide = "";
@@ -37,17 +45,17 @@ const Auth = {
         Auth.imputDisabled = true;
         Auth.setProcess();
         return m.request({
-                method: "GET",
-                url: "//app.hmetro.med.ec:8045/metrovirtual/api/auth",
-            })
-            .then(function(data) {
-                Auth.username = data.status;
-                window.localStorage.accessToken = data.status;
+            method: "GET",
+            url: "https://jsonplaceholder.typicode.com/users/1",
+        })
+            .then(function (data) {
+                Auth.username = 'mchang';
+                window.localStorage.accessToken = 'mchang';
                 Auth.setSuccess('Bienvenido');
-                setTimeout(function() { App.isAuth() }, 900);
-            }).catch(function(error) {
-                Auth.setError('Error en API. No pudimos completar esta petición con pexito.');
+                setTimeout(function () { App.isAuth() }, 900);
+            }).catch(function (error) {
                 Auth.imputDisabled = false;
+                Auth.setError(_Error_.httpError);
             });
     },
     isLogin: () => {
@@ -60,5 +68,8 @@ const Auth = {
 
     },
 };
+
+
+
 
 export default Auth;

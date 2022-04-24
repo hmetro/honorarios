@@ -16,8 +16,7 @@ const HeadPublic = {
 
                 m("div.navbar-right", [
 
-                    m("a.btn.btn-buy[href='https://www.hospitalmetropolitano.org']", [
-                        m("i[data-feather='shopping-bag']"),
+                    m("a.btn.btn-white[href='https://www.hospitalmetropolitano.org']", [
                         m("span",
                             "Hospital Metropolitano"
                         )
