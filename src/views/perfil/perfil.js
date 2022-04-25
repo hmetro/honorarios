@@ -1,25 +1,25 @@
 import Auth from '../../models/auth';
-import HeaderPrivate from '../layout/header-private';
-import MenuPanel from '../menu/panel';
+import HeaderPage from '../layout/header-page';
+import PagePerfil from './page';
 import App from '../app';
 
 
-const Inicio = {
+const MiPerfil = {
     oninit: () => {
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
     },
     oncreate: () => {
-        document.title = "Inicio | " + App.title;
+        document.title = "Mi Perfil | " + App.title;
     },
     view: () => {
         return [
-            m(HeaderPrivate),
-            m(MenuPanel),
+            m(HeaderPage),
+            m(PagePerfil),
         ];
     },
 
 };
 
-export default Inicio;
+export default MiPerfil;

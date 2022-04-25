@@ -10,12 +10,7 @@ const Auth = {
     statusHide: " d-none",
     statusError: "warning",
     imputDisabled: false,
-    oncreate: () => {
-        Auth.statusHide = "d-none";
-        Auth.statusError = "warning";
-        Auth.messageError = "";
-        Auth.imputDisabled = false;
-    },
+
     setUsername: (value) => {
         Auth.username = value
     },
@@ -23,7 +18,6 @@ const Auth = {
         Auth.password = value
     },
     canSubmit: () => {
-
         return Auth.username !== "" && Auth.password !== "";
     },
     setError: (message) => {
@@ -45,16 +39,29 @@ const Auth = {
         Auth.imputDisabled = true;
         Auth.setProcess();
         return m.request({
-            method: "GET",
-            url: "https://jsonplaceholder.typicode.com/users/1",
-        })
-            .then(function (data) {
-                Auth.username = 'mchang';
+                method: "GET",
+                url: "https://jsonplaceholder.typicode.com/users/1",
+            })
+            .then(function(data) {
+
                 window.localStorage.accessToken = 'mchang';
                 Auth.setSuccess('Bienvenido');
-                setTimeout(function () { App.isAuth() }, 900);
-            }).catch(function (error) {
+                setTimeout(function() {
+                    Auth.imputDisabled = false;
+                    Auth.statusHide = "d-none";
+                    Auth.statusError = "warning";
+                    Auth.messageError = "";
+                    Auth.username = "";
+                    Auth.password = "";
+                    App.isAuth()
+                }, 900);
+            }).catch(function(error) {
                 Auth.imputDisabled = false;
+                Auth.statusHide = "d-none";
+                Auth.statusError = "warning";
+                Auth.messageError = "";
+                Auth.username = "";
+                Auth.password = "";
                 Auth.setError(_Error_.httpError);
             });
     },

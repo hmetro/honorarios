@@ -1,25 +1,25 @@
 import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
-import MenuPanel from '../menu/panel';
+import PagePacientes from './page';
 import App from '../app';
 
 
-const Inicio = {
+const Pacientes = {
     oninit: () => {
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
     },
     oncreate: () => {
-        document.title = "Inicio | " + App.title;
+        document.title = "Pacientes | " + App.title;
     },
     view: () => {
         return [
             m(HeaderPrivate),
-            m(MenuPanel),
+            m(PagePacientes),
         ];
     },
 
 };
 
-export default Inicio;
+export default Pacientes;

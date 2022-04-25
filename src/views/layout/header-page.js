@@ -1,8 +1,10 @@
-const HeaderPrivate = {
+const HeaderPage = {
     view: () => {
         return [
             m("header",
+                m("div.toolbar.grad-bg--2.type-2.pt-1.pb-1",
 
+                ),
                 m("div.toolbar",
                     m("div.container",
                         m("div.row", [
@@ -49,4 +51,4 @@ const HeaderPrivate = {
 
 };
 
-export default HeaderPrivate;
+export default HeaderPage;

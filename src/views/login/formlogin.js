@@ -4,74 +4,55 @@ const FormLogin = {
 
     view: () => {
 
-
         return [
-            m("div.content.content-fixed.content-auth",
+            m("section.m-pt-10.m-pb-90.m-bg-1",
                 m("div.container",
-                    m("div.media.align-items-stretch.justify-content-center.ht-100p.pos-relative", [
-                        m("div.media-body.align-items-center.d-none.d-lg-flex", [
-                            m("div.mx-wd-600",
-                                m("img.img-fluid[src='assets/dashforge/img/img15.png'][alt='']")
-                            ),
+                    m("div.row",
+                        m("div.col-md-6.offset-md-3",
+                            m("div.text-center.m-mt-70", [
 
-                        ]),
-                        m("div.sign-wrapper.mg-lg-l-50.mg-xl-l-60",
-                            m("div.wd-100p", [
-                                m("h3.tx-color-01.mg-b-5",
-                                    "Entrar"
+                                m("h2.m-0.text-dark",
+                                    "Entrar "
                                 ),
-                                m("p.tx-color-03.tx-16.mg-b-40",
-                                    "¡Bienvenido! Por favor, inicia sesión para continuar."
-                                ),
-
-                                m("div." + Auth.statusHide + ".alert.alert-solid.response.alert-" + Auth.statusError + "[role='alert']",
-                                    Auth.messageError
-                                ),
-                                m("div.form-group", [
-                                    m("label",
-                                        "Usuario o Correo electrónico:"
-                                    ),
-                                    m("input.form-control[type='email'][placeholder='mpaez o mpaez@hmetro.med.ec']", {
-                                        oninput: function (e) { Auth.setUsername(e.target.value) },
-                                        value: Auth.username,
-                                        disabled: Auth.imputDisabled,
-                                    })
-                                ]),
-                                m("div.form-group", [
-                                    m("div.d-flex.justify-content-between.mg-b-5", [
-                                        m("label.mg-b-0-f", "Contraseña:"),
-                                    ]),
-                                    m("input.form-control[type='password'][placeholder='Contraseña']", {
-                                        oninput: function (e) { Auth.setPassword(e.target.value) },
-                                        value: Auth.password,
-                                        disabled: Auth.imputDisabled,
-                                    })
-                                ]),
-                                m("button.btn.btn-brand-02.btn-block", {
-                                    disabled: !Auth.canSubmit() || Auth.imputDisabled,
-                                    onclick: Auth.login
-                                }, "Entrar"),
-                                m("div.divider-text",
-                                    "Metrovirtual"
-                                ),
-                                m("div.tx-13.mg-t-20.tx-center", [
-                                    m("a[href='/lostpass']",
-                                        "¿Olvide mi contraseña?"
-                                    )
-                                ]),
-                                m("div.tx-13.mg-t-0.tx-center", [
-                                    "¿No tienes una cuenta? ",
-                                    m("a[href='#!/registro']",
-                                        "Regístrate"
-                                    )
-                                ])
-
-
+                                m("p.m-mt-10",
+                                    "¡Bienvenido! Por favor inicia sesión para continuar."
+                                )
                             ])
                         )
-                    ])
+                    ),
+                    m("div.row",
+                        m("div.col-md-12",
+                            m("div." + Auth.statusHide + ".alert.alert-solid.response.alert-" + Auth.statusError + "[role='alert']",
+                                Auth.messageError
+                            ),
+                            m("div.input-group.banenr-seach.bg-white.m-mt-40.mb-0", [
+                                m("input.form-control[type='text'][placeholder='Usuario']", {
+                                    oninput: function(e) { Auth.setUsername(e.target.value) },
+                                    value: Auth.username,
+                                    disabled: Auth.imputDisabled,
+                                }),
+                            ]),
+                            m("div.input-group.banenr-seach.bg-white.m-mt-20.mb-0", [
+                                m("input.form-control[type='password'][placeholder='Contraseña']", {
+                                    oninput: function(e) { Auth.setPassword(e.target.value) },
+                                    value: Auth.password,
+                                    disabled: Auth.imputDisabled,
+                                }),
+                                m("div.input-group-append",
+                                    m("button.btn[type='button']", {
+                                            disabled: !Auth.canSubmit() || Auth.imputDisabled,
+                                            onclick: Auth.login
+                                        },
+                                        "Entrar"
+                                    )
+                                )
+                            ])
+                        ),
+
+                    )
                 )
-            )
+            ),
+
         ];
     },
 

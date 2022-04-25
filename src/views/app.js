@@ -3,7 +3,7 @@ import Loader from './loader';
 
 
 const App = {
-    title: "MetroQ - Metrovirtual Quality",
+    title: "Metrovirtual Mobile - Metrovirtual HM v3.0",
     oninit: () => {
         document.title = "Cargando...";
     },

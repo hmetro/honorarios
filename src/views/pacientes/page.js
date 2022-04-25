@@ -1,4 +1,4 @@
-const MenuPanel = {
+const PagePacientes = {
 
     view: () => {
 
@@ -11,7 +11,7 @@ const MenuPanel = {
                             m("div.text-center.m-mt-70", [
 
                                 m("h2.m-0.text-dark",
-                                    "Inicio "
+                                    "Mis Pacientes "
                                 ),
                                 m("p.m-mt-10",
                                     "Opciones disponibles"
@@ -76,4 +76,4 @@ const MenuPanel = {
 
 
 
-export default MenuPanel;
+export default PagePacientes;

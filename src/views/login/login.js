@@ -2,22 +2,20 @@ import Auth from '../../models/auth';
 import HeaderPublic from '../layout/header-public';
 import FooterPublic from '../layout/footer-public';
 import FormLogin from './formlogin';
-
+import App from '../app';
 
 const Login = {
-    title: "MetroQ - Metrovirtual Quality",
     oninit: () => {
         if (Auth.isLogin()) {
             return m.route.set('/inicio');
         }
     },
     oncreate: () => {
-        document.title = "Entrar | " + Login.title;
+        document.title = "Entrar | " + App.title;
         submitLogin();
     },
 
     view: () => {
-
 
         return [
             m(HeaderPublic),
@@ -28,7 +26,7 @@ const Login = {
 };
 
 function submitLogin() {
-    document.onkeypress = function (e) {
+    document.onkeypress = function(e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {
