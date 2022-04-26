@@ -20,44 +20,124 @@ const PagePacientes = {
                         )
                     ),
                     m("div.row.m-pt-20.m-pb-60", [
-                        m("div.col-md-6",
-                            m("a[href='#!/pacientes']",
-                                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
-                                        m("span.icofont-doctor.text-grad-1.fz-50")
-                                    ),
-                                    m("h5.text-dark2.mb-3.position-relative.pt-2",
-                                        " Mis Pacientes "
-                                    )
-                                ])
-                            )
-                        ),
-                        m("div.col-md-3",
-                            m("a[href='#!/laboratorio']",
-                                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
-                                        m("span.icofont-laboratory.text-grad-1.fz-50")
-                                    ),
-                                    m("h5.text-dark2.mb-3.position-relative.pt-2",
-                                        " Laboratorio "
-                                    )
-                                ])
-                            )
-                        ),
-                        m("div.col-md-3",
-                            m("a[href='#!/imagen']",
-                                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
-                                        m("span.icofont-patient-file.text-grad-1.fz-50")
-                                    ),
-                                    m("h5.text-dark2.mb-3.position-relative.pt-2",
-                                        "  Imagen "
-                                    )
-                                ])
-                            )
-                        ),
+                        m("div.col-md-10.offset-md-1.col-sm-12",
+                            [
+                                m("article.blog.pb-5.type-1.mb-80",
+                                    [
 
+                                        m("div",
+                                            [
+                                                m("div",
+                                                    [
+                                                        m("a.text-default.mr-3.fz-poppins.[href='#']",
+                                                            [
+                                                                m("span",
+                                                                    m("i.icofont-ui-clock")
+                                                                ),
+                                                                " Ingreso: 25-04-2022 "
+                                                            ]
+                                                        ),
+                                                        m("a.text-default.fz-poppins.mr-3[href='#']",
+                                                            [
+                                                                m("span",
+                                                                    m("i.icofont-hospital")
+                                                                ),
+                                                                " 1 Día "
+                                                            ]
+                                                        )
+                                                    ]
+                                                ),
+                                                m("a.display-block.[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pte/?nhc=671200&ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",
+                                                    m("h3.semi-bold.mb-4.mt-1.text-dark",
+                                                        "JACOME PONCE JOEL ALEJANDRO"
+                                                    )
+                                                ),
+                                                m("div.d-flex.align-items-end.justify-content-between.inline-flex",
+                                                    [
+                                                        m("div.media.d-inline-flex",
+                                                            [
+                                                                m("div.media-body",
+                                                                    [
+                                                                        m("a.fz-poppins[href='#']",
+                                                                            " Emergencia "
+                                                                        ),
+                                                                        m("p.fz-poppins.mb-0",
+                                                                            "PB, Medicina Interna"
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        ),
+                                                        m("a.d-inline-block.fz-poppins.text-default[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pte/?nhc=671200&ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",
+                                                            " Ver Paciente "
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                        ),
 
+                                    ]
+                                ),
+
+                                m("article.blog.pb-5.type-1.mb-80",
+                                    [
+
+                                        m("div",
+                                            [
+                                                m("div",
+                                                    [
+                                                        m("a.text-default.mr-3.fz-poppins.[href='#']",
+                                                            [
+                                                                m("span",
+                                                                    m("i.icofont-ui-clock")
+                                                                ),
+                                                                " Ingreso: 25-04-2022 "
+                                                            ]
+                                                        ),
+                                                        m("a.text-default.fz-poppins.mr-3[href='#']",
+                                                            [
+                                                                m("span",
+                                                                    m("i.icofont-hospital")
+                                                                ),
+                                                                " 1 Día "
+                                                            ]
+                                                        )
+                                                    ]
+                                                ),
+                                                m("a.display-block.[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pte/?nhc=12636&ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",
+                                                    m("h3.semi-bold.mb-4.mt-1.text-dark",
+                                                        "CARLOS ALFONSO SALAZAR TOSCANO"
+                                                    )
+                                                ),
+                                                m("div.d-flex.align-items-end.justify-content-between.inline-flex",
+                                                    [
+                                                        m("div.media.d-inline-flex",
+                                                            [
+                                                                m("div.media-body",
+                                                                    [
+                                                                        m("a.fz-poppins[href='#']",
+                                                                            " Hospitalización "
+                                                                        ),
+                                                                        m("p.fz-poppins.mb-0",
+                                                                            "C2, Medicina Interna"
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        ),
+                                                        m("a.d-inline-block.fz-poppins.text-default[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pte/?nhc=12636&ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",
+                                                            " Ver Paciente "
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                        ),
+
+                                    ]
+                                ),
+
+                            ]
+                        )
                     ])
                 )
             ),
