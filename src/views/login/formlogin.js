@@ -37,7 +37,6 @@ const FormLogin = {
                                         m("input.form-control[type='email'][placeholder='mperez o mperez@hmetro.med.ec'][required]", {
                                             oninput: function(e) { Auth.setUsername(e.target.value) },
                                             value: Auth.username,
-                                            disabled: Auth.imputDisabled,
                                         }),
                                         m("div.icon",
                                             m("i.ri-user-line")
@@ -52,7 +51,6 @@ const FormLogin = {
                                         m("input.form-control[type='password'][placeholder='Contraseña'][required]", {
                                             oninput: function(e) { Auth.setPassword(e.target.value) },
                                             value: Auth.password,
-                                            disabled: Auth.imputDisabled,
                                         }),
                                         m("div.icon",
                                             m("i.ri-lock-password-line")

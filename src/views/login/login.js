@@ -28,7 +28,7 @@ function submitLogin() {
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {
             if (Auth.canSubmit()) {
-                $('button').click();
+                $('.sendLogin').click();
             }
         }
     };

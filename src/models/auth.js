@@ -5,9 +5,10 @@ const Auth = {
     username: "",
     password: "",
     messageError: "",
-    statusHide: " d-none",
+    statusHide: "d-none",
     statusError: "warning",
     imputDisabled: false,
+    buttonDisabled: "disabled",
     setUsername: (value) => {
         Auth.username = value
     },
@@ -15,7 +16,15 @@ const Auth = {
         Auth.password = value
     },
     canSubmit: () => {
+
+        if (Auth.username !== "" && Auth.password !== "") {
+            Auth.buttonDisabled = "";
+        } else {
+            Auth.buttonDisabled = "disabled";
+        }
+
         return Auth.username !== "" && Auth.password !== "";
+
     },
     setError: (message) => {
         Auth.statusHide = "";

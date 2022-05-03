@@ -1,21 +1,14 @@
 import Auth from '../../models/auth';
 
 const FooterPublic = {
-    _disabled: "disabled",
-    classDisabled: () => {
-        if (!Auth.canSubmit() || Auth.imputDisabled) {
-            return 'disabled';
-        } else {
-            return '';
-        }
-    },
+
     view: () => {
         return [
             m("footer.footer-account",
                 m("div.env-pb", [
                     m("div.display-actions.text-center",
-                        m("btn.btn-sm-arrow.bg-primary " + classDisabled(), {
-                            disabled: !Auth.canSubmit() || Auth.imputDisabled,
+                        m("a.sendLogin.btn.btn-sm-arrow.bg-primary " + Auth.buttonDisabled, {
+                            disabled: !Auth.canSubmit(),
                             onclick: Auth.login
                         }, [
                             m("p",
