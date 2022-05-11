@@ -1,3 +1,33 @@
+
+
+
+class Modulo {
+    constructor(_data) {
+        this.url = "";
+        this.icon = "";
+        this.title = "";
+    }
+    view() {
+        return [
+            m("a", { href: this.url }, [
+                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
+                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
+                        m("span.icofont-" + this.icon + ".text-grad-1.fz-50")
+                    ),
+                    m("h5.text-dark2.mb-3.position-relative.pt-2",
+                        this.title
+                    )
+                ])
+            ]),
+        ]
+    }
+    setUrl(_data) {
+        this.url = _data.href;
+        this.icon = _data.icon;
+        this.title = _data.title;
+    }
+}
+
 const MenuPanel = {
 
     view: () => {
@@ -21,28 +51,22 @@ const MenuPanel = {
                     ),
                     m("div.row.m-pt-20.m-pb-60", [
                         m("div.col-md-6",
-                            m("a[href='#!/pacientes']",
-                                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
-                                        m("span.icofont-doctor.text-grad-1.fz-50")
-                                    ),
-                                    m("h5.text-dark2.mb-3.position-relative.pt-2",
-                                        " Mis Pacientes "
-                                    )
-                                ])
-                            )
+                            m(Modulo, {
+                                oncreate: Modulo.setUrl({
+                                    icon: "doctor",
+                                    href: "'#!/resultados",
+                                    title: "'Mis Pacientes"
+                                })
+                            })
                         ),
                         m("div.col-md-3",
-                            m("a[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pacientes/?ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",
-                                m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
-                                        m("span.icofont-laboratory.text-grad-1.fz-50")
-                                    ),
-                                    m("h5.text-dark2.mb-3.position-relative.pt-2",
-                                        " Laboratorio "
-                                    )
-                                ])
-                            )
+                            m(Modulo, {
+                                oncreate: Modulo.setUrl({
+                                    icon: "patient-file",
+                                    href: "'#!/resultados",
+                                    title: "'Mis Resultados"
+                                })
+                            })
                         ),
                         m("div.col-md-3",
                             m("a[href='https://beta.metrovirtual.hospitalmetropolitano.org/touch/pacientes/?ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org']",

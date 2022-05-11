@@ -1,5 +1,8 @@
 import App from '../views/app';
 import _Error_ from '../views/error';
+import Loader from '../views/loader';
+import Login from '../views/login/login';
+
 
 
 
@@ -24,29 +27,34 @@ const Auth = {
         Auth.statusHide = "";
         Auth.statusError = "danger";
         Auth.messageError = message;
+        m.mount(document.body.querySelector('#app'), Login);
+
     },
     setSuccess: (message) => {
         Auth.statusHide = "";
         Auth.statusError = "success";
         Auth.messageError = message;
+        m.mount(document.body.querySelector('#app'), Login);
+
     },
     setProcess: () => {
         Auth.statusHide = "";
         Auth.statusError = "warning";
         Auth.messageError = 'Procesando...';
+        m.mount(document.body.querySelector('#app'), Loader);
     },
     login: () => {
         Auth.imputDisabled = true;
         Auth.setProcess();
         return m.request({
-                method: "GET",
-                url: "https://jsonplaceholder.typicode.com/users/1",
-            })
-            .then(function(data) {
+            method: "GET",
+            url: "https://jsonplaceholder.typicode.com/users/1",
+        })
+            .then(function (data) {
 
                 window.localStorage.accessToken = 'mchang';
                 Auth.setSuccess('Bienvenido');
-                setTimeout(function() {
+                setTimeout(function () {
                     Auth.imputDisabled = false;
                     Auth.statusHide = "d-none";
                     Auth.statusError = "warning";
@@ -55,7 +63,7 @@ const Auth = {
                     Auth.password = "";
                     App.isAuth()
                 }, 900);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 Auth.imputDisabled = false;
                 Auth.statusHide = "d-none";
                 Auth.statusError = "warning";
