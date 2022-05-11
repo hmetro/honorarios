@@ -14,9 +14,7 @@ const Login = {
         document.title = "Entrar | " + App.title;
         submitLogin();
     },
-
     view: () => {
-
         return [
             m(HeaderPublic),
             m(FormLogin),

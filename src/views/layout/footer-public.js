@@ -9,7 +9,7 @@ const FooterPublic = {
                             m("div.footer-widget", [
                                 m("div.logo",
                                     m("a.d-inline-block.mb-5[href='/']",
-                                        m("img[src='assets/logo.metrovirtual.png'][alt='Metrovirtual'][width='70%']")
+                                        m("img[alt='HM'][src='assets/images/logo-hm.svg']")
                                     )
                                 ),
                                 m("p",
