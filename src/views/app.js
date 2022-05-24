@@ -3,7 +3,7 @@ import Loader from './loader';
 
 
 const App = {
-    title: "Metrovirtual Mobile - Metrovirtual HM v3.0",
+    title: "Metrovirtual v3.0 para Médicos",
     oninit: () => {
         document.title = "Cargando...";
     },

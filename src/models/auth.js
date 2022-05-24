@@ -47,23 +47,36 @@ const Auth = {
         Auth.imputDisabled = true;
         Auth.setProcess();
         return m.request({
-            method: "GET",
-            url: "https://jsonplaceholder.typicode.com/users/1",
-        })
-            .then(function (data) {
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/t/v1/auth",
+                data: {
+                    user: Auth.username,
+                    pass: Auth.password
+                }
+            })
+            .then(function(data) {
 
-                window.localStorage.accessToken = 'mchang';
-                Auth.setSuccess('Bienvenido');
-                setTimeout(function () {
+                if (data.status) {
+                    window.localStorage.accessToken = data.jwt;
+                    Auth.setSuccess('Bienvenido');
+                    setTimeout(function() {
+                        Auth.imputDisabled = false;
+                        Auth.statusHide = "d-none";
+                        Auth.statusError = "warning";
+                        Auth.messageError = "";
+                        Auth.username = "";
+                        Auth.password = "";
+                        App.isAuth()
+                    }, 900);
+                } else {
                     Auth.imputDisabled = false;
                     Auth.statusHide = "d-none";
                     Auth.statusError = "warning";
                     Auth.messageError = "";
-                    Auth.username = "";
-                    Auth.password = "";
-                    App.isAuth()
-                }, 900);
-            }).catch(function (error) {
+                    Auth.setError(data.message);
+                }
+
+            }).catch(function(error) {
                 Auth.imputDisabled = false;
                 Auth.statusHide = "d-none";
                 Auth.statusError = "warning";

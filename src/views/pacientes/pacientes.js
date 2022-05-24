@@ -4,6 +4,7 @@ import PagePacientes from './page';
 import App from '../app';
 
 
+
 const Pacientes = {
     oninit: () => {
         if (!Auth.isLogin()) {
@@ -11,7 +12,7 @@ const Pacientes = {
         }
     },
     oncreate: () => {
-        document.title = "Pacientes | " + App.title;
+        document.title = "Mis Pacientes | " + App.title;
     },
     view: () => {
         return [
