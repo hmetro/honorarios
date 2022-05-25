@@ -4,6 +4,7 @@ import Salir from '../views/salir'
 import Login from '../views/login/login'
 import Inicio from '../views/inicio/inicio'
 import Pacientes from '../views/pacientes/pacientes';
+import Paciente from '../views/paciente/paciente';
 import MiPerfil from '../views/perfil/perfil';
 import _404 from '../views/404'
 
@@ -17,6 +18,7 @@ const Routes = {
     '/inicio': Inicio, //Inicio
     '/auth': Login, // Login
     '/pacientes': Pacientes, // Pacientes
+    '/paciente/:nhc': Paciente, // Pacientes
     '/mi-perfil': MiPerfil, // MiPerfil
     '/salir': Salir, // Salir
     "/:404...": _404

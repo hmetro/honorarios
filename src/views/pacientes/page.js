@@ -5,51 +5,51 @@ import App from '../app';
 const iPaciente = {
     view: (_data) => {
         return [
-
-            m("article.blog.pb-5.type-1", [
-                m("div", [
-                    m("div", [
-                        m("text-default.mr-3.fz-poppins", [
-                            m("span",
-                                m("i.icofont-ui-clock")
-                            ),
-                            " Ingreso: " + _data.attrs.FECHA_ADMISION
-                        ]),
-                        m("text-default.fz-poppins.mr-3", [
-                            m("span",
-                                m("i.icofont-user")
-                            ),
-                            " Edad:  " + _data.attrs.EDAD + " Años"
-                        ])
-
-                    ]),
-                    m("a.display-block", {
+            m("div.intro-box.bg-white.radius-5", [
+                m("div.intro-icon.rounded-circle.grad-bg--5",
+                    m("span.icofont-user.text-white")
+                ),
+                m("h3.m-text-2.mb-3",
+                    _data.attrs.NOMBRE_PACIENTE
+                ),
+                m("p", [
+                    m("span",
+                        "Ingreso:"
+                    ),
+                    m("span",
+                        _data.attrs.FECHA_ADMISION
+                    )
+                ]),
+                m("p", [
+                    m("span",
+                        "Edad:"
+                    ),
+                    m("span",
+                        _data.attrs.EDAD + " Años"
+                    )
+                ]),
+                m("p", [
+                    m("span",
+                        "Emergencia:"
+                    ),
+                    m("span",
+                        ((_data.attrs.NRO_HABITACION == null) ? "Ubicación Pendiente" : _data.attrs.NRO_HABITACION) + ", Especialidad: " + _data.attrs.ESPECIALIDAD
+                    )
+                ]),
+                m("p", [
+                    m("span",
+                        "Dg."
+                    ),
+                    m("span",
+                        (_data.attrs.DG_PRINCIPAL !== null) ? _data.attrs.DG_PRINCIPAL : "Diagnóstico Pendiente"
+                    )
+                ]),
+                m("div.text-right", [
+                    m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
                             href: "#!/paciente/" + _data.attrs.HC
                         },
-                        m("h3.semi-bold.mb-4.mt-1.text-dark",
-                            _data.attrs.NOMBRE_PACIENTE
-                        )
-                    ),
-                    m("div.d-flex.align-items-end.justify-content-between.inline-flex", [
-                        m("div.media.d-inline-flex", [
-                            m("div.media-body", [
-                                m("span.fz-poppins.text-primary",
-                                    " Emergencia "
-                                ),
-                                m("p.fz-poppins.mb-0",
-                                    _data.attrs.NRO_HABITACION + ", Especialidad: " + _data.attrs.ESPECIALIDAD
-                                ),
-                                m("p.fz-poppins.mb-0",
-                                    "Dg: " + _data.attrs.DG_PRINCIPAL
-                                )
-                            ])
-                        ]),
-                        m("a.d-inline-block.fz-poppins.text-default", {
-                                href: "#!/paciente/" + _data.attrs.HC
-                            },
-                            " Ver Paciente "
-                        )
-                    ])
+                        " Ver Paciente "
+                    )
                 ]),
 
             ]),
@@ -59,6 +59,7 @@ const iPaciente = {
 };
 
 const PagePacientes = {
+
     oninit: () => {
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
@@ -73,10 +74,17 @@ const PagePacientes = {
             m("div.preloader",
                 m("div.preloader-inner",
                     m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.")
-                    )
-                )
+                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", [
+                            m("p.text-center.ff-roboto.m-mt-20.text-primary", "Procesando...")
+                        ]),
+                    ),
+
+                ),
+
+
+
             ),
+
             m("section.m-bg-1",
                 m("div.container",
                     m("div.row",
@@ -85,10 +93,26 @@ const PagePacientes = {
                                 m("h2.m-0.text-dark",
                                     "Mis Pacientes "
                                 ),
+                                m("span.icon-section-wave.d-inline-block.text-active.section-wave.mt-3.active")
                             ])
                         )
                     ),
-                    m("div.row.m-pt-20.m-pb-60.m-mt-70", [
+                    m("div.row.m-mb-20",
+                        m("div.col-md-12",
+                            m("form[id='busquedaPaciente']", [
+
+                                m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
+                                    m("input.form-control[type='text'][id='pte'][placeholder='Buscar por Apellidos y Nombres']"),
+                                    m("div.input-group-append",
+                                        m("button.btn[id='buscarPte'][type='button']",
+                                            "Buscar"
+                                        )
+                                    )
+                                ]),
+
+                            ]))
+                    ),
+                    m("div.row.m-pt-20.m-pb-60.m-mt-20", [
                         m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.",
                             m("table.table.table-sm[id='table-pacientes'][width='100%']"),
                         )
@@ -130,7 +154,9 @@ function loadPacientes() {
     $.fn.dataTable.ext.errMode = "none";
     var table = $("#table-pacientes").DataTable({
         "ajax": {
-
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
             url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes",
             dataSrc: "data",
             serverSide: true,
@@ -144,7 +170,7 @@ function loadPacientes() {
             sSearch: "",
             lengthMenu: "Mostrar _MENU_ registros por página",
             sProcessing: "Procesando...",
-            sZeroRecords: "Todavía no tienes resultados disponibles.",
+            sZeroRecords: "No existe resultados disponibles.",
             sEmptyTable: "Ningún dato disponible en esta tabla",
             sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
@@ -212,6 +238,12 @@ function loadPacientes() {
         drawCallback: function(settings) {
             $(".preloader").hide();
             $(".container").show();
+
+            $("table").css("border-color", "transparent").css('margin-bottom', '50px');
+            $("table").find("thead").css('display', 'none');
+
+            $('.paginate_button').addClass('capsul fz-poppins active text-white radius-pill');
+
             settings.aoData.map(function(_i) {
                 m.mount(_i.anCells[3], { view: function() { return m(iPaciente, _i._aData) } });
             })
@@ -229,31 +261,15 @@ function loadPacientes() {
 
     });
 
-    $('.dataTables_length select').select2({
-        minimumResultsForSearch: Infinity
+
+    $('#buscarPte').click(function(e) {
+        e.preventDefault();
+        $('.preloader').show();
+        $('.container').hide();
+        table.search($('#pte').val()).draw();
     });
 
 
-    $('#button-buscar-t').click(function(e) {
-        e.preventDefault();
-        $('.table-loader').show();
-        $('.table-content').hide();
-        table.search($('#_dt_search_text').val()).draw();
-    });
-    $('#filtrar').click(function(e) {
-        e.preventDefault();
-        $('.table-loader').show();
-        $('.table-content').hide();
-        table.search('fechas-' + $('#desde').val() + '-' + $('#hasta').val()).draw();
-    });
-
-    $('#resetTable').click(function(e) {
-        e.preventDefault();
-        $('#_dt_search_text').val('');
-        $('#desde').val('');
-        $('#hasta').val('');
-        table.search('').draw();
-    });
 
     return table;
 
