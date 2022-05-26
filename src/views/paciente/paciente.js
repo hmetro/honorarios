@@ -1,22 +1,51 @@
+
 import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
 import App from '../app';
+import m from 'mithril';
 import Loader from '../loader';
 
 
-
-const Paciente = {
-    imageUrl: "assets/medim/assets/images/intro-bg.jpg",
-    oninit: () => {
-        if (!Auth.isLogin()) {
-            return m.route.set('/auth');
-        }
-    },
-    oncreate: () => {
-        document.title = "Paciente | " + App.title;
+const DetallePedido = {
+    data: [],
+    detalle: [],
+    error: "",
+    fetch: () => {
+        m.request({
+            method: "GET",
+            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes",
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
+                DetallePedido.detalle = [1, 2, 3];
+            })
+            .catch(function (e) {
+                DetallePedido.error = e.message;
+            })
     },
     view: () => {
-        return [
+
+
+    },
+}
+
+
+const Pedido = {
+    ver: true,
+    eliminar: false,
+    editar: false,
+    labelOperation: "Detalle:",
+    oninit: () => {
+        DetallePedido.fetch();
+    },
+    view: () => {
+        return DetallePedido.error ? [
+            m(".alert.alert-danger[role='alert']",
+                DetallePedido.error
+            )
+        ] : DetallePedido.detalle.length !== 0 ? [
             m(HeaderPrivate),
             m("section.m-bg-1.intro-area.type-1.position-relative", [
                 m("div.intro-overlay.position-absolute.set-bg", {
@@ -45,7 +74,7 @@ const Paciente = {
                                             " Laboratorio "
                                         )
                                     ]),
-                                    m("a.renderUIImagen.nav-link.active.show[data-toggle='pill'][href='#v-pills-imagen'][role='tab'][aria-controls='v-pills-settings'][aria-selected='true']", [
+                                    m("a.renderUIImagen.nav-link[data-toggle='pill'][href='#v-pills-imagen'][role='tab'][aria-controls='v-pills-settings'][aria-selected='true']", [
                                         m("i.icofont-file-image"),
                                         m("span",
                                             " Imagen "
@@ -271,9 +300,36 @@ const Paciente = {
                     ])
                 )
             ])
+
+
+        ] : m(Loader)
+    }
+}
+
+
+
+
+const Paciente = {
+    idPedido: null,
+    oninit: (_data) => {
+        if (!Auth.isLogin()) {
+            return m.route.set('/auth');
+        }
+    },
+    oncreate: () => {
+        document.title = "Detalle Pedido N°:  | " + App.title;
+    },
+    view: () => {
+        return [
+            m(Pedido)
         ];
     },
 
 };
 
+
+
+
+
 export default Paciente;
+
