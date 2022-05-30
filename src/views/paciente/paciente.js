@@ -1,4 +1,3 @@
-
 import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
 import App from '../app';
@@ -6,23 +5,29 @@ import m from 'mithril';
 import Loader from '../loader';
 
 
-const DetallePedido = {
+const DetallePaciente = {
     data: [],
     detalle: [],
     error: "",
     fetch: () => {
         m.request({
-            method: "GET",
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes",
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
-                DetallePedido.detalle = [1, 2, 3];
+                method: "GET",
+                url: "https://api.hospitalmetropolitano.org/t/v1/datos-paciente/" + Paciente.nhc,
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
             })
-            .catch(function (e) {
-                DetallePedido.error = e.message;
+            .then(function(result) {
+                if (result.status) {
+                    DetallePaciente.data = result.data;
+
+                } else {
+                    DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia.";
+                }
+
+            })
+            .catch(function(e) {
+                DetallePaciente.error = e.message;
             })
     },
     view: () => {
@@ -32,20 +37,20 @@ const DetallePedido = {
 }
 
 
-const Pedido = {
+const DetalleSignosVitales = {
     ver: true,
     eliminar: false,
     editar: false,
     labelOperation: "Detalle:",
     oninit: () => {
-        DetallePedido.fetch();
+        DetallePaciente.fetch();
     },
     view: () => {
-        return DetallePedido.error ? [
+        return DetallePaciente.error ? [
             m(".alert.alert-danger[role='alert']",
-                DetallePedido.error
+                DetallePaciente.error
             )
-        ] : DetallePedido.detalle.length !== 0 ? [
+        ] : DetallePaciente.data.length !== 0 ? [
             m(HeaderPrivate),
             m("section.m-bg-1.intro-area.type-1.position-relative", [
                 m("div.intro-overlay.position-absolute.set-bg", {
@@ -62,10 +67,16 @@ const Pedido = {
                         m("div.col-md-4",
                             m("div.department-tab-pill.m-pt-140.m-pb-140.position-relative.", [
                                 m("h3.nombresPaciente.text-white.pb-md-5",
-                                    "JOSE JOAQUIN RIOFRIO MONTESINOS"
+                                    DetallePaciente.data.NOMBRE_PACIENTE
                                 ),
                                 m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
-                                    "NHC: 94182201"
+                                    "NHC: " + DetallePaciente.data.HC
+                                ),
+                                m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
+                                    "Edad: " + DetallePaciente.data.EDAD + " Años"
+                                ),
+                                m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
+                                    "Especialidad: " + DetallePaciente.data.ESPECIALIDAD
                                 ),
                                 m(".nav.pt-md-0.flex-column.nav-pills[id='v-pills-tab'][role='tablist'][aria-orientation='vertical']", [
                                     m("a.renderLab.nav-link[data-toggle='pill'][href='#v-pills-lab'][role='tab'][aria-controls='v-pills-profile'][aria-selected='false']", [
@@ -74,7 +85,7 @@ const Pedido = {
                                             " Laboratorio "
                                         )
                                     ]),
-                                    m("a.renderUIImagen.nav-link[data-toggle='pill'][href='#v-pills-imagen'][role='tab'][aria-controls='v-pills-settings'][aria-selected='true']", [
+                                    m("a.renderUIImagen.nav-link[data-toggle='pill'][href='#v-pills-imagen'][role='tab'][aria-controls='v-pills-settings'][aria-selected='false']", [
                                         m("i.icofont-file-image"),
                                         m("span",
                                             " Imagen "
@@ -85,7 +96,7 @@ const Pedido = {
                         ),
                         m("div.col-md-8",
                             m("div.tab-content.m-pt-140.m-pb-140.", [
-                                m(".tab-pane.fade[id='v-pills-lab'][role='tabpanel']", [
+                                m(".tab-pane.fade.active.show[id='v-pills-lab'][role='tabpanel']", [
                                     m("h4.m-text-2.",
                                         "Resultados de Laboratorio"
                                     ),
@@ -227,7 +238,7 @@ const Pedido = {
                                         )
                                     )
                                 ]),
-                                m(".tab-pane.fade.active.show[id='v-pills-imagen'][role='tabpanel']", [
+                                m(".tab-pane.fade[id='v-pills-imagen'][role='tabpanel']", [
                                     m("h4.m-text-2.",
                                         "Resultados de Imagen"
                                     ),
@@ -307,21 +318,20 @@ const Pedido = {
 }
 
 
-
-
 const Paciente = {
-    idPedido: null,
+    nhc: null,
     oninit: (_data) => {
+        Paciente.nhc = _data.attrs.nhc + "01";
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
     },
     oncreate: () => {
-        document.title = "Detalle Pedido N°:  | " + App.title;
+        document.title = "Paciente NHC: " + Paciente.nhc + " | " + App.title;
     },
     view: () => {
         return [
-            m(Pedido)
+            m(DetalleSignosVitales)
         ];
     },
 
@@ -332,4 +342,3 @@ const Paciente = {
 
 
 export default Paciente;
-
