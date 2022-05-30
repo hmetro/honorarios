@@ -46,8 +46,8 @@ const iPaciente = {
                 ]),
                 m("div.text-right", [
                     m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
-                            href: "#!/paciente/" + _data.attrs.HC
-                        },
+                        href: "https://beta.metrovirtual.hospitalmetropolitano.org/touch/pte/?nhc=" + _data.attrs.HC.slice(0, -2) + "&ticket=ST-66902-RSvjdifVCLOMpfz2vmCC-cas.example.org"
+                    },
                         " Ver Paciente "
                     )
                 ]),
@@ -102,7 +102,10 @@ const PagePacientes = {
                             m("form[id='busquedaPaciente']", [
 
                                 m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
-                                    m("input.form-control[type='text'][id='pte'][placeholder='Buscar por Apellidos y Nombres']"),
+                                    m("input.form-control[type='text'][id='pte'][placeholder='Buscar por Apellidos y Nombres']", {
+                                        oninput: function (e) { e.target.value = e.target.value.toUpperCase(); },
+
+                                    }),
                                     m("div.input-group-append",
                                         m("button.btn[id='buscarPte'][type='button']",
                                             "Buscar"
@@ -194,48 +197,48 @@ function loadPacientes() {
         order: false,
         columns: false,
         aoColumnDefs: [{
-                mRender: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                },
-                visible: false,
-                aTargets: [0],
-                orderable: false,
+            mRender: function (data, type, row, meta) {
+                return meta.row + meta.settings._iDisplayStart + 1;
             },
-            {
-                mRender: function(data, type, full) {
-                    return full.FECHA_ADMISION;
-                },
-                visible: false,
-                aTargets: [1],
-                orderable: false,
-
+            visible: false,
+            aTargets: [0],
+            orderable: false,
+        },
+        {
+            mRender: function (data, type, full) {
+                return full.FECHA_ADMISION;
             },
-            {
-                mRender: function(data, type, full) {
-                    return full.NOMBRE_PACIENTE;
-
-                },
-                visible: false,
-                aTargets: [2],
-                orderable: false,
-
-            },
-            {
-                mRender: function(data, type, full) {
-                    return "";
-                },
-                visible: true,
-                aTargets: [3],
-                width: "100%",
-                orderable: false,
-
-            },
-
-        ],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            visible: false,
+            aTargets: [1],
+            orderable: false,
 
         },
-        drawCallback: function(settings) {
+        {
+            mRender: function (data, type, full) {
+                return full.NOMBRE_PACIENTE;
+
+            },
+            visible: false,
+            aTargets: [2],
+            orderable: false,
+
+        },
+        {
+            mRender: function (data, type, full) {
+                return "";
+            },
+            visible: true,
+            aTargets: [3],
+            width: "100%",
+            orderable: false,
+
+        },
+
+        ],
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+        },
+        drawCallback: function (settings) {
             $(".preloader").hide();
             $(".container").show();
 
@@ -244,17 +247,17 @@ function loadPacientes() {
 
             $('.paginate_button').addClass('capsul fz-poppins active text-white radius-pill');
 
-            settings.aoData.map(function(_i) {
-                m.mount(_i.anCells[3], { view: function() { return m(iPaciente, _i._aData) } });
+            settings.aoData.map(function (_i) {
+                m.mount(_i.anCells[3], { view: function () { return m(iPaciente, _i._aData) } });
             })
 
         },
-    }).on('xhr.dt', function(e, settings, json, xhr) {
+    }).on('xhr.dt', function (e, settings, json, xhr) {
         // Do some staff here...
         $('.preloader').hide();
         $('.container').show();
         //   initDataPicker();
-    }).on('page.dt', function(e, settings, json, xhr) {
+    }).on('page.dt', function (e, settings, json, xhr) {
         // Do some staff here...
         $('.preloader').show();
         $('.container').hide();
@@ -262,7 +265,7 @@ function loadPacientes() {
     });
 
 
-    $('#buscarPte').click(function(e) {
+    $('#buscarPte').click(function (e) {
         e.preventDefault();
         $('.preloader').show();
         $('.container').hide();

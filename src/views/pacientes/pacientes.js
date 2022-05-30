@@ -23,4 +23,6 @@ const Pacientes = {
 
 };
 
+
+
 export default Pacientes;

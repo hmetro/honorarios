@@ -27,39 +27,36 @@ const Auth = {
         Auth.statusHide = "";
         Auth.statusError = "danger";
         Auth.messageError = message;
-        m.mount(document.body.querySelector('#app'), Login);
 
     },
     setSuccess: (message) => {
         Auth.statusHide = "";
         Auth.statusError = "success";
         Auth.messageError = message;
-        m.mount(document.body.querySelector('#app'), Login);
 
     },
     setProcess: () => {
         Auth.statusHide = "";
         Auth.statusError = "warning";
         Auth.messageError = 'Procesando...';
-        m.mount(document.body.querySelector('#app'), Loader);
     },
     login: () => {
         Auth.imputDisabled = true;
         Auth.setProcess();
         return m.request({
-                method: "POST",
-                url: "https://api.hospitalmetropolitano.org/t/v1/auth",
-                data: {
-                    user: Auth.username,
-                    pass: Auth.password
-                }
-            })
-            .then(function(data) {
+            method: "POST",
+            url: "https://api.hospitalmetropolitano.org/t/v1/auth",
+            data: {
+                user: Auth.username,
+                pass: Auth.password
+            }
+        })
+            .then(function (data) {
 
                 if (data.status) {
                     window.localStorage.accessToken = data.jwt;
                     Auth.setSuccess('Bienvenido');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         Auth.imputDisabled = false;
                         Auth.statusHide = "d-none";
                         Auth.statusError = "warning";
@@ -76,7 +73,7 @@ const Auth = {
                     Auth.setError(data.message);
                 }
 
-            }).catch(function(error) {
+            }).catch(function (error) {
                 Auth.imputDisabled = false;
                 Auth.statusHide = "d-none";
                 Auth.statusError = "warning";
