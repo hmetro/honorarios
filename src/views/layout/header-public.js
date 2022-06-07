@@ -16,9 +16,7 @@ const HeadPublic = {
                             m("a.navbar-brand[href='/']",
                                 m("img[src='assets/logo.metrovirtual.png'][alt='Metrovirtual'][width='200rem']")
                             ),
-                            m("div.burger_menu",
-                                m("span.navbar-toggler-icon")
-                            ),
+
                             m(".collapse.navbar-collapse.bcbd_collpase_nav[id='navbarSupportedContent']",
                                 [
                                     m("div.nav_outer.mr-auto.ml-lg-auto.mr-lg-0",
