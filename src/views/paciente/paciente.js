@@ -39,29 +39,29 @@ const Imagen = {
     data: [],
     detalle: [],
     error: "",
-    showFor: "",
-    fecth: () => {
+    showResultados: "d-none",
+    showButtons: "",
+    fetch: () => {
         m.request({
                 method: "GET",
-                url: "https://api.hospitalmetropolitano.org/t/v1/resultados-laboratorio/" + Paciente.nhc,
+                url: "https://api.hospitalmetropolitano.org/t/v1/resultados-img/" + Paciente.nhc,
                 headers: {
                     "Authorization": localStorage.accessToken,
                 },
             })
             .then(function(result) {
-                if (result.status) {
+                if (result.status && result.data.length !== 0) {
                     Imagen.data = result.data;
                 } else {
                     Imagen.error = result.message;
                 }
-
             })
             .catch(function(e) {
                 Imagen.error = e.message;
             })
     },
     oninit: () => {
-        Imagen.fecth();
+        Imagen.fetch();
     },
     view: () => {
 
@@ -87,7 +87,8 @@ const Imagen = {
                 m("h6.text-light-dark.ff-roboto.pb-40.mb-0",
                     "Hospital Metropolitano"
                 ),
-                m("div.row.p-1",
+
+                m("div." + Imagen.showButtons + ".row.p-1",
                     m("div.col-md-6",
                         m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50.", {
                                 onclick: () => {
@@ -102,7 +103,10 @@ const Imagen = {
                     ),
                     m("div.col-md-6",
                         m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50.", {
-                                onclick: () => {},
+                                onclick: () => {
+                                    Imagen.showResultados = "";
+                                    Imagen.showButtons = "d-none";
+                                },
                                 "style": { "cursor": "pointer" }
                             },
                             m("h4.text-dark2.mb-3.position-relative.pt-2",
@@ -110,6 +114,73 @@ const Imagen = {
                             )
                         )
                     )
+                ),
+                m("div." + Imagen.showResultados + ".row.p-1",
+                    m("p.p-1", [
+                        "Resultados disponible desde Enero, 2019.",
+                        m("a.ml-2", {
+                            href: "/",
+                            onclick: (e) => {
+                                e.preventDefault();
+                                Imagen.showResultados = "d-none";
+                                Imagen.showButtons = "";
+                            },
+                        }, [
+                            "<< Regresar"
+                        ]),
+                        m("a.ml-2", {
+                            href: "/",
+                            onclick: (e) => {
+                                e.preventDefault();
+                                Imagen.data = [];
+                                Imagen.fetch();
+                            },
+                        }, [
+                            m("i.icofont-refresh.mr-2"),
+                            "Actualizar"
+                        ]),
+
+                    ]),
+                    m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.",
+                        m("table.table.table-sm[width='100%']", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
+                            m("tbody", [
+                                Imagen.data.map(function(_v, _i, _contentData) {
+                                    return [
+                                        m("tr[role='row']", { "style": { "background-color": "transparent" } },
+                                            m("td", { "style": { "border-color": "transparent", "padding": "0px" } },
+                                                m("div.row.bg-white.radius-5.p-2.article-tags", [
+                                                    m("div.col-lg-6.p-2", [
+                                                        m("div", { "style": { "display": "block" } },
+                                                            m("span", { "style": { "color": "red", "display": "none" } },
+                                                                " Nuevo Resultado "
+                                                            )
+                                                        ),
+                                                        m("span.d-block",
+                                                            "Estudio: " + _v.ESTUDIO
+                                                        ),
+                                                        m("span.d-block",
+                                                            " Fecha: " + _v.FECHA
+                                                        ),
+                                                    ]),
+                                                    m("div.col-lg-6.p-2.text-xl-right", [
+                                                        m("button.capsul.fz-poppins.text-default.radius-pill.active", {
+                                                            onclick: () => {
+                                                                window.open(_v.URL_INFORME)
+                                                            },
+                                                            "style": { "cursor": "pointer" }
+                                                        }, [
+                                                            m("i.icofont-download"),
+                                                            " Descargar "
+                                                        ])
+                                                    ])
+                                                ])
+                                            )
+                                        )
+                                    ]
+                                })
+                            ])
+                        ])
+                    ),
                 )
             ]),
         ] : [
@@ -140,7 +211,28 @@ const Laboratorio = {
     detalle: [],
     error: "",
     showFor: "",
-    fecth: () => {
+    loader: false,
+    fetchResultado: (url) => {
+        m.request({
+                method: "GET",
+                url: url,
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
+                Laboratorio.loader = false;
+                if (result.status !== undefined && result.status) {
+                    window.open(result.url);
+                } else {
+                    Laboratorio.error = "Resultado no disponible.";
+                    setTimeout(function() { Laboratorio.error = ""; }, 5000);
+                }
+
+            })
+
+    },
+    fetch: () => {
         m.request({
                 method: "GET",
                 url: "https://api.hospitalmetropolitano.org/t/v1/resultados-laboratorio/" + Paciente.nhc,
@@ -149,7 +241,7 @@ const Laboratorio = {
                 },
             })
             .then(function(result) {
-                if (result.status) {
+                if (result.status && result.data.length !== 0) {
                     Laboratorio.data = result.data;
                 } else {
                     Laboratorio.error = result.message;
@@ -161,7 +253,7 @@ const Laboratorio = {
             })
     },
     oninit: () => {
-        Laboratorio.fecth();
+        Laboratorio.fetch();
     },
     view: () => {
 
@@ -178,7 +270,7 @@ const Laboratorio = {
                     Laboratorio.error
                 )
             ]),
-        ] : Laboratorio.data.length !== 0 ? [
+        ] : (Laboratorio.data.length !== 0 && !Laboratorio.loader) ? [
             m(".tab-pane.fade[id='v-pills-lab'][role='tabpanel']", [
                 m("h4.m-text-2.",
                     m("i.icofont-laboratory.mr-2"),
@@ -194,7 +286,7 @@ const Laboratorio = {
                         onclick: (e) => {
                             e.preventDefault();
                             Laboratorio.data = [];
-                            Laboratorio.fecth();
+                            Laboratorio.fetch();
                         },
                     }, [
                         m("i.icofont-refresh.mr-2"),
@@ -204,6 +296,8 @@ const Laboratorio = {
                 ]),
                 m("div.row.p-1",
                     m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.",
+
+
                         m("table.table.table-sm[width='100%']", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
                                 Laboratorio.data.map(function(_v, _i, _contentData) {
@@ -225,11 +319,13 @@ const Laboratorio = {
                                                         ),
                                                     ]),
                                                     m("div.col-lg-6.p-2.text-xl-right", [
-                                                        m("button.verRes.capsul.fz-poppins.text-default.radius-pill.active", { "style": { "cursor": "pointer" } }, [
-                                                            m("i.icofont-ui-file"),
-                                                            " Ver Resultado "
-                                                        ]),
-                                                        m("button.imprimirRes.capsul.fz-poppins.text-default.radius-pill.active", { "style": { "cursor": "pointer" } }, [
+                                                        m("button.capsul.fz-poppins.text-default.radius-pill.active", {
+                                                            onclick: () => {
+                                                                Laboratorio.loader = true;
+                                                                Laboratorio.fetchResultado(_v.urlPdf);
+                                                            },
+                                                            "style": { "cursor": "pointer" }
+                                                        }, [
                                                             m("i.icofont-download"),
                                                             " Descargar "
                                                         ])
@@ -317,7 +413,7 @@ const Evoluciones = {
     detalle: [],
     error: "",
     showFor: "",
-    fecth: () => {
+    fetch: () => {
         m.request({
                 method: "POST",
                 url: "https://api.hospitalmetropolitano.org/t/v1/ev-paciente-emergencia",
@@ -341,7 +437,7 @@ const Evoluciones = {
             })
     },
     oninit: () => {
-        Evoluciones.fecth();
+        Evoluciones.fetch();
     },
     view: () => {
 
@@ -376,7 +472,7 @@ const Evoluciones = {
                             onclick: (e) => {
                                 e.preventDefault();
                                 Evoluciones.data = [];
-                                Evoluciones.fecth();
+                                Evoluciones.fetch();
                             },
                         }, [
                             m("i.icofont-refresh.mr-2"),
@@ -465,7 +561,7 @@ const SignosVitales = {
     data: [],
     detalle: [],
     error: "",
-    fecth: () => {
+    fetch: () => {
         m.request({
                 method: "POST",
                 url: "https://api.hospitalmetropolitano.org/t/v1/sv-paciente-emergencia",
@@ -489,7 +585,7 @@ const SignosVitales = {
             })
     },
     oninit: () => {
-        SignosVitales.fecth();
+        SignosVitales.fetch();
     },
     view: () => {
 
@@ -515,7 +611,7 @@ const SignosVitales = {
                             onclick: (e) => {
                                 e.preventDefault();
                                 SignosVitales.data = [];
-                                SignosVitales.fecth();
+                                SignosVitales.fetch();
                             },
                         }, [
                             m("i.icofont-refresh.mr-2"),
@@ -674,12 +770,24 @@ const DetalleClinico = {
     editar: false,
     labelOperation: "Detalle:",
     oninit: () => {
+        DetallePaciente.data = [];
         DetallePaciente.fetch();
     },
     view: () => {
         return DetallePaciente.error ? [
-            m(".alert.alert-danger[role='alert']",
-                DetallePaciente.error
+            m("div.container",
+                m("div.m-pt-50.text-center", [
+                    m(".alert.alert-danger[role='alert']", [
+                            DetallePaciente.error,
+                            " Ver Información disponible.",
+                            m("a", {
+                                href: "/"
+                            }, " Click Aquí"),
+
+                        ]
+
+                    )
+                ])
             )
         ] : DetallePaciente.data.length !== 0 ? [
             m("section.m-bg-1.intro-area.type-1.position-relative", [

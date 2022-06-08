@@ -1,5 +1,6 @@
 import Auth from '../../models/auth';
 import App from '../app';
+import Loader from '../loader';
 
 
 const iPaciente = {
@@ -71,20 +72,7 @@ const PagePacientes = {
     },
     view: () => {
         return [
-            m("div.preloader",
-                m("div.preloader-inner",
-                    m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", [
-                            m("p.text-center.ff-roboto.m-mt-20.text-primary", "Procesando...")
-                        ]),
-                    ),
-
-                ),
-
-
-
-            ),
-
+            m(Loader),
             m("section.m-bg-1",
                 m("div.container",
                     m("div.row",
