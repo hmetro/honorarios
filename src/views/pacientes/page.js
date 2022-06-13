@@ -5,33 +5,35 @@ import Loader from '../loader';
 const DataProvider = {
     data: [],
     filteredData: [],
+    searchField: "",
     fetch: () => {
         DataProvider.data = [];
+        Loader.show = "";
         Loader.buttonShow = "";
         m.request({
-            method: "GET",
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=10",
+                method: "GET",
+                url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=10" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
 
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
-
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
+                Loader.show = "d-none";
+                Loader.buttonShow = "d-none";
 
                 DataProvider.data = result.data;
                 DataProvider.filterData();
             })
-            .catch(function (e) {
-            })
+            .catch(function(e) {})
 
 
     },
-    loadData: function () {
+    loadData: function() {
         DataProvider.fetch();
 
     },
-    filterData: function () {
+    filterData: function() {
         var to = Math.min(DataProvider.from + DataProvider.count, DataProvider.data.length + 1);
         DataProvider.filteredData = [];
         for (var i = DataProvider.from - 1; i < to - 1; i++) {
@@ -40,38 +42,38 @@ const DataProvider = {
     },
     from: 1,
     count: 10,
-    setFrom: function (from) {
+    setFrom: function(from) {
         DataProvider.from = parseInt(from);
         DataProvider.filterData();
     },
-    setCount: function (count) {
+    setCount: function(count) {
         DataProvider.count = parseInt(count);
         DataProvider.filterData();
     },
-    nextPage: function () {
+    nextPage: function() {
         var from = DataProvider.from + DataProvider.count;
         if (from > DataProvider.data.length)
             return;
         DataProvider.from = from;
         DataProvider.filterData();
     },
-    lastPage: function () {
+    lastPage: function() {
         DataProvider.from = DataProvider.data.length - DataProvider.count + 1;
         DataProvider.filterData();
     },
-    prevPage: function () {
+    prevPage: function() {
         DataProvider.from = Math.max(1, DataProvider.from - DataProvider.count);
         DataProvider.filterData();
     },
-    firstPage: function () {
+    firstPage: function() {
         DataProvider.from = 1;
         DataProvider.filterData();
     },
-    rowBack: function () {
+    rowBack: function() {
         DataProvider.from = Math.max(1, DataProvider.from - 1);
         DataProvider.filterData();
     },
-    rowFwd: function () {
+    rowFwd: function() {
         if (DataProvider.from + DataProvider.count - 1 >= DataProvider.data.length)
             return;
         DataProvider.from += 1;
@@ -81,49 +83,53 @@ const DataProvider = {
 
 const dataView = {
     oninit: DataProvider.loadData,
-
     view: () => {
         Loader.show = "d-none";
         Loader.buttonShow = "d-none";
 
         return m('table.w-100.mt-5', [
 
-            m('tbody', DataProvider.filteredData.map(function (d) {
-                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10",
-                    [
-                        m("h4.text-white.mb-0",
-                            d['NOMBRE_PACIENTE']
-                        ),
-                        m("p.text-white.designation.text-uppercase",
-                            "Especialidad: " + d['ESPECIALIDAD']
-                        ),
-                        m("p.text-white",
-                            "Dg: " + d['DG_PRINCIPAL']
-                        ),
-                        m("h6.text-white.pt-2",
-                            [
-                                m("i.icofont-stopwatch"),
-                                " Sat - Wed ( 4pm - 9pm ) "
-                            ]
-                        ),
-                        m("h6.text-white.pt-2",
-                            [
-                                m("i.icofont-stopwatch"),
-                                " Sat - Wed ( 4pm - 9pm ) "
-                            ]
-                        ),
-                        m("div.text-right", [
-                            m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
+            m('tbody', DataProvider.filteredData.map(function(d) {
+
+                console.log(d)
+
+                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
+                    m("h4.text-white.mb-0", [
+                            m("i.icofont-ui-user"),
+                            " " + d['NOMBRE_PACIENTE']
+                        ]
+
+                    ),
+                    m("p.text-white.designation.text-uppercase", [
+                        "Especialidad: ",
+                        d['ESPECIALIDAD'],
+                        " Edad: ",
+                        d['EDAD'],
+                        " Año(s)."
+                    ]),
+                    m("h6.text-white",
+                        (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE"
+                    ),
+                    m("h6.text-white.pt-2", [
+                        m("i.icofont-calendar"),
+                        " Fecha Admisión: " + d['FECHA_ADMISION']
+                    ]),
+                    m("h6.text-white.pt-2", [
+                        m("i.icofont-patient-bed"),
+                        (d['NRO_HABITACION'] !== null) ? " Ubicación: " + d['NRO_HABITACION'] : " Ubicación: NO DISPONIBLE"
+                    ]),
+
+                    m("div.text-right", [
+                        m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
                                 href: "#!/paciente/" + d['HC']
                             },
-                                " Ver Paciente "
-                            )
-                        ])
+                            " Ver Paciente "
+                        )
+                    ])
 
-                    ]
-                )
-            }))]
-        );
+                ])
+            }))
+        ]);
     }
 };
 
@@ -131,26 +137,24 @@ const pageTool = {
     view: () => {
         return m('div.f6.w-100.mw8.center', [
             m("div.fl.w-50.w-20-ns.tc.pv5", [
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.firstPage(); } }, '|<<'),
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.prevPage(); } }, '<<'),
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.rowBack(); } }, '<')
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.firstPage(); } }, '|<<'),
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.prevPage(); } }, '<<'),
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.rowBack(); } }, '<')
             ]),
             m("div.fl.w-50.w-60-ns.tc.pv5", [
                 m('span.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', 'showing '),
-                m('input.tc.w-10.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', { value: DataProvider.count, onchange: function (e) { DataProvider.setCount(e.target.value); } }),
+                m('input.tc.w-10.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', { value: DataProvider.count, onchange: function(e) { DataProvider.setCount(e.target.value); } }),
                 m('span.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', ' of ' + DataProvider.data.length + ' rows. Starting at row '),
-                m('input.tc.w-10.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', { value: DataProvider.from, onchange: function (e) { DataProvider.setFrom(e.target.value); } })
+                m('input.tc.w-10.f5.f4-m.f3-l.fw2.black-50.mt0.lh-copy', { value: DataProvider.from, onchange: function(e) { DataProvider.setFrom(e.target.value); } })
             ]),
             m("div.fl.w-50.w-20-ns.tc.pv5", [
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.rowFwd(); } }, '>'),
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.nextPage(); } }, '>>'),
-                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function () { DataProvider.lastPage(); } }, '>>|')
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.rowFwd(); } }, '>'),
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.nextPage(); } }, '>>'),
+                m('button.f6.link.dim.br2.ph3.pv2.mb2.dib.white.bg-black', { onclick: function() { DataProvider.lastPage(); } }, '>>|')
             ])
         ]);
     }
 };
-
-
 
 const iPaciente = {
     view: (_data) => {
@@ -196,8 +200,8 @@ const iPaciente = {
                 ]),
                 m("div.text-right", [
                     m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
-                        href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
-                    },
+                            href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
+                        },
                         " Ver Paciente "
                     )
                 ]),
@@ -242,14 +246,28 @@ const PagePacientes = {
                             m("form[id='busquedaPaciente']", [
 
                                 m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
-                                    m("input.form-control[type='text'][id='pte'][placeholder='Buscar por Apellidos y Nombres']", {
-                                        oninput: function (e) { e.target.value = e.target.value.toUpperCase(); },
-
+                                    m("input.form-control[type='text'][placeholder='Buscar por Apellidos y Nombres']", {
+                                        oninput: function(e) {
+                                            e.target.value = e.target.value.toUpperCase();
+                                            DataProvider.searchField = e.target.value;
+                                        },
+                                        value: DataProvider.searchField,
                                     }),
                                     m("div.input-group-append",
-                                        m("button.btn[id='buscarPte'][type='button']",
+                                        m("i.icofont-close.fz-40.p-2[style='color:#6c757d66 !important']", {
+                                            onclick: () => {
+                                                DataProvider.searchField = "";
+                                                DataProvider.fetch();
+                                            },
+                                        }),
+                                        m("button.btn[type='button']", {
+                                                onclick: () => {
+                                                    DataProvider.fetch();
+                                                },
+                                            },
                                             "Buscar"
-                                        )
+                                        ),
+
                                     )
                                 ]),
 
@@ -272,7 +290,6 @@ const PagePacientes = {
     },
 
 };
-
 
 function loadPacientes() {
 
@@ -337,48 +354,48 @@ function loadPacientes() {
         order: false,
         columns: false,
         aoColumnDefs: [{
-            mRender: function (data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
+                mRender: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+                visible: false,
+                aTargets: [0],
+                orderable: false,
             },
-            visible: false,
-            aTargets: [0],
-            orderable: false,
-        },
-        {
-            mRender: function (data, type, full) {
-                return full.FECHA_ADMISION;
-            },
-            visible: false,
-            aTargets: [1],
-            orderable: false,
-
-        },
-        {
-            mRender: function (data, type, full) {
-                return full.NOMBRE_PACIENTE;
+            {
+                mRender: function(data, type, full) {
+                    return full.FECHA_ADMISION;
+                },
+                visible: false,
+                aTargets: [1],
+                orderable: false,
 
             },
-            visible: false,
-            aTargets: [2],
-            orderable: false,
+            {
+                mRender: function(data, type, full) {
+                    return full.NOMBRE_PACIENTE;
 
-        },
-        {
-            mRender: function (data, type, full) {
-                return "";
+                },
+                visible: false,
+                aTargets: [2],
+                orderable: false,
+
             },
-            visible: true,
-            aTargets: [3],
-            width: "100%",
-            orderable: false,
+            {
+                mRender: function(data, type, full) {
+                    return "";
+                },
+                visible: true,
+                aTargets: [3],
+                width: "100%",
+                orderable: false,
 
-        },
+            },
 
         ],
-        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
         },
-        drawCallback: function (settings) {
+        drawCallback: function(settings) {
             $(".preloader").hide();
             $(".container").show();
 
@@ -387,17 +404,17 @@ function loadPacientes() {
 
             $('.paginate_button').addClass('capsul fz-poppins active text-white radius-pill');
 
-            settings.aoData.map(function (_i) {
-                m.mount(_i.anCells[3], { view: function () { return m(iPaciente, _i._aData) } });
+            settings.aoData.map(function(_i) {
+                m.mount(_i.anCells[3], { view: function() { return m(iPaciente, _i._aData) } });
             })
 
         },
-    }).on('xhr.dt', function (e, settings, json, xhr) {
+    }).on('xhr.dt', function(e, settings, json, xhr) {
         // Do some staff here...
         $('.preloader').hide();
         $('.container').show();
         //   initDataPicker();
-    }).on('page.dt', function (e, settings, json, xhr) {
+    }).on('page.dt', function(e, settings, json, xhr) {
         // Do some staff here...
         $('.preloader').show();
         $('.container').hide();
@@ -405,7 +422,7 @@ function loadPacientes() {
     });
 
 
-    $('#buscarPte').click(function (e) {
+    $('#buscarPte').click(function(e) {
         e.preventDefault();
         $('.preloader').show();
         $('.container').hide();
