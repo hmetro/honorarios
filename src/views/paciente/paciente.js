@@ -11,7 +11,7 @@ const VisorRis = {
         return [
             m("div", [
                 m("iframe", {
-                    src: "https:s//imagen.hmetro.med.ec/zfp?Lights=on&mode=proxy#view&pid=" + Paciente.nhc + "&un=WEBAPI&pw=lEcfvZxzlXTsfimMMonmVZZ15IqsgEcdV%2forI8EUrLY%3d",
+                    src: "https://imagen.hmetro.med.ec/zfp?Lights=on&mode=proxy#view&pid=" + Paciente.nhc + "&un=WEBAPI&pw=lEcfvZxzlXTsfimMMonmVZZ15IqsgEcdV%2forI8EUrLY%3d",
                     "style": {
                         "frameborder": "0",
                         "width": "100%",
@@ -42,6 +42,9 @@ const Imagen = {
     showResultados: "d-none",
     showButtons: "",
     fetch: () => {
+        Imagen.data = [];
+        Imagen.error = "";
+
         m.request({
             method: "GET",
             url: "https://api.hospitalmetropolitano.org/t/v1/resultados-img/" + Paciente.nhc,
@@ -61,6 +64,7 @@ const Imagen = {
             })
     },
     oninit: () => {
+
         Imagen.fetch();
     },
     view: () => {
@@ -106,6 +110,7 @@ const Imagen = {
                             onclick: () => {
                                 Imagen.showResultados = "";
                                 Imagen.showButtons = "d-none";
+                                MenuBoton.update = "RX";
                             },
                             "style": { "cursor": "pointer" }
                         },
@@ -116,8 +121,8 @@ const Imagen = {
                     )
                 ),
                 m("div." + Imagen.showResultados + ".row.p-1",
-                    m("p.p-1", [
-                        "Resultados disponible desde Enero, 2019.",
+                    m("h6.mb-5.ml-2", [
+                        "Resultados disponibles desde Enero, 2019.",
                         m("a.ml-2", {
                             href: "/",
                             onclick: (e) => {
@@ -127,17 +132,6 @@ const Imagen = {
                             },
                         }, [
                             "<< Regresar"
-                        ]),
-                        m("a.ml-2", {
-                            href: "/",
-                            onclick: (e) => {
-                                e.preventDefault();
-                                Imagen.data = [];
-                                Imagen.fetch();
-                            },
-                        }, [
-                            m("i.icofont-refresh.mr-2"),
-                            "Actualizar"
                         ]),
 
                     ]),
@@ -205,6 +199,247 @@ const Imagen = {
 
 };
 
+const verDocPDF = {
+    url: "",
+    show: "",
+
+    loadDcoument: (_url) => {
+
+
+
+        verDocPDF.url = _url;
+
+        var canvas = document.getElementById("render-pdf");
+        console.log(canvas)
+        setTimeout(function () {
+
+
+
+            $(".doc-loader").show();
+            $(".doc-content").hide();
+            $(".doc-control").hide();
+
+
+
+
+
+            // If absolute URL from the remote server is provided, configure the CORS
+            // Loaded via <script> tag, create shortcut to access PDF.js exports.
+            var pdfjsLib = window["pdfjs-dist/build/pdf"];
+            // The workerSrc property shall be specified.
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "assets/dashforge/lib/pdf.js/build/pdf.worker.js";
+            var pdfDoc = null,
+                pageNum = 1,
+                pageRendering = false,
+                pageNumPending = null,
+                scale = 1.25,
+                canvas = document.getElementById("render-pdf"),
+                ctx = canvas.getContext("2d")
+            /**
+             * Get page info from document, resize canvas accordingly, and render page.
+             * @param num Page number.
+             */
+            function renderPage(num) {
+                pageRendering = true;
+                // Using promise to fetch the page
+                pdfDoc.getPage(num).then(function (page) {
+                    var viewport = page.getViewport({
+                        scale: scale,
+                    });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    canvas.style.width = "100%";
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport,
+                    };
+                    var renderTask = page.render(renderContext);
+                    // Wait for rendering to finish
+                    renderTask.promise.then(function () {
+                        pageRendering = false;
+                        if (pageNumPending !== null) {
+
+                            // New page rendering is pending
+                            renderPage(pageNumPending);
+                            pageNumPending = null;
+
+                        } else {
+
+                            $('.preloader').fadeOut('slow', function () {
+                                $(this).hide();
+                            });
+
+
+                        }
+                    });
+                });
+                // Update page counters
+                // document.getElementsByClassName('page_num').textContent = num;
+                $(".page_num").text(num);
+            }
+            /**
+             * If another page rendering in progress, waits until the rendering is
+             * finised. Otherwise, executes rendering immediately.
+             */
+            function queueRenderPage(num) {
+                if (pageRendering) {
+                    pageNumPending = num;
+                } else {
+                    renderPage(num);
+                }
+            }
+            /**
+             * Displays previous page.
+             */
+            function onPrevPage() {
+                if (pageNum <= 1) {
+                    return;
+                }
+                pageNum--;
+                queueRenderPage(pageNum);
+            }
+            /*
+                                                                                                                                                                                                                                                                                  document.getElementsByClassName('prev').onclick = function(e) {
+                                                                                                                                                                                                                                                                                      e.preventDefault();
+                                                                                                                                                                                                                                                                                      onPrevPage();
+                                                                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                                                                                                  */
+            $(".prev").click(function (e) {
+                e.preventDefault();
+                onPrevPage();
+            });
+            /**
+             * Displays next page.
+             */
+            function onNextPage() {
+                if (pageNum >= pdfDoc.numPages) {
+                    return;
+                }
+                pageNum++;
+                queueRenderPage(pageNum);
+            }
+            /*
+                                                                                                                                                                                                                                                                                  document.getElementsByClassName('next').onclick = function(e) {
+                                                                                                                                                                                                                                                                                      e.preventDefault();
+                                                                                                                                                                                                                                                                                      onNextPage();
+                                                                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                                                                                                  */
+            $(".next").click(function (e) {
+                e.preventDefault();
+                onNextPage();
+            });
+            /**
+             * Asynchronously downloads PDF.
+             *
+             */
+
+            pdfjsLib
+                .getDocument({
+                    url: verDocPDF.url,
+                })
+                .promise.then(function (pdfDoc_) {
+                    pdfDoc = pdfDoc_;
+                    $(".page_count").text(pdfDoc.numPages);
+
+                    // Initial/first page rendering
+                    setTimeout(function () {
+                        $(".doc-loader").hide();
+                        $(".doc-content").show();
+                        $(".doc-control").show();
+                        renderPage(pageNum);
+                    }, 100);
+
+                    if (pdfDoc.numPages > 1) {
+                        $('.btn-next-detalle').show();
+                        $('.btn-prev-detalle').show();
+                    }
+                });
+
+
+        }, 900);
+
+
+
+
+
+    },
+
+    view: () => {
+
+        if (verDocPDF.url.length !== 0) {
+            return [
+                m("div.col-lg-12.text-center[id='docPDF']",
+                    [
+                        m("div.doc-control.row.mb-0.p-0.w-100",
+                            [
+
+                                m("div.row.col-12.d-block.tx-14.tx-semibold",
+                                    [
+                                        " Página: ",
+                                        m("span.page_num",
+                                        ),
+                                        " / ",
+                                        m("span.page_count",
+                                        )
+                                    ]
+                                ),
+                                m("div.row.col-12.d-block.social-icon.circle-link", [
+                                    m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", { title: "Anterior" },
+                                        m("i.icofont-circled-left")
+                                    ),
+                                    m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", { title: "Siguiente" },
+                                        m("i.icofont-circled-right")
+
+
+
+                                    ),
+                                    m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[target='_blank']", {
+                                        href: verDocPDF.url,
+                                        title: "Descargar"
+                                    },
+                                        m("i.icofont-download")
+                                    ),
+                                    m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", {
+                                        onclick: (e) => {
+                                            e.preventDefault();
+                                            verDocPDF.show = "";
+                                            verDocPDF.url = "";
+
+                                        }, title: "Cerrar"
+                                    },
+                                        m("i.icofont-close-circled")
+                                    ),
+
+                                ])
+                            ]
+                        ),
+                        m("div.doc-loader.row.col-12", { "style": { "display": "none" } },
+                            m("div..col-12.pd-5",
+                                m("div.preloader-inner",
+                                    m("div.loader-content",
+                                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.",),
+                                    )
+                                ),
+                            )
+                        ),
+                        m("div.doc-content.row.col-12.mt-5.pd-0.", { "style": { "display": "flex" } },
+                            m("div.d-flex.justify-content-start.pd-0.mg-0.w-100",
+                                m.trust('<canvas id="render-pdf" style="width:100%"></canvas>')
+                            )
+                        ),
+
+                    ]
+                )
+            ]
+        }
+
+
+
+
+    }
+}
 
 const Laboratorio = {
     data: [],
@@ -212,6 +447,27 @@ const Laboratorio = {
     error: "",
     showFor: "",
     loader: false,
+    verResultado: (url) => {
+        m.request({
+            method: "GET",
+            url: url,
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
+                Laboratorio.loader = false;
+                if (result.status !== undefined && result.status) {
+                    verDocPDF.loadDcoument(result.url);
+
+                } else {
+                    Laboratorio.error = "Resultado no disponible.";
+                    setTimeout(function () { Laboratorio.error = ""; }, 5000);
+                }
+
+            })
+
+    },
     fetchResultado: (url) => {
         m.request({
             method: "GET",
@@ -233,6 +489,10 @@ const Laboratorio = {
 
     },
     fetch: () => {
+        Laboratorio.data = [];
+        Laboratorio.error = "";
+        verDocPDF.url = "";
+
         m.request({
             method: "GET",
             url: "https://api.hospitalmetropolitano.org/t/v1/resultados-laboratorio/" + Paciente.nhc,
@@ -279,26 +539,16 @@ const Laboratorio = {
                 m("h6.text-light-dark.ff-roboto.pb-40.mb-0",
                     "Hospital Metropolitano"
                 ),
-                m("p", [
-                    "Resultados desde Enero, 2019.",
-                    m("a.ml-2", {
-                        href: "/",
-                        onclick: (e) => {
-                            e.preventDefault();
-                            Laboratorio.data = [];
-                            Laboratorio.fetch();
-                        },
-                    }, [
-                        m("i.icofont-refresh.mr-2"),
-                        "Actualizar"
-                    ]),
+
+                m("h6.mb-5.d-flex", [
+                    "Resultados disponibles desde Enero, 2019.",
+
 
                 ]),
+
                 m("div.row.p-1",
-                    m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.",
-
-
-                        m("table.table.table-sm[width='100%']", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
+                    m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.w-100." + verDocPDF.show,
+                        m("table.table.table-sm", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
                                 Laboratorio.data.map(function (_v, _i, _contentData) {
                                     return [
@@ -322,13 +572,27 @@ const Laboratorio = {
                                                         m("button.capsul.fz-poppins.text-default.radius-pill.active", {
                                                             onclick: () => {
                                                                 Laboratorio.loader = true;
+                                                                verDocPDF.show = "d-none";
+                                                                Laboratorio.verResultado(_v.urlPdf);
+
+                                                            },
+                                                            "style": { "cursor": "pointer" }
+                                                        }, [
+                                                            m("i.icofont-eye-alt"),
+                                                            " Ver"
+
+                                                        ]),
+                                                        m("button.capsul.fz-poppins.text-default.radius-pill.active", {
+                                                            onclick: () => {
+                                                                Laboratorio.loader = true;
                                                                 Laboratorio.fetchResultado(_v.urlPdf);
                                                             },
                                                             "style": { "cursor": "pointer" }
                                                         }, [
                                                             m("i.icofont-download"),
-                                                            " Descargar "
-                                                        ])
+                                                            " Descargar"
+
+                                                        ]),
                                                     ])
                                                 ])
                                             )
@@ -338,6 +602,7 @@ const Laboratorio = {
                             ])
                         ])
                     ),
+                    m(verDocPDF)
                 )
             ]),
         ] : [
@@ -396,9 +661,15 @@ const FOR005 = {
         let fecha_alta = "";
         let medico_tratante = "";
         let identificacion = "";
+        let evolucion_medica_texto = "";
+        let prescripciones_texto = "";
+
+
 
         if (FOR005.secs.length !== 0) {
             return FOR005.secs.map(function (_v, _i, _contentData) {
+
+
 
                 if (_v.name == 'nombres') {
 
@@ -474,9 +745,26 @@ const FOR005 = {
 
                 }
 
+                if (_v.name == 'prescripciones_texto') {
+
+                    prescripciones_texto = _v.answer;
+
+                }
+
+                if (_v.name == 'evolucion_medica_texto') {
+
+                    evolucion_medica_texto = _v.answer;
+
+                }
+
                 if (_v.name == 'Logotipo_archivo') {
 
-                    return m("table.table.table-bordered.mb-60.mt-2.p-2",
+
+                    return m("table.table.table-bordered.mb-60.mt-4.p-2.w-100", {
+                        "style": {
+                            "zoom": Formulario.zoom,
+                        }
+                    },
                         [
                             m("thead",
                                 [
@@ -484,7 +772,7 @@ const FOR005 = {
                                         m("th[colspan='12'][scope='col']",
                                             [
                                                 m("i.tx-light.fas.fa-file-alt.mg-r-2."),
-                                                m("p", " SNS - MSP / HCU-form.005 / 2008 "),
+                                                m("div.p-0", " SNS - MSP / HCU-form.005 / 2008 "),
 
 
                                             ]
@@ -493,7 +781,7 @@ const FOR005 = {
                                     m("tr",
                                         [
                                             m("th[colspan='10'][scope='col']",
-                                                m("p.m-0.p-0",
+                                                m("div.m-0.p-0",
                                                     m("img", {
                                                         width: "100rem",
                                                         src: "data:image/png;base64," + _v.answer
@@ -501,7 +789,7 @@ const FOR005 = {
                                                 )
                                             ),
                                             m("th[colspan='2'][scope='col']",
-                                                m("p.m-0.p-0",
+                                                m("div.m-0.p-0",
                                                     "HIS MV"
 
                                                 )
@@ -515,33 +803,33 @@ const FOR005 = {
                                 [
                                     m("tr",
                                         [
-                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "ESTABLECIMIENTO"
                                                 )
                                             ),
-                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "NOMBRE"
                                                 )
                                             ),
-                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='3'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "APELLIDO"
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "SEXO (M-F)"
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "NHCL."
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.tx-bold.text-center.",
                                                     "ADM."
                                                 )
                                             )
@@ -550,32 +838,32 @@ const FOR005 = {
                                     m("tr",
                                         [
                                             m("th.text-center[colspan='3'][scope='row']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     "HOSPITAL METROPOLITANO"
                                                 )
                                             ),
                                             m("td.text-center[colspan='3']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     nombres
                                                 )
                                             ),
                                             m("td.text-center[colspan='3']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     apellidos_paciente
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     sexo
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     nhcl
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     numero_admision
                                                 )
                                             )
@@ -583,33 +871,33 @@ const FOR005 = {
                                     ),
                                     m("tr",
                                         [
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "EDAD"
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "IDENTIFICACION"
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "FECHA ADMISION"
                                                 )
                                             ),
-                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "FECHA ALTA"
                                                 )
                                             ),
-                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "UBICACION"
                                                 )
                                             ),
-                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0" } },
-                                                m("p.m-0.p-0.tx-bold.text-center.", { "style": { "background-color": "#edfbf5" } },
+                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
                                                     "MEDICO TRATANTE"
                                                 )
                                             )
@@ -617,36 +905,121 @@ const FOR005 = {
                                     ),
                                     m("tr",
                                         [
-                                            m("th.text-center[colspan='1'][scope='row']",
-                                                m("p.m-0.p-0.text-center",
-                                                    edad
+                                            m("td.text-center[colspan='1'][scope='row']",
+                                                m("div.m-0.p-0.text-center",
+                                                    edad || edad_paciente
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     identificacion
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     fecha_admision
                                                 )
                                             ),
                                             m("td.text-center[colspan='1']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     fecha_admision
                                                 )
                                             ),
                                             m("td.text-center[colspan='4']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     ubicacion
                                                 )
                                             ),
                                             m("td.text-center[colspan='4']",
-                                                m("p.m-0.p-0.text-center",
+                                                m("div.m-0.p-0.text-center",
                                                     medico_tratante
                                                 )
                                             )
+                                        ]
+                                    ),
+                                    m("tr",
+                                        [
+                                            m("th[colspan='6'][scope='row']", { "style": { "padding": "0", "background-color": "#eef9c8" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
+                                                    "1.- EVOLUCIÓN"
+                                                )
+                                            ),
+                                            m("th[colspan='5'][scope='row']", { "style": { "padding": "0", "background-color": "#eef9c8" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
+                                                    "2.- PRESCRIPCIONES"
+                                                )
+                                            ),
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#eef9c8" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.", [
+                                                    "FIRMAR AL PIE DE",
+                                                    m("br"),
+                                                    "CADA PRESCRIPCIÓN"
+                                                ]
+
+                                                )
+                                            ),
+
+                                        ]
+                                    ),
+                                    m("tr",
+                                        [
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.", [
+                                                    "FECHA",
+                                                    m("br"),
+                                                    "día/mes/año"
+                                                ]
+                                                )
+                                            ),
+                                            m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
+                                                    "HORA"
+                                                )
+                                            ),
+                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.",
+                                                    "NOTAS DE EVOLUCIÓN"
+                                                )
+                                            ),
+                                            m("th[colspan='4'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.", [
+                                                    "FARMACOTERAPIA E INDICACIONES",
+                                                    m("br"),
+                                                    "(PARA ENFERMERÍA Y OTRO PERSONAL)"
+
+                                                ]
+
+                                                )
+                                            ),
+                                            m("th[colspan='2'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
+                                                m("div.m-0.p-0.tx-bold.text-center.", [
+                                                    "ADMINISTR.",
+                                                    m("br"),
+                                                    "FÁRMACOS INSUMOS"
+
+                                                ]
+
+                                                )
+                                            ),
+
+                                        ]
+                                    ),
+                                    m("tr",
+                                        [
+                                            m("td[colspan='6'][scope='row']", { "style": { "padding": "0", } },
+                                                m("div.m-0.p-2.tx-bold.text-justify",
+                                                    (evolucion_medica_texto !== null && evolucion_medica_texto.length !== 0) ? m.trust(evolucion_medica_texto.replace(/(\r\n|\r|\n)/g, "<br/>")) : ""
+
+
+                                                )
+                                            ),
+                                            m("td[colspan='6'][scope='row']", { "style": { "padding": "0", } },
+                                                m("div.m-0.p-2.text-justify",
+                                                    (prescripciones_texto !== null && prescripciones_texto.length !== 0) ? m.trust(prescripciones_texto.replace(/(\r\n|\r|\n)/g, "<br/>")) : ""
+
+                                                )
+                                            ),
+
                                         ]
                                     ),
 
@@ -671,11 +1044,14 @@ const FOR005 = {
 };
 
 const Formulario = {
+    zoom: 0.5,
     adm: 1,
     nhc: 1,
     data: [],
     error: "",
     fetch: () => {
+        Formulario.data = [];
+        Formulario.error = "";
         m.request({
             method: "GET",
             url: "https://api.hospitalmetropolitano.org/t/v1/formulario?nhcl=" + Formulario.nhc + "&adm=" + Formulario.adm,
@@ -697,7 +1073,6 @@ const Formulario = {
             })
     },
     oninit: () => {
-        Formulario.data = [];
         Formulario.fetch();
     },
     view: () => {
@@ -713,7 +1088,7 @@ const Formulario = {
         ] : [
             m("div.text-center", [
                 m("div.loader-content",
-                    m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
+                    m("span.icon-section-wave.d-inline-block.text-active.mt-10.mb-10.",)
                 )
             ])
         ]
@@ -727,6 +1102,8 @@ const Evoluciones = {
     error: "",
     showFor: "",
     fetch: () => {
+        Evoluciones.data = [];
+        Evoluciones.error = "";
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/ev-paciente-emergencia",
@@ -753,6 +1130,7 @@ const Evoluciones = {
             })
     },
     oninit: () => {
+
         Evoluciones.fetch();
     },
     view: () => {
@@ -784,23 +1162,13 @@ const Evoluciones = {
                 ),
                 m("h6.mb-5.d-flex", [
                     "Última información disponible. HIS MV.",
-                    m("a.ml-2", {
-                        href: "/",
-                        onclick: (e) => {
-                            e.preventDefault();
-                            Evoluciones.data = [];
-                            Evoluciones.fetch();
-                        },
-                    }, [
-                        m("i.icofont-refresh.mr-2"),
-                        "Actualizar"
-                    ]),
+
 
                 ]
 
                 ),
                 m("div.row.p-1",
-                    m("div.bg-white.col-12.pd-r-0.pd-l-0.pd-b-20.",
+                    m("div.col-12.bg-white.pd-r-0.pd-l-0.pd-b-20.",
                         m(Formulario),
                     ),
 
@@ -829,117 +1197,311 @@ const Evoluciones = {
 }
 
 const WidgetsSV = {
-    view: () => {
-
-        return SignosVitales.data.map(function (_v, _i, _contentData) {
-
-            if (_v.SIGNO == 'PRESION ARTERIAL DIASTOLICA') {
-
-                return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
-                    m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                        m("div.media",
-                            [
-                                m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                    m("span.icon-heart-beat.text-grad-1")
-                                ),
-                                m("div.media-body",
-                                    [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            _v.SIGNO
-                                        ),
-                                        m("p.mb-4.text-default.d-inline-block.pt-2.fz-poppins.fz-40.text-Underline",
-                                            _v.VALOR + "ml."
-                                        )
-                                    ]
-                                )
-                            ]
-                        )
-                    )
-                )
-
-            }
+    data: {
+        PAS: [],
+        PAD: [],
+        FC: [],
+        FR: [],
+        SO: [],
+        SO: [],
+        FIO: [],
+        TEMP: [],
+        PS: [],
+        TA: [],
+    },
+    oninit: () => {
+        SignosVitales.data.map(function (_v, _i, _contentData) {
 
             if (_v.SIGNO == 'PRESION ARTERIAL SISTOLICA') {
 
-                return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
-                    m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                        m("div.media",
-                            [
-                                m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                    m("span.icon-heart-beat.text-grad-1")
-                                ),
-                                m("div.media-body",
-                                    [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            _v.SIGNO
-                                        ),
-                                        m("p.mb-4.text-default.d-inline-block.pt-2.fz-poppins.fz-40.text-Underline",
-                                            _v.VALOR + "ml."
-                                        )
-                                    ]
-                                )
-                            ]
-                        )
-                    )
-                )
+                WidgetsSV.data.PAS = _v;
 
             }
 
+            if (_v.SIGNO == 'PRESION ARTERIAL DIASTOLICA') {
+
+                WidgetsSV.data.PAD = _v;
+
+            }
 
             if (_v.SIGNO == 'FRECUENCIA CARDIACA') {
 
-                return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
-                    m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                        m("div.media",
-                            [
-                                m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                    m("span.icon-heart-beat.text-grad-1")
-                                ),
-                                m("div.media-body",
-                                    [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            _v.SIGNO
-                                        ),
-                                        m("p.mb-4.text-default.d-inline-block.pt-2.fz-poppins.fz-40.text-Underline",
-                                            _v.VALOR + "xMin."
-                                        )
-                                    ]
-                                )
-                            ]
-                        )
-                    )
-                )
+                WidgetsSV.data.FC = _v;
 
             }
 
             if (_v.SIGNO == 'FRECUENCIA RESPIRATORIA') {
 
-                return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
-                    m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                        m("div.media",
-                            [
-                                m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                    m("span.icon-heart-beat.text-grad-1")
-                                ),
-                                m("div.media-body",
-                                    [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            _v.SIGNO
-                                        ),
-                                        m("p.mb-4.text-default.d-inline-block.pt-2.fz-poppins.fz-40.text-Underline",
-                                            _v.VALOR + "xMin."
-                                        )
-                                    ]
-                                )
-                            ]
-                        )
-                    )
-                )
+                WidgetsSV.data.FR = _v;
+
+            }
+
+            if (_v.SIGNO == 'SATURACION OXIGENO') {
+
+                WidgetsSV.data.SO = _v;
+
+            }
+
+            if (_v.SIGNO == 'FI02') {
+
+                WidgetsSV.data.FIO = _v;
+
+            }
+
+            if (_v.SIGNO == 'TEMPERATURA') {
+
+                WidgetsSV.data.TEMP = _v;
+
+            }
+
+            if (_v.SIGNO == 'PESO') {
+
+                WidgetsSV.data.PS = _v;
+
+            }
+
+            if (_v.SIGNO == 'TALLA') {
+
+                WidgetsSV.data.TA = _v;
 
             }
 
 
         })
+
+    },
+    view: () => {
+
+        return [
+            Object.keys(WidgetsSV.data).map(function (_v, _i, _contentData) {
+
+                if ((_v == 'PAS' || _v == 'PAD') && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icon-heart-beat.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + "mmHg."
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'FC' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-default.rounded-circle.s-dp-1-3-15.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icon-heart-beat.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " LPM"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'FR' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-lungs.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " RPM"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'SO' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-stethoscope.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "SATURACIÓN DE OXIGENO"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " %"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'FIO' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-stethoscope.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "FIO2"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " %"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'TEMP' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-thermometer.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "TEMPERATURA"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " °C"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'PS' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-user-alt-1.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "PESO"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " °C"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+                if (_v == 'TA' && WidgetsSV.data[_v].length !== 0) {
+                    return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                            m("div.media",
+                                [
+                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                        m("span.icofont-ruler.text-grad-1")
+                                    ),
+                                    m("div.media-body",
+                                        [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "TALLA"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " °C"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        )
+                    )
+                }
+
+
+
+            })
+        ]
+
+
+
+
+
+
+
 
     }
 };
@@ -949,6 +1511,8 @@ const SignosVitales = {
     detalle: [],
     error: "",
     fetch: () => {
+        SignosVitales.data = [];
+        SignosVitales.error = "";
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/sv-paciente-emergencia",
@@ -972,6 +1536,7 @@ const SignosVitales = {
             })
     },
     oninit: () => {
+
         SignosVitales.fetch();
     },
     view: () => {
@@ -993,17 +1558,7 @@ const SignosVitales = {
                 ),
                 m("h6.mb-5.d-flex", [
                     "Última información disponible. HIS MV.",
-                    m("a.ml-2", {
-                        href: "/",
-                        onclick: (e) => {
-                            e.preventDefault();
-                            SignosVitales.data = [];
-                            SignosVitales.fetch();
-                        },
-                    }, [
-                        m("i.icofont-refresh.mr-2"),
-                        "Actualizar"
-                    ]),
+
 
                 ]
 
@@ -1023,8 +1578,11 @@ const SignosVitales = {
                 m("h6.text-light-dark.ff-roboto.pb-40.mb-0",
                     "Hospital Metropolitano"
                 ),
-                m("h6.mb-5.d-flex",
-                    "Última información disponible. HIS MV."
+                m("h6.mb-5.d-flex", [
+                    "Última información disponible. HIS MV.",
+
+                ]
+
                 ),
                 m("div.text-center", [
                     m("div.loader-content",
@@ -1044,6 +1602,8 @@ const DetallePaciente = {
     detalle: [],
     error: "",
     fetch: () => {
+        DetallePaciente.data = [];
+        DetallePaciente.error = "";
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/status-paciente-emergencia",
@@ -1067,34 +1627,50 @@ const DetallePaciente = {
     },
     view: () => {
         return [
-            m("div.col-md-4",
+            m("div.col-md-4." + DetalleClinico.inZoom,
                 m("div.department-tab-pill.m-pt-140.m-pb-140.position-relative.", [
-                    m("h3.nombresPaciente.text-white.pb-md-5",
+                    m("i.icofont-prescription.text-white.fz-40", { "style": { "margin-left": "-5px" } }),
+                    m("h2.text-white.pb-md-5", [
+
                         DetallePaciente.data.NOMBRE_PACIENTE
+                    ]
+
                     ),
-                    m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
+                    m("h6.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
                         "NHC: " + DetallePaciente.data.HC
                     ),
-                    m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
+                    m("h6.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
                         "Edad: " + DetallePaciente.data.EDAD + " Años"
                     ),
-                    m("h6.nhcPaciente.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
+                    m("h6.ml12.text-white.text-uppercase.fadeInDown-slide.animated",
                         "Especialidad: " + DetallePaciente.data.ESPECIALIDAD
                     ),
                     m(".nav.pt-md-0.flex-column.nav-pills[id='v-pills-tab'][role='tablist'][aria-orientation='vertical']", [
-                        m("a.nav-link.active[data-toggle='pill'][href='#v-pills-sv'][role='tab']", [
+                        m("a.nav-link.active[data-toggle='pill'][href='#v-pills-sv'][role='tab']", {
+                            onclick: () => {
+                                MenuBoton.update = "SV";
+                            },
+                        }, [
                             m("i.icofont-heart-beat"),
                             m("span",
                                 " Signos Vitales "
                             )
                         ]),
-                        m("a.nav-link[data-toggle='pill'][href='#v-pills-ev'][role='tab']", [
+                        m("a.nav-link[data-toggle='pill'][href='#v-pills-ev'][role='tab']", {
+                            onclick: () => {
+                                MenuBoton.update = "EV";
+                            },
+                        }, [
                             m("i.icofont-prescription"),
                             m("span",
                                 " Evoluciones "
                             )
                         ]),
-                        m("a.nav-link[data-toggle='pill'][href='#v-pills-lab'][role='tab']", [
+                        m("a.nav-link[data-toggle='pill'][href='#v-pills-lab'][role='tab']", {
+                            onclick: () => {
+                                MenuBoton.update = "LAB";
+                            },
+                        }, [
                             m("i.icofont-laboratory"),
                             m("span",
                                 " Laboratorio "
@@ -1123,14 +1699,144 @@ const DetallePaciente = {
     },
 }
 
+const MenuBoton = {
+    show: "",
+    close: "d-none",
+    zoomin: "d-none",
+    zoomout: "d-none",
+    reload: "d-none",
+    zi: "",
+    update: "",
+    setComand: () => {
+
+        if (MenuBoton.update == "SV") {
+            SignosVitales.fetch();
+        }
+
+        if (MenuBoton.update == "EV") {
+            Evoluciones.fetch();
+        }
+
+        if (MenuBoton.update == "LAB") {
+            Laboratorio.fetch();
+        }
+
+        if (MenuBoton.update == "RX") {
+            Imagen.fetch();
+        }
+
+
+
+
+    },
+    view: () => {
+        return [
+            m("div.button-menu-right-plus." + MenuBoton.show, { "style": { "display": "flex" } },
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "d-none";
+                        MenuBoton.close = "";
+                        MenuBoton.zoomin = "";
+                        MenuBoton.zoomout = "";
+                        MenuBoton.reload = "";
+
+                    },
+                },
+                    m("i.icofont-plus", { "style": { "font-size": "x-large" } })
+                )
+            ),
+            m("div.button-menu-right-close." + MenuBoton.close, { "style": { "display": "flex" } }, [
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-close", { "style": { "font-size": "x-large" } })
+                )
+
+            ]
+
+            ),
+            m("div.button-menu-right-reload-pte." + MenuBoton.reload, { "style": { "display": "flex" } }, [
+                m("div.text-primary.mr-2", "Actualizar"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                        verDocPDF.show = "";
+
+                        MenuBoton.setComand();
+
+
+                    },
+                },
+                    m("i.icofont-refresh", { "style": { "font-size": "x-large" } })
+                )
+            ]
+
+            ),
+            m("div.button-menu-right-zoomin." + MenuBoton.zoomin, { "style": { "display": "flex" } }, [
+                m("div.text-primary.mr-2", "Aumentar"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        Formulario.zoom = 0.85;
+                        DetalleClinico.inZoom = "d-none";
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-ui-zoom-in", { "style": { "font-size": "x-large" } })
+                )
+            ]
+
+            ),
+            m("div.button-menu-right-zoomout." + MenuBoton.zoomout, { "style": { "display": "flex" } }, [
+                m("div.text-primary.mr-2", "Disminuir"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        Formulario.zoom = 0.5;
+                        DetalleClinico.inZoom = "";
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-ui-zoom-out", { "style": { "font-size": "x-large" } })
+                )
+
+            ]
+
+            )
+
+        ]
+    }
+};
 
 const DetalleClinico = {
     ver: true,
     eliminar: false,
     editar: false,
     labelOperation: "Detalle:",
+    inZoom: "",
     oninit: () => {
-        DetallePaciente.data = [];
+        MenuBoton.update = "SV";
         DetallePaciente.fetch();
     },
     view: () => {
@@ -1151,7 +1857,7 @@ const DetalleClinico = {
             )
         ] : DetallePaciente.data.length !== 0 ? [
             m("section.m-bg-1.intro-area.type-1.position-relative", [
-                m("div.intro-overlay.position-absolute.set-bg", {
+                m("div.intro-overlay.position-absolute.set-bg." + DetalleClinico.inZoom, {
                     "style": {
                         "background-position": "center center",
                         "background-size": "cover",
@@ -1159,21 +1865,28 @@ const DetalleClinico = {
                         "background-image": 'url(\"/assets/images/intro-bg.jpg\")',
                     }
                 }),
-                m("div.overlay"),
-                m("div.container",
+                m("div.overlay." + DetalleClinico.inZoom),
+                m("div.container", {
+                    class: (DetalleClinico.inZoom.length === 0) ? "" : "bg-white"
+                },
                     m("div.row", [
                         m(DetallePaciente),
-                        m("div.col-md-8",
-                            m("div.tab-content.m-pt-140.m-pb-140.", [
+                        m("div", {
+                            class: (DetalleClinico.inZoom.length !== 0) ? "col-md-12" : "col-md-8"
+                        }, [
+                            m("div.tab-content.m-pb-140.", {
+                                class: (DetalleClinico.inZoom.length === 0) ? "m-pt-140" : "m-pt-40"
+                            }, [
                                 m(SignosVitales),
                                 m(Evoluciones),
                                 m(Laboratorio),
                                 m(Imagen)
                             ])
+                        ])
+                    ]),
 
-                        )
-                    ])
-                )
+                ),
+                m(MenuBoton)
             ])
         ] : m(Loader)
     }
@@ -1183,7 +1896,18 @@ const DetalleClinico = {
 const Paciente = {
     nhc: null,
     oninit: (_data) => {
-        Paciente.nhc = _data.attrs.nhc + "01";
+        Paciente.nhc = _data.attrs.nhc;
+        Loader.show = "";
+        Loader.buttonShow = "";
+        DetallePaciente.data = [];
+        Evoluciones.data = [];
+        Formulario.data = [];
+        Imagen.data = [];
+        SignosVitales.data = [];
+
+
+
+
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
@@ -1196,7 +1920,7 @@ const Paciente = {
 
         if (VisorRis.show.length === 0) {
             return [
-                m(HeaderPrivate),
+                (DetalleClinico.inZoom.length === 0) ? m(HeaderPrivate) : "",
                 m(DetalleClinico)
             ];
         } else {
@@ -1209,7 +1933,13 @@ const Paciente = {
 
 };
 
+function draw(element, isInitialized, context) {
+    //don't redraw if we did once already
+    if (isInitialized) return;
 
+    var ctx = element.getContext("2d");
+    /* draws stuff */
+}
 
 function _Main() {
 
