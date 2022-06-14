@@ -6162,6 +6162,7 @@ textarea[data-box-name='contact-message'] {
 .button-menu-center {
     position: fixed;
     left: 45%;
+    z-index: 999;
     bottom: 20px;
     border-radius: 50%;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, .20);
