@@ -10,10 +10,12 @@ const DataProvider = {
         DataProvider.data = [];
         Loader.show = "";
         Loader.buttonShow = "";
-        m.request({
-            method: "GET",
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=10" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
 
+        var formData = new FormData($('#busquedaPaciente')[0]);
+        m.request({
+            method: "POST",
+            url: "https://api.hospitalmetropolitano.org/t/v1/buscar-paciente",
+            data: formData,
             headers: {
                 "Authorization": localStorage.accessToken,
             },
@@ -83,53 +85,53 @@ const DataProvider = {
 
 const dataView = {
     oninit: DataProvider.loadData,
+
     view: () => {
-        Loader.show = "d-none";
-        Loader.buttonShow = "d-none";
 
-        return m('table.w-100.mt-5', [
+        if (DataProvider.filteredData.length !== 0) {
 
-            m('tbody', DataProvider.filteredData.map(function (d) {
+            Loader.show = "d-none";
+            Loader.buttonShow = "d-none";
+            return m('table.w-100.mt-5', [
 
-                console.log(d)
+                m('tbody', DataProvider.filteredData.map(function (d) {
 
-                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
-                    m("h4.text-white.mb-0", [
-                        m("i.icofont-ui-user"),
-                        " " + d['NOMBRE_PACIENTE']
-                    ]
 
-                    ),
-                    m("p.text-white.designation.text-uppercase", [
-                        "Especialidad: ",
-                        d['ESPECIALIDAD'],
-                        " Edad: ",
-                        d['EDAD'],
-                        " Año(s)."
-                    ]),
-                    m("h6.text-white",
-                        (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE"
-                    ),
-                    m("h6.text-white.pt-2", [
-                        m("i.icofont-calendar"),
-                        " Fecha Admisión: " + d['FECHA_ADMISION']
-                    ]),
-                    m("h6.text-white.pt-2", [
-                        m("i.icofont-patient-bed"),
-                        (d['NRO_HABITACION'] !== null) ? " Ubicación: " + d['NRO_HABITACION'] : " Ubicación: NO DISPONIBLE"
-                    ]),
+                    return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
+                        m("h4.text-white.mb-0", [
+                            m("i.icofont-ui-user"),
+                            " " + d['APELLIDOS'] + " " + d['NOMBRES']
+                        ]
 
-                    m("div.text-right", [
-                        m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
-                            href: "#!/paciente/" + d['HC']
-                        },
-                            " Ver Paciente "
-                        )
+                        ),
+                        m("div.text-right", [
+                            m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
+                                href: "#!/resultados/paciente/" + d['PK_NHCL']
+                            },
+                                " Ver Paciente "
+                            )
+                        ])
+
                     ])
+                }))
+            ]);
 
-                ])
-            }))
-        ]);
+
+
+        } else {
+
+            Loader.show = "d-none";
+            Loader.buttonShow = "d-none";
+            return m('table.w-100.mt-5', [
+
+
+            ]);
+
+        }
+
+
+
+
     }
 };
 
@@ -212,7 +214,7 @@ const iPaciente = {
     }
 };
 
-const PagePacientes = {
+const PageResultados = {
 
     oninit: () => {
         Loader.show = "";
@@ -222,11 +224,10 @@ const PagePacientes = {
             return m.route.set('/auth');
         }
     },
-    oncreate: () => {
-        document.title = "Mis Pacientes | " + App.title;
 
-    },
     view: () => {
+
+
         return [
             m(Loader),
             m("section.m-bg-1",
@@ -235,7 +236,7 @@ const PagePacientes = {
                         m("div.col-md-6.offset-md-3",
                             m("div.text-center.m-mt-70", [
                                 m("h2.m-0.text-dark",
-                                    "Mis Pacientes "
+                                    "Resultados de Imagen y Laboratorio"
                                 ),
                                 m("span.icon-section-wave.d-inline-block.text-active.section-wave.mt-3.active")
                             ])
@@ -244,9 +245,36 @@ const PagePacientes = {
                     m("div.row.m-mb-20",
                         m("div.col-md-12",
                             m("form[id='busquedaPaciente']", [
-
+                                m("div.d-flex.align-items-left.position-relative.justify-content-left",
+                                    [
+                                        m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2",
+                                            [
+                                                m("input.custom-control-input[type='radio'][id='cedula'][name='tipoBusqueda'][value='cc']"),
+                                                m("label.custom-control-label[for='cedula']",
+                                                    "Cédula"
+                                                )
+                                            ]
+                                        ),
+                                        m("div.custom-control.custom-radio.m-mb-20.mr-2",
+                                            [
+                                                m("input.custom-control-input[type='radio'][id='nhc'][name='tipoBusqueda'][value='nhc']"),
+                                                m("label.custom-control-label[for='nhc']",
+                                                    "Historia Clínica"
+                                                )
+                                            ]
+                                        ),
+                                        m("div.custom-control.custom-radio.m-mb-20.mr-2",
+                                            [
+                                                m("input.custom-control-input[type='radio'][id='pte'][name='tipoBusqueda'][value='pte']"),
+                                                m("label.custom-control-label[for='pte']",
+                                                    "Apellidos y Nombres"
+                                                )
+                                            ]
+                                        )
+                                    ]
+                                ),
                                 m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
-                                    m("input.form-control[type='text'][placeholder='Buscar por Apellidos y Nombres']", {
+                                    m("input.form-control[type='text'][name='pte'][placeholder='Buscar por Cédula, Historia Clínica, Apellidos y Nombres']", {
                                         oninput: function (e) {
                                             e.target.value = e.target.value.toUpperCase();
                                             DataProvider.searchField = e.target.value;
@@ -294,149 +322,5 @@ const PagePacientes = {
 
 };
 
-function loadPacientes() {
 
-    $(".preloader").show();
-    $(".container").hide();
-
-    // MOMMENT
-    moment.lang("es", {
-        months: "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
-            "_"
-        ),
-        monthsShort: "Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.".split(
-            "_"
-        ),
-        weekdays: "Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado".split(
-            "_"
-        ),
-        weekdaysShort: "Dom._Lun._Mar._Mier._Jue._Vier._Sab.".split("_"),
-        weekdaysMin: "Do_Lu_Ma_Mi_Ju_Vi_Sa".split("_"),
-    });
-
-    $.fn.dataTable.ext.errMode = "none";
-    var table = $("#table-pacientes").DataTable({
-        "ajax": {
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes",
-            dataSrc: "data",
-            serverSide: true,
-        },
-        processing: true,
-        serverSide: true,
-        responsive: false,
-        dom: 'tp',
-        language: {
-            searchPlaceholder: "Buscar...",
-            sSearch: "",
-            lengthMenu: "Mostrar _MENU_ registros por página",
-            sProcessing: "Procesando...",
-            sZeroRecords: "No existe resultados disponibles.",
-            sEmptyTable: "Ningún dato disponible en esta tabla",
-            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Último",
-                sNext: "Siguiente",
-                sPrevious: "Anterior",
-            },
-            oAria: {
-                sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending: ": Activar para ordenar la columna de manera descendente",
-            },
-        },
-        cache: false,
-        order: false,
-        columns: false,
-        aoColumnDefs: [{
-            mRender: function (data, type, row, meta) {
-                return meta.row + meta.settings._iDisplayStart + 1;
-            },
-            visible: false,
-            aTargets: [0],
-            orderable: false,
-        },
-        {
-            mRender: function (data, type, full) {
-                return full.FECHA_ADMISION;
-            },
-            visible: false,
-            aTargets: [1],
-            orderable: false,
-
-        },
-        {
-            mRender: function (data, type, full) {
-                return full.NOMBRE_PACIENTE;
-
-            },
-            visible: false,
-            aTargets: [2],
-            orderable: false,
-
-        },
-        {
-            mRender: function (data, type, full) {
-                return "";
-            },
-            visible: true,
-            aTargets: [3],
-            width: "100%",
-            orderable: false,
-
-        },
-
-        ],
-        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-        },
-        drawCallback: function (settings) {
-            $(".preloader").hide();
-            $(".container").show();
-
-            $("table").css("border-color", "transparent").css('margin-bottom', '50px');
-            $("table").find("thead").css('display', 'none');
-
-            $('.paginate_button').addClass('capsul fz-poppins active text-white radius-pill');
-
-            settings.aoData.map(function (_i) {
-                m.mount(_i.anCells[3], { view: function () { return m(iPaciente, _i._aData) } });
-            })
-
-        },
-    }).on('xhr.dt', function (e, settings, json, xhr) {
-        // Do some staff here...
-        $('.preloader').hide();
-        $('.container').show();
-        //   initDataPicker();
-    }).on('page.dt', function (e, settings, json, xhr) {
-        // Do some staff here...
-        $('.preloader').show();
-        $('.container').hide();
-
-    });
-
-
-    $('#buscarPte').click(function (e) {
-        e.preventDefault();
-        $('.preloader').show();
-        $('.container').hide();
-        table.search($('#pte').val()).draw();
-    });
-
-
-
-    return table;
-
-}
-
-
-export default PagePacientes;
+export default PageResultados;
