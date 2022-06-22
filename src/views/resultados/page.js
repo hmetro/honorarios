@@ -6,18 +6,18 @@ const DataProvider = {
     data: [],
     filteredData: [],
     searchField: "",
+    tipoBusqueda: "",
     fetch: () => {
         DataProvider.data = [];
         Loader.show = "";
         Loader.buttonShow = "";
 
-        var tipoBusqueda = $("[name='tipoBusqueda']").val();
 
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/buscar-paciente",
-            data: {
-                tipoBusqueda: tipoBusqueda,
+            body: {
+                tipoBusqueda: DataProvider.tipoBusqueda,
                 pte: DataProvider.searchField
             },
             headers: {
@@ -89,7 +89,6 @@ const DataProvider = {
 
 const dataView = {
     oninit: DataProvider.loadData,
-
     view: () => {
 
         if (DataProvider.filteredData.length !== 0) {
@@ -177,7 +176,7 @@ const pageTool = {
                         type: "button",
                         onclick: function () { DataProvider.rowFwd(); }
                     },
-                        " Siguiente > "
+                        " Siguiente "
                     ),
 
                     m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
@@ -269,11 +268,12 @@ const PageResultados = {
             return m.route.set('/auth');
         }
     },
-
+    oncreate: () => {
+        submitBusqueda();
+        setTimeout(function () { document.getElementById("pte").click(); }, 500);
+    },
 
     view: () => {
-
-
         return [
             m(Loader),
             m("section.m-bg-1",
@@ -292,19 +292,37 @@ const PageResultados = {
                         m("div.col-md-12", [
                             m("div.d-flex.align-items-left.position-relative.justify-content-left", [
                                 m("div.custom-control.custom-radio.m-mb-20.mr-2", [
-                                    m("input.custom-control-input[type='radio'][id='pte'][name='tipoBusqueda'][value='pte']", { checked: true }),
+                                    m("input.custom-control-input[type='radio'][id='pte'][name='tipoBusqueda'][value='pte']", {
+                                        onclick: (e) => {
+                                            if (e.target.checked) {
+                                                DataProvider.tipoBusqueda = e.target.value;
+                                            }
+                                        }
+                                    }),
                                     m("label.custom-control-label[for='pte']",
                                         "Apellidos y Nombres"
                                     )
                                 ]),
                                 m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2", [
-                                    m("input.custom-control-input[type='radio'][id='cedula'][name='tipoBusqueda'][value='cc']"),
+                                    m("input.custom-control-input[type='radio'][id='cedula'][name='tipoBusqueda'][value='cc']", {
+                                        onclick: (e) => {
+                                            if (e.target.checked) {
+                                                DataProvider.tipoBusqueda = e.target.value;
+                                            }
+                                        }
+                                    }),
                                     m("label.custom-control-label[for='cedula']",
                                         "Cédula"
                                     )
                                 ]),
                                 m("div.custom-control.custom-radio.m-mb-20.mr-2", [
-                                    m("input.custom-control-input[type='radio'][id='nhc'][name='tipoBusqueda'][value='nhc']"),
+                                    m("input.custom-control-input[type='radio'][id='nhc'][name='tipoBusqueda'][value='nhc']", {
+                                        onclick: (e) => {
+                                            if (e.target.checked) {
+                                                DataProvider.tipoBusqueda = e.target.value;
+                                            }
+                                        }
+                                    }),
                                     m("label.custom-control-label[for='nhc']",
                                         "Historia Clínica"
                                     )
@@ -312,7 +330,7 @@ const PageResultados = {
 
                             ]),
                             m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
-                                m("input.form-control[type='text'][name='pte'][placeholder='Buscar por Apellidos y Nombres, Cédula, Historia Clínica']", {
+                                m("input.form-control[type='text'][placeholder='Buscar por Apellidos y Nombres, Cédula, Historia Clínica']", {
                                     oninput: function (e) {
                                         e.target.value = e.target.value.toUpperCase();
                                         DataProvider.searchField = e.target.value;
@@ -360,6 +378,18 @@ const PageResultados = {
     },
 
 };
+
+
+function submitBusqueda() {
+    document.onkeypress = function (e) {
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == "13") {
+            console.log('OK');
+        }
+    };
+}
+
 
 
 

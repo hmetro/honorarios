@@ -641,7 +641,7 @@ const DetallePaciente = {
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/buscar-paciente",
-            data: {
+            body: {
                 tipoBusqueda: "nhc",
                 pte: ResultadoPaciente.nhc
             },

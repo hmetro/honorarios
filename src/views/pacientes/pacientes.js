@@ -13,6 +13,7 @@ const Pacientes = {
     },
     oncreate: () => {
         document.title = "Mis Pacientes | " + App.title;
+        submitBusqueda();
         _Main();
     },
     view: () => {
@@ -571,6 +572,16 @@ function _Main() {
     });
 
 
+}
+
+function submitBusqueda() {
+    document.onkeypress = function (e) {
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == "13") {
+            console.log('OK');
+        }
+    };
 }
 
 

@@ -20,7 +20,7 @@ const HeaderPrivate = {
                     m("div.overlay.op-P9"),
                     m("div.container",
                         m("div.row",
-                            m("div.col-md-12", )
+                            m("div.col-md-12",)
                         )
                     )
                 ]),
@@ -29,7 +29,7 @@ const HeaderPrivate = {
                         m("a.navbar-brand[href='/']",
                             m("img[src='assets/logo.metrovirtual.png'][alt='Metrovirtual'][width='200rem']")
                         ),
-                        m("div.d-block.d-md-none",
+                        m("div.d-lg-none",
                             m("a", { href: "#!/mi-perfil" },
                                 m("div.features-circle.m-bg-3.text-active.d-inline-flex.align-items-center.justify-content-center.rounded-circle", { "style": { "height": "50px", "width": "50px" } },
                                     m("i.icofont-doctor", { "style": { "fontSize": "20px" } })

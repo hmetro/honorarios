@@ -2,7 +2,6 @@ import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
 import MenuPanel from '../menu/panel';
 import App from '../app';
-import Loader from '../loader';
 
 
 

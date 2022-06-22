@@ -1,7 +1,5 @@
 import App from '../views/app';
 import _Error_ from '../views/error';
-import Loader from '../views/loader';
-import Login from '../views/login/login';
 
 
 
@@ -46,7 +44,7 @@ const Auth = {
         return m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/auth",
-            data: {
+            body: {
                 user: Auth.username,
                 pass: Auth.password
             }

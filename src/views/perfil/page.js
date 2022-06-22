@@ -11,40 +11,18 @@ const PagePerfil = {
 
                     ),
                     m("div.row.m-mb-60.m-mt-60.", [
-                        m("div.col-md-4",
+                        m("div.col-12",
                             m("div.bg-white.mb-0.position-relative.has-float-icon.pt-4.pl-4.pb-4.pr-4.info-box.m-mtb-20.radius-5", { onclick: () => { alert("Disponible muy pronto.") } }, [
                                 m("span.position-absolute.flaot-icon",
                                     m("i.icofont-stethoscope-alt.text-active")
                                 ),
                                 m("h5.m-text-2.mb-3.text-uppercase",
-                                    "Mis Datos"
+                                    "Mi Perfil"
                                 ),
-                                m("div.media.",
-                                    m("div.media-body",
-                                        m("p.m-0.",
-                                            "Mis datos personales y configuración de Perfil."
-                                        )
-                                    )
-                                )
+
                             ])
                         ),
-                        m("div.col-md-4",
-                            m("div.bg-white.position-relative.has-float-icon.pt-4.pl-4.pb-4.pr-4.info-box.m-mtb-20.radius-5", { onclick: () => { alert("Disponible muy pronto.") } }, [
-                                m("span.position-absolute.flaot-icon",
-                                    m("i.icofont-stethoscope-alt")
-                                ),
-                                m("h5.m-text-2.mb-3.text-uppercase",
-                                    "Cambio de Contraseña"
-                                ),
-                                m("div.media.",
-                                    m("div.media-body",
-                                        m("p.m-0.",
-                                            "Actualización de credenciales de acceso."
-                                        )
-                                    )
-                                )
-                            ])
-                        ),
+
 
                     ]),
                     m("div.row",

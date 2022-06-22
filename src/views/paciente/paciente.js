@@ -1082,7 +1082,7 @@ const Evoluciones = {
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/ev-paciente-emergencia",
-            data: {
+            body: {
                 numeroHistoriaClinica: Paciente.nhc
             },
             headers: {
@@ -1277,7 +1277,7 @@ const WidgetsSV = {
                 Object.keys(WidgetsSV.data).map(function (_v, _i, _contentData) {
 
                     if ((_v == 'PAS' || _v == 'PAD') && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1300,7 +1300,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'FC' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-default.rounded-circle.s-dp-1-3-15.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1323,7 +1323,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'FR' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1346,7 +1346,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'SO' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1369,7 +1369,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'FIO' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1392,7 +1392,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'TEMP' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1415,7 +1415,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'PS' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1438,7 +1438,7 @@ const WidgetsSV = {
                     }
 
                     if (_v == 'TA' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-6.offset-md-0.col-xl-6",
+                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
                             m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
                                 m("div.media", [
                                     m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
@@ -1494,7 +1494,7 @@ const SignosVitales = {
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/sv-paciente-emergencia",
-            data: {
+            body: {
                 numeroHistoriaClinica: Paciente.nhc
             },
             headers: {
@@ -1597,7 +1597,7 @@ const DetallePaciente = {
         m.request({
             method: "POST",
             url: "https://api.hospitalmetropolitano.org/t/v1/status-paciente-emergencia",
-            data: {
+            body: {
                 numeroHistoriaClinica: Paciente.nhc
             },
             headers: {
@@ -1860,7 +1860,10 @@ const DetalleClinico = {
                 }),
                 m("div.overlay." + DetalleClinico.inZoom),
                 m("div.container", {
-                    class: (DetalleClinico.inZoom.length === 0) ? "" : "bg-white"
+                    class: (DetalleClinico.inZoom.length === 0) ? "" : "bg-white",
+                    style: {
+                        "height": "2500px"
+                    }
                 },
                     m("div.row", [
                         m(DetallePaciente),

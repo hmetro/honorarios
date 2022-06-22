@@ -2,7 +2,6 @@ const path = require("path");
 const glob = require("glob-all");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 // tree-shaking
@@ -107,18 +106,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       m: "mithril" //Global access
     }),
-    new CleanWebpackPlugin(),
 
     new MiniCssExtractPlugin({
       filename: "[name]-[hash:7].css"
     }),
-    new PurifyCSSPlugin({
-      // Give paths to parse for rules. These should be absolute!
-      paths: glob.sync([
-        path.join(__dirname, "./src/views/*.js"),
-        path.join(__dirname, "./src/views/**/*.js")
-      ])
-    })
+
   ],
   optimization: {
     minimizer: [
