@@ -12,7 +12,7 @@ const DataProvider = {
         Loader.buttonShow = "";
         m.request({
             method: "GET",
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=10" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
+            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=1000" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
 
             headers: {
                 "Authorization": localStorage.accessToken,
@@ -21,7 +21,6 @@ const DataProvider = {
             .then(function (result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
-
                 DataProvider.data = result.data;
                 DataProvider.filterData();
             })
@@ -86,16 +85,12 @@ const dataView = {
     view: () => {
         Loader.show = "d-none";
         Loader.buttonShow = "d-none";
-
         return m('table.w-100.mt-5', [
-
             m('tbody', DataProvider.filteredData.map(function (d) {
-
-
                 return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
                     m("h4.text-white.mb-0", [
                         m("i.icofont-ui-user"),
-                        " " + d['NOMBRE_PACIENTE']
+                        " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
                     ]
 
                     ),
@@ -116,6 +111,9 @@ const dataView = {
                     m("h6.text-white.pt-2", [
                         m("i.icofont-patient-bed"),
                         (d['NRO_HABITACION'] !== null) ? " Ubicación: " + d['NRO_HABITACION'] : " Ubicación: NO DISPONIBLE"
+                    ]),
+                    m("h6.text-white.pt-2", [
+                        (d['CLASIFICACION_MEDICO'] == 'TRA') ? " MED: TRATANTE" : " MED: INTERCONSULTA "
                     ]),
 
                     m("div.text-right", [
@@ -212,11 +210,9 @@ const iPaciente = {
 };
 
 const PagePacientes = {
-
     oninit: () => {
         Loader.show = "";
         Loader.buttonShow = "";
-
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
