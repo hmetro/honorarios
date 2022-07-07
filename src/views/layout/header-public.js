@@ -26,8 +26,8 @@ const HeadPublic = {
                                                 [
 
                                                     m("li.nav-item",
-                                                        m("a.nav-link[href='contact.html']",
-                                                            " V3.0.0 "
+                                                        m("a.nav-link[href='/']", { "style": { "text-transform": "initial" } },
+                                                            " v3.0.0 "
                                                         )
                                                     )
                                                 ]
@@ -37,7 +37,7 @@ const HeadPublic = {
                                     ),
                                     m("div.navigation_right_area.position-relative.d-none.d-lg-block.navbar-search.my-lg-0",
                                         m("a.btn.fadeInDown-slide.animated.no-border.bg-transparent.medim-btn.grad-bg--3.position-relative.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white[href='/']",
-                                            "Metrovirtual"
+                                            "Médicos"
                                         )
                                     )
                                 ]

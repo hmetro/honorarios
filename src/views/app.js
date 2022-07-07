@@ -3,7 +3,7 @@ import Loader from './loader';
 
 
 const App = {
-    title: "Metrovirtual v3.0 para Médicos",
+    title: "Metrovirtual para Médicos",
     oninit: () => {
         document.title = "Cargando...";
     },
@@ -20,7 +20,7 @@ const App = {
     view: () => {
         return [
             m(Loader),
-            setTimeout(function() { App.isAuth() }, 300)
+            setTimeout(function () { App.isAuth() }, 300)
         ];
     },
 };

@@ -21,10 +21,16 @@ const FormLogin = {
                         )
                     ),
                     m("div.row",
-                        m("div.col-md-12",
-                            m("div." + Auth.statusHide + ".alert.alert-solid.response.alert-" + Auth.statusError + "[role='alert']",
+                        m("div.col-md-12.text-center.", [
+                            m("div.loader-content." + ((Auth.messageError === "Procesando...") ? "" : "d-none"),
+                                m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
+                            ),
+                            m("div." + ((Auth.messageError === "Procesando..." || Auth.statusHide) ? "d-none" : "") + ".alert.alert-solid.response.alert-" + Auth.statusError + "[role='alert']",
                                 Auth.messageError
                             ),
+                        ]),
+                        m("div.col-md-12." + ((Auth.messageError !== "Procesando...") ? "" : "d-none"),
+
                             m("div.input-group.banenr-seach.bg-white.m-mt-40.mb-0", [
                                 m("input.form-control[type='text'][placeholder='Usuario']", {
                                     oninput: function (e) { Auth.setUsername(e.target.value) },
@@ -48,6 +54,7 @@ const FormLogin = {
                                 )
                             ])
                         ),
+
 
                     )
                 )
