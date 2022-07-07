@@ -1,7 +1,7 @@
-import Auth from '../../models/auth';
 import HeaderPrivate from '../layout/header-private';
 import App from '../app';
 import m from 'mithril';
+import Auth from '../../models/auth';
 import Loader from '../loader';
 
 
@@ -60,7 +60,8 @@ const Imagen = {
                 }
             })
             .catch(function(e) {
-                Imagen.error = e.message;
+                Imagen.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Imagen.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -472,6 +473,12 @@ const Laboratorio = {
                 }
 
             })
+            .catch(function(e) {
+                alert("Resultado no disponible.");
+                Laboratorio.loader = false;
+                verDocPDF.show = "";
+                Laboratorio.error = "";
+            });
 
     },
     fetchResultado: (url) => {
@@ -491,7 +498,12 @@ const Laboratorio = {
                     setTimeout(function() { Laboratorio.error = ""; }, 5000);
                 }
 
-            })
+            }).catch(function(e) {
+                alert("Resultado no disponible.");
+                Laboratorio.loader = false;
+                verDocPDF.show = "";
+                Laboratorio.error = "";
+            });
 
     },
     fetch: () => {
@@ -515,7 +527,8 @@ const Laboratorio = {
 
             })
             .catch(function(e) {
-                Laboratorio.error = e.message;
+                Laboratorio.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Laboratorio.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -557,13 +570,22 @@ const Laboratorio = {
                         m("table.table.table-sm", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
                                 Laboratorio.data.map(function(_v, _i, _contentData) {
+
+                                    var _fechaHoy = moment(new Date()).format("DD-MM-YYYY");
+
                                     return [
                                         m("tr[role='row']", { "style": { "background-color": "transparent" } },
                                             m("td", { "style": { "border-color": "transparent", "padding": "0px" } },
                                                 m("div.row.bg-white.radius-5.p-2.article-tags", [
                                                     m("div.col-lg-6.p-2", [
-                                                        m("div", { "style": { "display": "block" } },
-                                                            m("span", { "style": { "color": "red", "display": "none" } },
+                                                        m("div", {
+                                                                "style": {
+                                                                    "display": ((_fechaHoy == _v.FECHA_REGISTRADO) ? "block" : "none")
+                                                                }
+                                                            },
+                                                            m("span", {
+                                                                    "style": { "color": "red" }
+                                                                },
                                                                 " Nuevo Resultado "
                                                             )
                                                         ),
@@ -575,6 +597,7 @@ const Laboratorio = {
                                                         ),
                                                     ]),
                                                     m("div.col-lg-6.p-2.text-xl-right", [
+
                                                         m("button.capsul.fz-poppins.text-default.radius-pill.active", {
                                                             onclick: () => {
                                                                 Laboratorio.loader = true;
@@ -634,7 +657,6 @@ const Laboratorio = {
 };
 
 
-
 const DetallePaciente = {
     data: [],
     detalle: [],
@@ -654,14 +676,22 @@ const DetallePaciente = {
                 },
             })
             .then(function(result) {
-                if (result.status) {
-                    DetallePaciente.data = result.data[0];
+
+                if (result === null) {
+                    DetallePaciente.fetch();
                 } else {
-                    DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia.";
+
+                    if (result.status) {
+                        DetallePaciente.data = result.data[0];
+                    } else {
+                        DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia.";
+                    }
                 }
+
             })
             .catch(function(e) {
-                DetallePaciente.error = e.message;
+                DetallePaciente.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { DetallePaciente.fetch(); }, 5000);
             })
     },
     view: () => {
@@ -687,20 +717,26 @@ const DetallePaciente = {
                                 " Laboratorio "
                             )
                         ]),
-                        m("a.nav-link[data-toggle='pill'][href='#v-pills-imagen'][role='tab']", [
+                        m("a.nav-link[data-toggle='pill'][href='#v-pills-imagen'][role='tab']", {
+                            onclick: () => {
+                                MenuBoton.update = "RX";
+                            },
+                        }, [
                             m("i.icofont-file-image"),
                             m("span",
                                 " Imagen "
                             )
                         ]),
                         m("a.nav-link", {
-                            href: "#!/resultados"
+                            href: "/#!/resultados"
+
                         }, [
                             m("i.icofont-circled-left"),
                             m("span",
-                                " Mas Resultados "
+                                " Más Resultados "
                             )
                         ])
+
                     ])
                 ])
             ),
@@ -844,7 +880,7 @@ const DetalleClinico = {
     labelOperation: "Detalle:",
     inZoom: "",
     oninit: () => {
-        MenuBoton.update = "SV";
+        MenuBoton.update = "LAB";
         DetallePaciente.fetch();
     },
     view: () => {
@@ -852,10 +888,12 @@ const DetalleClinico = {
             m("div.container",
                 m("div.m-pt-50.text-center", [
                     m(".alert.alert-danger[role='alert']", [
-                            DetallePaciente.error,
-                            " Ver Información disponible.",
+                            (DetallePaciente.error !== null) ? DetallePaciente.error : "¡Error inesperado!",
+                            " Reintentar nuevamente.",
                             m("a", {
-                                href: "/"
+                                onclick: (e) => {
+                                    window.location.reload();
+                                }
                             }, " Click Aquí"),
 
                         ]
@@ -902,7 +940,6 @@ const DetalleClinico = {
     }
 }
 
-
 const ResultadoPaciente = {
     nhc: null,
     oninit: (_data) => {
@@ -910,11 +947,7 @@ const ResultadoPaciente = {
         Loader.show = "";
         Loader.buttonShow = "";
         DetallePaciente.data = [];
-
         Imagen.data = [];
-
-
-
 
         if (!Auth.isLogin()) {
             return m.route.set('/auth');

@@ -12,7 +12,7 @@ const PagePerfil = {
                     ),
                     m("div.row.m-mb-60.m-mt-60.", [
                         m("div.col-12",
-                            m("div.bg-white.mb-0.position-relative.has-float-icon.pt-4.pl-4.pb-4.pr-4.info-box.m-mtb-20.radius-5", { onclick: () => { alert("Disponible muy pronto.") } }, [
+                            m("div.bg-white.mb-0.position-relative.has-float-icon.pt-4.pl-4.pb-4.pr-4.info-box.m-mtb-20.radius-5", [
                                 m("span.position-absolute.flaot-icon",
                                     m("i.icofont-stethoscope-alt.text-active")
                                 ),

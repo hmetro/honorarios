@@ -60,7 +60,8 @@ const Imagen = {
                 }
             })
             .catch(function(e) {
-                Imagen.error = e.message;
+                Imagen.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Imagen.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -517,7 +518,8 @@ const Laboratorio = {
 
             })
             .catch(function(e) {
-                Laboratorio.error = e.message;
+                Laboratorio.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Laboratorio.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -559,13 +561,23 @@ const Laboratorio = {
                         m("table.table.table-sm", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
                                 Laboratorio.data.map(function(_v, _i, _contentData) {
+
+                                    var _fechaHoy = moment(new Date()).format("DD-MM-YYYY");
+
+
                                     return [
                                         m("tr[role='row']", { "style": { "background-color": "transparent" } },
                                             m("td", { "style": { "border-color": "transparent", "padding": "0px" } },
                                                 m("div.row.bg-white.radius-5.p-2.article-tags", [
                                                     m("div.col-lg-6.p-2", [
-                                                        m("div", { "style": { "display": "block" } },
-                                                            m("span", { "style": { "color": "red", "display": "none" } },
+                                                        m("div", {
+                                                                "style": {
+                                                                    "display": ((_fechaHoy == _v.FECHA_REGISTRADO) ? "block" : "none")
+                                                                }
+                                                            },
+                                                            m("span", {
+                                                                    "style": { "color": "red" }
+                                                                },
                                                                 " Nuevo Resultado "
                                                             )
                                                         ),
@@ -1050,7 +1062,9 @@ const Formulario = {
 
             })
             .catch(function(e) {
-                Formulario.error = e.message;
+                Formulario.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Formulario.fetch(); }, 5000);
+
             })
     },
     oninit: () => {
@@ -1096,6 +1110,9 @@ const Evoluciones = {
                 },
             })
             .then(function(result) {
+
+
+
                 if (result.status) {
                     Evoluciones.data = result.data;
                     Formulario.adm = Evoluciones.data[0].ADM;
@@ -1107,7 +1124,9 @@ const Evoluciones = {
 
             })
             .catch(function(e) {
-                Evoluciones.error = e.message;
+                Evoluciones.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { Evoluciones.fetch(); }, 5000);
+
             })
     },
     oninit: () => {
@@ -1524,7 +1543,9 @@ const SignosVitales = {
 
             })
             .catch(function(e) {
-                SignosVitales.error = e.message;
+                SignosVitales.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { SignosVitales.fetch(); }, 5000);
+
             })
     },
     oninit: () => {
@@ -1622,11 +1643,12 @@ const DetallePaciente = {
                 if (result.status) {
                     DetallePaciente.data = result.data;
                 } else {
-                    DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia.";
+                    DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia ni Hospitalización.";
                 }
             })
             .catch(function(e) {
-                DetallePaciente.error = e.message;
+                DetallePaciente.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
+                setTimeout(function() { DetallePaciente.fetch(); }, 5000);
             })
     },
     view: () => {
