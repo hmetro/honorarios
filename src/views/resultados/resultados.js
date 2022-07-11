@@ -20,7 +20,6 @@ const Resultados = {
             m(HeaderPrivate),
             m(PageResultados),
             m("footer", [
-
                 m("div.footer-bottom.text-center.m-mt-120.m-bg-1.pt-4.pb-4",
                     m("div.container",
                         m("div.row",

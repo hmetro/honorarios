@@ -12,11 +12,11 @@ const DataProviderInter = {
 
 
     },
-    loadData: function () {
+    loadData: function() {
         DataProviderInter.fetch();
 
     },
-    filterData: function () {
+    filterData: function() {
         var to = Math.min(DataProviderInter.from + DataProviderInter.count, DataProviderInter.data.length + 1);
         DataProviderInter.filteredData = [];
         for (var i = DataProviderInter.from - 1; i < to - 1; i++) {
@@ -25,38 +25,38 @@ const DataProviderInter = {
     },
     from: 1,
     count: 10,
-    setFrom: function (from) {
+    setFrom: function(from) {
         DataProviderInter.from = parseInt(from);
         DataProviderInter.filterData();
     },
-    setCount: function (count) {
+    setCount: function(count) {
         DataProviderInter.count = parseInt(count);
         DataProviderInter.filterData();
     },
-    nextPage: function () {
+    nextPage: function() {
         var from = DataProviderInter.from + DataProviderInter.count;
         if (from > DataProviderInter.data.length)
             return;
         DataProviderInter.from = from;
         DataProviderInter.filterData();
     },
-    lastPage: function () {
+    lastPage: function() {
         DataProviderInter.from = DataProviderInter.data.length - DataProviderInter.count + 1;
         DataProviderInter.filterData();
     },
-    prevPage: function () {
+    prevPage: function() {
         DataProviderInter.from = Math.max(1, DataProviderInter.from - DataProviderInter.count);
         DataProviderInter.filterData();
     },
-    firstPage: function () {
+    firstPage: function() {
         DataProviderInter.from = 1;
         DataProviderInter.filterData();
     },
-    rowBack: function () {
+    rowBack: function() {
         DataProviderInter.from = Math.max(1, DataProviderInter.from - 1);
         DataProviderInter.filterData();
     },
-    rowFwd: function () {
+    rowFwd: function() {
         if (DataProviderInter.from + DataProviderInter.count - 1 >= DataProviderInter.data.length)
             return;
         DataProviderInter.from += 1;
@@ -78,13 +78,13 @@ const DataProvider = {
         Loader.show = "";
         Loader.buttonShow = "";
         m.request({
-            method: "GET",
-            url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=1000" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
+                method: "GET",
+                url: "https://api.hospitalmetropolitano.org/t/v1/mis-pacientes?start=0&length=1000" + ((DataProvider.searchField.length !== 0) ? "&searchField=" + DataProvider.searchField : ""),
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
                 PagePacientes.codMedico = result.codMedico;
@@ -92,19 +92,9 @@ const DataProvider = {
                 DataProviderInter.data = result.dataInter;
                 DataProvider.filterData();
                 DataProviderInter.filterData();
-                if (DataProvider.searchField.length !== 0) {
-                    if (DataProvider.data.length !== 0 && DataProviderInter.data.length == 0) {
-                        document.getElementById("tratante").click();
-                    } else if (DataProviderInter.data.length !== 0 && DataProvider.data.length == 0) {
-                        document.getElementById("inter").click();
-                    } else {
-                        document.getElementById("tratante").click();
-                    }
-                } else {
-                    document.getElementById("tratante").click();
-                }
+
             })
-            .catch(function (e) {
+            .catch(function(e) {
 
             })
 
@@ -112,11 +102,11 @@ const DataProvider = {
 
 
     },
-    loadData: function () {
+    loadData: function() {
         DataProvider.fetch();
 
     },
-    filterData: function () {
+    filterData: function() {
         var to = Math.min(DataProvider.from + DataProvider.count, DataProvider.data.length + 1);
         DataProvider.filteredData = [];
         for (var i = DataProvider.from - 1; i < to - 1; i++) {
@@ -125,38 +115,38 @@ const DataProvider = {
     },
     from: 1,
     count: 10,
-    setFrom: function (from) {
+    setFrom: function(from) {
         DataProvider.from = parseInt(from);
         DataProvider.filterData();
     },
-    setCount: function (count) {
+    setCount: function(count) {
         DataProvider.count = parseInt(count);
         DataProvider.filterData();
     },
-    nextPage: function () {
+    nextPage: function() {
         var from = DataProvider.from + DataProvider.count;
         if (from > DataProvider.data.length)
             return;
         DataProvider.from = from;
         DataProvider.filterData();
     },
-    lastPage: function () {
+    lastPage: function() {
         DataProvider.from = DataProvider.data.length - DataProvider.count + 1;
         DataProvider.filterData();
     },
-    prevPage: function () {
+    prevPage: function() {
         DataProvider.from = Math.max(1, DataProvider.from - DataProvider.count);
         DataProvider.filterData();
     },
-    firstPage: function () {
+    firstPage: function() {
         DataProvider.from = 1;
         DataProvider.filterData();
     },
-    rowBack: function () {
+    rowBack: function() {
         DataProvider.from = Math.max(1, DataProvider.from - 1);
         DataProvider.filterData();
     },
-    rowFwd: function () {
+    rowFwd: function() {
         if (DataProvider.from + DataProvider.count - 1 >= DataProvider.data.length)
             return;
         DataProvider.from += 1;
@@ -169,20 +159,23 @@ const dataView = {
     oninit: DataProvider.loadData,
     view: () => {
         return m('table.w-100.mt-5.' + dataView.show, [
-            m('tbody', DataProvider.filteredData.map(function (d) {
-                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
+            m('tbody', DataProvider.filteredData.map(function(d) {
+                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--1.position-relative.type-1.radius-10", [
                     m("h4.text-white.mb-0", [
-                        m("i.icofont-ui-user"),
-                        " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
-                    ]
+                            m("i.icofont-ui-user"),
+                            " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
+                        ]
 
                     ),
                     m("p.text-white.designation.text-uppercase", [
-                        "Especialidad: ",
-                        d['ESPECIALIDAD'],
-                        " Edad: ",
                         d['EDAD'],
-                        " Año(s)."
+                        " Año(s)",
+                        " Especialidad: ",
+                        d['ESPECIALIDAD'],
+                    ]),
+                    m("p.text-white.designation.text-uppercase", [
+                        "Médico: ",
+                        d['NOMBRE_MEDICO'],
                     ]),
                     m("h6.text-white",
                         (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE"
@@ -207,8 +200,8 @@ const dataView = {
                     ],
                     m("div.text-right", [
                         m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
-                            href: "#!/paciente/" + d['HC']
-                        },
+                                href: "#!/paciente/" + d['HC']
+                            },
                             " Ver Paciente "
                         )
                     ])
@@ -225,20 +218,23 @@ const dataViewInter = {
     view: () => {
 
         return m('table.w-100.mt-5.' + dataViewInter.show, [
-            m('tbody', DataProviderInter.filteredData.map(function (d) {
-                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--5.position-relative.type-1.radius-10", [
+            m('tbody', DataProviderInter.filteredData.map(function(d) {
+                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--1.position-relative.type-1.radius-10", [
                     m("h4.text-white.mb-0", [
-                        m("i.icofont-ui-user"),
-                        " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
-                    ]
+                            m("i.icofont-ui-user"),
+                            " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
+                        ]
 
                     ),
                     m("p.text-white.designation.text-uppercase", [
-                        "Especialidad: ",
-                        d['ESPECIALIDAD'],
-                        " Edad: ",
                         d['EDAD'],
-                        " Año(s)."
+                        " Año(s)",
+                        " Especialidad: ",
+                        d['ESPECIALIDAD'],
+                    ]),
+                    m("p.text-white.designation.text-uppercase", [
+                        "Médico: ",
+                        d['NOMBRE_MEDICO'],
                     ]),
                     m("h6.text-white",
                         (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE"
@@ -264,8 +260,8 @@ const dataViewInter = {
 
                     m("div.text-right", [
                         m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
-                            href: "#!/paciente/" + d['HC']
-                        },
+                                href: "#!/paciente/" + d['HC']
+                            },
                             " Ver Paciente "
                         )
                     ])
@@ -300,11 +296,11 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowBack(); }
-                            },
+                                    onclick: function() { DataProvider.rowBack(); }
+                                },
                                 " << Anterior "
                             ),
                         ]),
@@ -312,11 +308,11 @@ const pageTool = {
                         m("div.w-50.w-20", [
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowFwd(); }
-                            },
+                                    onclick: function() { DataProvider.rowFwd(); }
+                                },
                                 " Siguiente >>"
                             ),
 
@@ -327,20 +323,20 @@ const pageTool = {
                     m('div.d-flex.w-100.text-center.mt-5', [
                         m("div.w-50.w-20", [
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.firstPage(); }
-                            },
+                                    onclick: function() { DataProvider.firstPage(); }
+                                },
                                 " | Inicio "
                             ),
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.prevPage(); }
-                            },
+                                    onclick: function() { DataProvider.prevPage(); }
+                                },
                                 " < Pág. Ant. "
                             ),
 
@@ -350,21 +346,21 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.nextPage(); }
-                            },
+                                    onclick: function() { DataProvider.nextPage(); }
+                                },
                                 " Pág. Sig. > "
                             ),
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.lastPage(); }
-                            },
+                                    onclick: function() { DataProvider.lastPage(); }
+                                },
                                 " Fin | "
                             ),
 
@@ -412,11 +408,11 @@ const pageToolInter = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.rowBack(); }
-                            },
+                                    onclick: function() { DataProviderInter.rowBack(); }
+                                },
                                 " << Anterior "
                             ),
                         ]),
@@ -424,11 +420,11 @@ const pageToolInter = {
                         m("div.w-50.w-20", [
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.rowFwd(); }
-                            },
+                                    onclick: function() { DataProviderInter.rowFwd(); }
+                                },
                                 " Siguiente >>"
                             ),
 
@@ -439,20 +435,20 @@ const pageToolInter = {
                     m('div.d-flex.w-100.text-center.mt-5', [
                         m("div.w-50.w-20", [
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.firstPage(); }
-                            },
+                                    onclick: function() { DataProviderInter.firstPage(); }
+                                },
                                 " | Inicio "
                             ),
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.prevPage(); }
-                            },
+                                    onclick: function() { DataProviderInter.prevPage(); }
+                                },
                                 " < Pág. Ant. "
                             ),
 
@@ -462,21 +458,21 @@ const pageToolInter = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.nextPage(); }
-                            },
+                                    onclick: function() { DataProviderInter.nextPage(); }
+                                },
                                 " Pág. Sig. > "
                             ),
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProviderInter.lastPage(); }
-                            },
+                                    onclick: function() { DataProviderInter.lastPage(); }
+                                },
                                 " Fin | "
                             ),
 
@@ -543,8 +539,8 @@ const iPaciente = {
                 ]),
                 m("div.text-right", [
                     m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
-                        href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
-                    },
+                            href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
+                        },
                         " Ver Paciente "
                     )
                 ]),
@@ -568,7 +564,7 @@ const PagePacientes = {
     oncreate: () => {
         document.title = "Mis Pacientes | " + App.title;
         submitBusqueda();
-        setTimeout(function () { document.getElementById("tratante").click(); }, 500);
+        setTimeout(function() { document.getElementById("tratante").click(); }, 500);
 
     },
     view: () => {
@@ -629,7 +625,7 @@ const PagePacientes = {
                             ]),
                             m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
                                 m("input.form-control[type='text'][placeholder='Buscar por Apellidos y Nombres']", {
-                                    oninput: function (e) {
+                                    oninput: function(e) {
                                         e.target.value = e.target.value.toUpperCase();
                                         DataProvider.searchField = e.target.value;
                                     },
@@ -646,10 +642,10 @@ const PagePacientes = {
                                         },
                                     }),
                                     m("button.btn[type='button'][id='actBuscar']", {
-                                        onclick: () => {
-                                            DataProvider.fetch();
+                                            onclick: () => {
+                                                DataProvider.fetch();
+                                            },
                                         },
-                                    },
                                         "Buscar"
                                     ),
 
@@ -682,7 +678,7 @@ const PagePacientes = {
 };
 
 function submitBusqueda() {
-    document.onkeypress = function (e) {
+    document.onkeypress = function(e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {
