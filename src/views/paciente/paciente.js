@@ -49,22 +49,22 @@ const Imagen = {
         Imagen.error = "";
 
         m.request({
-                method: "GET",
-                url: "https://api.hospitalmetropolitano.org/t/v1/resultados-img/" + Paciente.nhc,
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "GET",
+            url: "https://api.hospitalmetropolitano.org/t/v1/resultados-img/" + Paciente.nhc,
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
                 if (result.status && result.data.length !== 0) {
                     Imagen.data = result.data;
                 } else {
                     Imagen.error = result.message;
                 }
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 Imagen.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { Imagen.fetch(); }, 5000);
+                setTimeout(function () { Imagen.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -99,11 +99,11 @@ const Imagen = {
                 m("div." + Imagen.showButtons + ".row.p-1",
                     m("div.col-md-6",
                         m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50.", {
-                                onclick: () => {
-                                    VisorRis.show = "d-none";
-                                },
-                                "style": { "cursor": "pointer" }
+                            onclick: () => {
+                                VisorRis.show = "d-none";
                             },
+                            "style": { "cursor": "pointer" }
+                        },
                             m("h4.text-dark2.mb-3.position-relative.pt-2",
                                 "Ver Exámenes"
                             )
@@ -111,13 +111,13 @@ const Imagen = {
                     ),
                     m("div.col-md-6",
                         m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50.", {
-                                onclick: () => {
-                                    Imagen.showResultados = "";
-                                    Imagen.showButtons = "d-none";
-                                    MenuBoton.update = "RX";
-                                },
-                                "style": { "cursor": "pointer" }
+                            onclick: () => {
+                                Imagen.showResultados = "";
+                                Imagen.showButtons = "d-none";
+                                MenuBoton.update = "RX";
                             },
+                            "style": { "cursor": "pointer" }
+                        },
                             m("h4.text-dark2.mb-3.position-relative.pt-2",
                                 "Ver Informes"
                             )
@@ -143,7 +143,7 @@ const Imagen = {
                     m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.",
                         m("table.table.table-sm[width='100%']", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
-                                Imagen.data.map(function(_v, _i, _contentData) {
+                                Imagen.data.map(function (_v, _i, _contentData) {
                                     return [
                                         m("tr[role='row']", { "style": { "background-color": "transparent" } },
                                             m("td", { "style": { "border-color": "transparent", "padding": "0px" } },
@@ -193,7 +193,7 @@ const Imagen = {
                 ),
                 m("div.text-center", [
                     m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", )
+                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
                     )
                 ])
             ]),
@@ -216,7 +216,7 @@ const verDocPDF = {
 
         var canvas = document.getElementById("render-pdf");
         console.log(canvas)
-        setTimeout(function() {
+        setTimeout(function () {
 
 
 
@@ -241,14 +241,14 @@ const verDocPDF = {
                 scale = 1.25,
                 canvas = document.getElementById("render-pdf"),
                 ctx = canvas.getContext("2d")
-                /**
-                 * Get page info from document, resize canvas accordingly, and render page.
-                 * @param num Page number.
-                 */
+            /**
+             * Get page info from document, resize canvas accordingly, and render page.
+             * @param num Page number.
+             */
             function renderPage(num) {
                 pageRendering = true;
                 // Using promise to fetch the page
-                pdfDoc.getPage(num).then(function(page) {
+                pdfDoc.getPage(num).then(function (page) {
                     var viewport = page.getViewport({
                         scale: scale,
                     });
@@ -261,7 +261,7 @@ const verDocPDF = {
                     };
                     var renderTask = page.render(renderContext);
                     // Wait for rendering to finish
-                    renderTask.promise.then(function() {
+                    renderTask.promise.then(function () {
                         pageRendering = false;
                         if (pageNumPending !== null) {
 
@@ -271,7 +271,7 @@ const verDocPDF = {
 
                         } else {
 
-                            $('.preloader').fadeOut('slow', function() {
+                            $('.preloader').fadeOut('slow', function () {
                                 $(this).hide();
                             });
 
@@ -310,7 +310,7 @@ const verDocPDF = {
                                                                                                                                                                                                                                                                                       onPrevPage();
                                                                                                                                                                                                                                                                                   };
                                                                                                                                                                                                                                                                                   */
-            $(".prev").click(function(e) {
+            $(".prev").click(function (e) {
                 e.preventDefault();
                 onPrevPage();
             });
@@ -330,7 +330,7 @@ const verDocPDF = {
                                                                                                                                                                                                                                                                                       onNextPage();
                                                                                                                                                                                                                                                                                   };
                                                                                                                                                                                                                                                                                   */
-            $(".next").click(function(e) {
+            $(".next").click(function (e) {
                 e.preventDefault();
                 onNextPage();
             });
@@ -343,12 +343,12 @@ const verDocPDF = {
                 .getDocument({
                     url: verDocPDF.url,
                 })
-                .promise.then(function(pdfDoc_) {
+                .promise.then(function (pdfDoc_) {
                     pdfDoc = pdfDoc_;
                     $(".page_count").text(pdfDoc.numPages);
 
                     // Initial/first page rendering
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $(".doc-loader").hide();
                         $(".doc-content").show();
                         $(".doc-control").show();
@@ -384,45 +384,45 @@ const verDocPDF = {
 
                         m("div.row.col-12.d-block.tx-14.tx-semibold", [
                             " Página: ",
-                            m("span.page_num", ),
+                            m("span.page_num",),
                             " / ",
-                            m("span.page_count", )
+                            m("span.page_count",)
                         ]),
                         m("div.row.col-12.d-block.social-icon.circle-link", [
                             m("a.prev.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", {
-                                    title: "Anterior",
-                                    onclick: (e) => {
-                                        e.preventDefault();
-                                    }
-                                },
+                                title: "Anterior",
+                                onclick: (e) => {
+                                    e.preventDefault();
+                                }
+                            },
                                 m("i.icofont-circled-left")
                             ),
                             m("a.next.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", {
-                                    title: "Siguiente",
-                                    onclick: (e) => {
-                                        e.preventDefault();
-                                    }
-                                },
+                                title: "Siguiente",
+                                onclick: (e) => {
+                                    e.preventDefault();
+                                }
+                            },
                                 m("i.icofont-circled-right")
 
 
 
                             ),
                             m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[target='_blank']", {
-                                    href: verDocPDF.url,
-                                    title: "Descargar"
-                                },
+                                href: verDocPDF.url,
+                                title: "Descargar"
+                            },
                                 m("i.icofont-download")
                             ),
                             m("a.text-primary.rounded-circle.bg-white.s-dp-1-3-15[href='#']", {
-                                    onclick: (e) => {
-                                        e.preventDefault();
-                                        verDocPDF.show = "";
-                                        verDocPDF.url = "";
+                                onclick: (e) => {
+                                    e.preventDefault();
+                                    verDocPDF.show = "";
+                                    verDocPDF.url = "";
 
-                                    },
-                                    title: "Cerrar"
                                 },
+                                title: "Cerrar"
+                            },
                                 m("i.icofont-close-circled")
                             ),
 
@@ -432,7 +432,7 @@ const verDocPDF = {
                         m("div..col-12.pd-5",
                             m("div.preloader-inner",
                                 m("div.loader-content",
-                                    m("span.icon-section-wave.d-inline-block.text-active.mt-3.", ),
+                                    m("span.icon-section-wave.d-inline-block.text-active.mt-3.",),
                                 )
                             ),
                         )
@@ -461,20 +461,20 @@ const Laboratorio = {
     loader: false,
     verResultado: (url) => {
         m.request({
-                method: "GET",
-                url: url,
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "GET",
+            url: url,
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
                 Laboratorio.loader = false;
                 if (result.status !== undefined && result.status) {
                     verDocPDF.loadDcoument(result.url);
 
                 } else {
                     Laboratorio.error = "Resultado no disponible.";
-                    setTimeout(function() { Laboratorio.error = ""; }, 5000);
+                    setTimeout(function () { Laboratorio.error = ""; }, 5000);
                 }
 
             })
@@ -482,19 +482,19 @@ const Laboratorio = {
     },
     fetchResultado: (url) => {
         m.request({
-                method: "GET",
-                url: url,
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "GET",
+            url: url,
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
                 Laboratorio.loader = false;
                 if (result.status !== undefined && result.status) {
                     window.open(result.url);
                 } else {
                     Laboratorio.error = "Resultado no disponible.";
-                    setTimeout(function() { Laboratorio.error = ""; }, 5000);
+                    setTimeout(function () { Laboratorio.error = ""; }, 5000);
                 }
 
             })
@@ -506,13 +506,13 @@ const Laboratorio = {
         verDocPDF.url = "";
 
         m.request({
-                method: "GET",
-                url: "https://api.hospitalmetropolitano.org/t/v1/resultados-laboratorio/" + Paciente.nhc,
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "GET",
+            url: "https://api.hospitalmetropolitano.org/t/v1/resultados-laboratorio/" + Paciente.nhc,
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
 
                 if (result.status && result.data.length !== 0) {
                     Laboratorio.data = result.data;
@@ -521,9 +521,9 @@ const Laboratorio = {
                 }
 
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 Laboratorio.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { Laboratorio.fetch(); }, 5000);
+                setTimeout(function () { Laboratorio.fetch(); }, 5000);
             })
     },
     oninit: () => {
@@ -564,7 +564,7 @@ const Laboratorio = {
                     m("div.table-content.col-12.pd-r-0.pd-l-0.pd-b-20.w-100." + verDocPDF.show,
                         m("table.table.table-sm", { "style": { "width": "100%", "border-color": "transparent", "margin-bottom": "50px" } }, [
                             m("tbody", [
-                                Laboratorio.data.map(function(_v, _i, _contentData) {
+                                Laboratorio.data.map(function (_v, _i, _contentData) {
 
                                     var _fechaHoy = moment(new Date()).format("DD-MM-YYYY");
 
@@ -575,13 +575,13 @@ const Laboratorio = {
                                                 m("div.row.bg-white.radius-5.p-2.article-tags", [
                                                     m("div.col-lg-6.p-2", [
                                                         m("div", {
-                                                                "style": {
-                                                                    "display": ((_fechaHoy == _v.FECHA_REGISTRADO) ? "block" : "none")
-                                                                }
-                                                            },
+                                                            "style": {
+                                                                "display": ((_fechaHoy == _v.FECHA_REGISTRADO) ? "block" : "none")
+                                                            }
+                                                        },
                                                             m("span", {
-                                                                    "style": { "color": "red" }
-                                                                },
+                                                                "style": { "color": "red" }
+                                                            },
                                                                 " Nuevo Resultado "
                                                             )
                                                         ),
@@ -640,7 +640,7 @@ const Laboratorio = {
                 ),
                 m("div.text-center", [
                     m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", )
+                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
                     )
                 ])
             ]),
@@ -653,16 +653,17 @@ const Laboratorio = {
 
 const FOR005 = {
     secs: [],
+    nombres: "",
     parseDoc: (_data) => {
 
-        return Object.keys(_data.data).map(function(_v, _i, _contentData) {
+        return Object.keys(_data.data).map(function (_v, _i, _contentData) {
             FOR005.secs.push(_data.data[_v])
         })
 
     },
     oninit: () => {
         FOR005.secs = [];
-        return Formulario.data.map(function(_v, _i, _contentData) {
+        return Formulario.data.map(function (_v, _i, _contentData) {
             FOR005.parseDoc(Formulario.data[_i])
         })
 
@@ -671,99 +672,90 @@ const FOR005 = {
     },
     view: () => {
 
-        let nombres = "";
-        let apellidos_paciente = "";
-        let sexo = "";
-        let nhcl = "";
-        let numero_admision = "";
-        let edad = "";
-        let edad_paciente = "";
-        let fecha_admision = "";
-        let ubicacion = "";
-        let fecha_alta = "";
-        let medico_tratante = "";
-        let identificacion = "";
+
         let evolucion_medica_texto = "";
         let prescripciones_texto = "";
 
 
-
         if (FOR005.secs.length !== 0) {
-            return FOR005.secs.map(function(_v, _i, _contentData) {
-
+            return FOR005.secs.map(function (_v, _i, _contentData) {
 
 
                 if (_v.name == 'nombres') {
 
-                    nombres = _v.answer;
+
+
+                    FOR005.nombres = _v.answer;
 
                 }
 
 
                 if (_v.name == 'apellidos_paciente') {
 
-                    apellidos_paciente = _v.answer;
+
+
+                    FOR005.apellidos_paciente = _v.answer;
 
                 }
 
                 if (_v.name == 'sexo de paciente') {
 
-                    sexo = _v.answer;
+                    FOR005.sexo = _v.answer;
 
                 }
 
                 if (_v.name == 'nhcl') {
 
-                    nhcl = _v.answer;
+                    FOR005.nhcl = _v.answer;
 
                 }
 
                 if (_v.name == 'numero_admision') {
 
-                    numero_admision = _v.answer;
+                    FOR005.numero_admision = _v.answer;
 
                 }
 
                 if (_v.name == 'edad') {
 
-                    edad = _v.answer;
+                    FOR005.edad = _v.answer;
 
                 }
 
                 if (_v.name == 'edad_paciente') {
 
-                    edad_paciente = _v.answer;
+                    FOR005.edad_paciente = _v.answer;
 
                 }
 
                 if (_v.name == 'identificacion_paciente') {
 
-                    identificacion = _v.answer;
+                    FOR005.identificacion = _v.answer;
 
                 }
 
                 if (_v.name == 'fecha_admision') {
 
-                    fecha_admision = _v.answer;
+                    FOR005.fecha_admision = _v.answer;
 
                 }
 
                 if (_v.name == 'ubicacion_atencion') {
 
-                    ubicacion = _v.answer;
+                    FOR005.ubicacion = _v.answer;
 
                 }
 
 
                 if (_v.name == 'fecha_alta') {
 
-                    fecha_alta = (_v.answer == null) ? '' : _v.answer;
+                    FOR005.fecha_alta = (_v.answer == null) ? '' : _v.answer;
 
                 }
 
                 if (_v.name == 'medico_tratante') {
 
-                    medico_tratante = _v.answer;
+                    FOR005.medico_tratante = _v.answer;
 
                 }
 
@@ -855,27 +847,27 @@ const FOR005 = {
                                 ),
                                 m("td.text-center[colspan='3']",
                                     m("div.m-0.p-0.text-center",
-                                        nombres
+                                        FOR005.nombres
                                     )
                                 ),
                                 m("td.text-center[colspan='3']",
                                     m("div.m-0.p-0.text-center",
-                                        apellidos_paciente
+                                        FOR005.apellidos_paciente
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        sexo
+                                        FOR005.sexo
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        nhcl
+                                        FOR005.nhcl
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        numero_admision
+                                        FOR005.numero_admision
                                     )
                                 )
                             ]),
@@ -914,32 +906,32 @@ const FOR005 = {
                             m("tr", [
                                 m("td.text-center[colspan='1'][scope='row']",
                                     m("div.m-0.p-0.text-center",
-                                        edad || edad_paciente
+                                        FOR005.edad || FOR005.edad_paciente
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        identificacion
+                                        FOR005.identificacion
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        fecha_admision
+                                        FOR005.fecha_admision
                                     )
                                 ),
                                 m("td.text-center[colspan='1']",
                                     m("div.m-0.p-0.text-center",
-                                        fecha_admision
+                                        FOR005.fecha_admision
                                     )
                                 ),
                                 m("td.text-center[colspan='4']",
                                     m("div.m-0.p-0.text-center",
-                                        ubicacion
+                                        FOR005.ubicacion
                                     )
                                 ),
                                 m("td.text-center[colspan='4']",
                                     m("div.m-0.p-0.text-center",
-                                        medico_tratante
+                                        FOR005.medico_tratante
                                     )
                                 )
                             ]),
@@ -956,10 +948,10 @@ const FOR005 = {
                                 ),
                                 m("th[colspan='1'][scope='row']", { "style": { "padding": "0", "background-color": "#eef9c8" } },
                                     m("div.m-0.p-0.tx-bold.text-center.", [
-                                            "FIRMAR AL PIE DE",
-                                            m("br"),
-                                            "CADA PRESCRIPCIÓN"
-                                        ]
+                                        "FIRMAR AL PIE DE",
+                                        m("br"),
+                                        "CADA PRESCRIPCIÓN"
+                                    ]
 
                                     )
                                 ),
@@ -985,21 +977,21 @@ const FOR005 = {
                                 ),
                                 m("th[colspan='4'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
                                     m("div.m-0.p-0.tx-bold.text-center.", [
-                                            "FARMACOTERAPIA E INDICACIONES",
-                                            m("br"),
-                                            "(PARA ENFERMERÍA Y OTRO PERSONAL)"
+                                        "FARMACOTERAPIA E INDICACIONES",
+                                        m("br"),
+                                        "(PARA ENFERMERÍA Y OTRO PERSONAL)"
 
-                                        ]
+                                    ]
 
                                     )
                                 ),
                                 m("th[colspan='2'][scope='row']", { "style": { "padding": "0", "background-color": "#edfbf5" } },
                                     m("div.m-0.p-0.tx-bold.text-center.", [
-                                            "ADMINISTR.",
-                                            m("br"),
-                                            "FÁRMACOS INSUMOS"
+                                        "ADMINISTR.",
+                                        m("br"),
+                                        "FÁRMACOS INSUMOS"
 
-                                        ]
+                                    ]
 
                                     )
                                 ),
@@ -1050,14 +1042,14 @@ const Formulario = {
         Formulario.data = [];
         Formulario.error = "";
         m.request({
-                method: "GET",
-                url: "https://api.hospitalmetropolitano.org/t/v1/formulario?nhcl=" + Formulario.nhc + "&adm=" + Formulario.adm,
+            method: "GET",
+            url: "https://api.hospitalmetropolitano.org/t/v1/formulario?nhcl=" + Formulario.nhc + "&adm=" + Formulario.adm,
 
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
                 if (result.length !== 0) {
                     Formulario.data = result;
                 } else {
@@ -1065,9 +1057,9 @@ const Formulario = {
                 }
 
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 Formulario.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { Formulario.fetch(); }, 5000);
+                setTimeout(function () { Formulario.fetch(); }, 5000);
 
             })
     },
@@ -1087,7 +1079,7 @@ const Formulario = {
         ] : [
             m("div.text-center", [
                 m("div.loader-content",
-                    m("span.icon-section-wave.d-inline-block.text-active.mt-10.mb-10.", )
+                    m("span.icon-section-wave.d-inline-block.text-active.mt-10.mb-10.",)
                 )
             ])
         ]
@@ -1104,16 +1096,16 @@ const Evoluciones = {
         Evoluciones.data = [];
         Evoluciones.error = "";
         m.request({
-                method: "POST",
-                url: "https://api.hospitalmetropolitano.org/t/v1/ev-paciente-emergencia",
-                body: {
-                    numeroHistoriaClinica: Paciente.nhc
-                },
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "POST",
+            url: "https://api.hospitalmetropolitano.org/t/v1/ev-paciente-emergencia",
+            body: {
+                numeroHistoriaClinica: Paciente.nhc
+            },
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
 
 
 
@@ -1127,9 +1119,9 @@ const Evoluciones = {
                 }
 
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 Evoluciones.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { Evoluciones.fetch(); }, 5000);
+                setTimeout(function () { Evoluciones.fetch(); }, 5000);
 
             })
     },
@@ -1186,7 +1178,7 @@ const Evoluciones = {
                 ),
                 m("div.text-center", [
                     m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", )
+                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
                     )
                 ])
             ]),
@@ -1212,7 +1204,7 @@ const WidgetsSV = {
     },
     oninit: () => {
         WidgetsSV.isData = 0;
-        SignosVitales.data.map(function(_v, _i, _contentData) {
+        SignosVitales.data.map(function (_v, _i, _contentData) {
 
             if (_v.SIGNO == 'PRESION ARTERIAL SISTOLICA') {
 
@@ -1303,7 +1295,7 @@ const WidgetsSV = {
 
         if (SignosVitales.data.length !== 0 && WidgetsSV.isData !== 0) {
             return [
-                Object.keys(WidgetsSV.data).map(function(_v, _i, _contentData) {
+                Object.keys(WidgetsSV.data).map(function (_v, _i, _contentData) {
 
                     if ((_v == 'PAS' || _v == 'PAD') && WidgetsSV.data[_v].length !== 0) {
                         return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
@@ -1521,24 +1513,24 @@ const SignosVitales = {
         SignosVitales.data = [];
         SignosVitales.error = "";
         m.request({
-                method: "POST",
-                url: "https://api.hospitalmetropolitano.org/t/v1/sv-paciente-emergencia",
-                body: {
-                    numeroHistoriaClinica: Paciente.nhc
-                },
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-                extract: (xhr, options) => {
+            method: "POST",
+            url: "https://api.hospitalmetropolitano.org/t/v1/sv-paciente-emergencia",
+            body: {
+                numeroHistoriaClinica: Paciente.nhc
+            },
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+            extract: (xhr, options) => {
 
-                    if (xhr.status !== 200) {
-                        SignosVitales.fetch();
-                    }
-
-                    return JSON.parse(xhr.responseText);
+                if (xhr.status !== 200) {
+                    SignosVitales.fetch();
                 }
-            })
-            .then(function(result) {
+
+                return JSON.parse(xhr.responseText);
+            }
+        })
+            .then(function (result) {
                 if (result.status) {
                     SignosVitales.data = result.data;
                 } else {
@@ -1546,9 +1538,9 @@ const SignosVitales = {
                 }
 
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 SignosVitales.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { SignosVitales.fetch(); }, 5000);
+                setTimeout(function () { SignosVitales.fetch(); }, 5000);
 
             })
     },
@@ -1562,9 +1554,9 @@ const SignosVitales = {
 
             m(".tab-pane.fade.active.show[id='v-pills-sv'][role='tabpanel']", [
                 m("h4.m-text-2.", [
-                        m("i.icofont-heart-beat.mr-2"),
-                        "Signos Vitales:"
-                    ]
+                    m("i.icofont-heart-beat.mr-2"),
+                    "Signos Vitales:"
+                ]
 
                 ),
                 m("h6.text-light-dark.ff-roboto.pb-40.mb-0",
@@ -1579,19 +1571,19 @@ const SignosVitales = {
         ] : SignosVitales.data.length !== 0 ? [
             m(".tab-pane.fade.active.show[id='v-pills-sv'][role='tabpanel']", [
                 m("h4.m-text-2.", [
-                        m("i.icofont-heart-beat.mr-2"),
-                        "Signos Vitales:"
-                    ]
+                    m("i.icofont-heart-beat.mr-2"),
+                    "Signos Vitales:"
+                ]
 
                 ),
                 m("h6.text-light-dark.ff-roboto.pb-40.mb-0",
                     "Hospital Metropolitano"
                 ),
                 m("h6.mb-5.d-flex", [
-                        "Última información disponible. HIS MV.",
+                    "Última información disponible. HIS MV.",
 
 
-                    ]
+                ]
 
                 ),
                 m("div.row", [
@@ -1608,14 +1600,14 @@ const SignosVitales = {
                     "Hospital Metropolitano"
                 ),
                 m("h6.mb-5.d-flex", [
-                        "Última información disponible. HIS MV.",
+                    "Última información disponible. HIS MV.",
 
-                    ]
+                ]
 
                 ),
                 m("div.text-center", [
                     m("div.loader-content",
-                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.", )
+                        m("span.icon-section-wave.d-inline-block.text-active.mt-3.",)
                     )
                 ])
             ]),
@@ -1634,25 +1626,25 @@ const DetallePaciente = {
         DetallePaciente.data = [];
         DetallePaciente.error = "";
         m.request({
-                method: "POST",
-                url: "https://api.hospitalmetropolitano.org/t/v1/status-paciente-emergencia",
-                body: {
-                    numeroHistoriaClinica: Paciente.nhc
-                },
-                headers: {
-                    "Authorization": localStorage.accessToken,
-                },
-            })
-            .then(function(result) {
+            method: "POST",
+            url: "https://api.hospitalmetropolitano.org/t/v1/status-paciente-emergencia",
+            body: {
+                numeroHistoriaClinica: Paciente.nhc
+            },
+            headers: {
+                "Authorization": localStorage.accessToken,
+            },
+        })
+            .then(function (result) {
                 if (result.status) {
                     DetallePaciente.data = result.data;
                 } else {
                     DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia ni Hospitalización.";
                 }
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 DetallePaciente.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function() { DetallePaciente.fetch(); }, 5000);
+                setTimeout(function () { DetallePaciente.fetch(); }, 5000);
             })
     },
     view: () => {
@@ -1775,95 +1767,95 @@ const MenuBoton = {
         return [
             m("div.button-menu-right-plus." + MenuBoton.show, { "style": { "display": "flex" } },
                 m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
-                        onclick: (e) => {
-                            e.preventDefault();
-                            MenuBoton.show = "d-none";
-                            MenuBoton.close = "";
-                            MenuBoton.zoomin = "";
-                            MenuBoton.zoomout = "";
-                            MenuBoton.reload = "";
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "d-none";
+                        MenuBoton.close = "";
+                        MenuBoton.zoomin = "";
+                        MenuBoton.zoomout = "";
+                        MenuBoton.reload = "";
 
-                        },
                     },
+                },
                     m("i.icofont-plus", { "style": { "font-size": "x-large" } })
                 )
             ),
             m("div.button-menu-right-close." + MenuBoton.close, { "style": { "display": "flex" } }, [
-                    m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
-                            onclick: (e) => {
-                                e.preventDefault();
-                                MenuBoton.show = "";
-                                MenuBoton.close = "d-none";
-                                MenuBoton.zoomin = "d-none";
-                                MenuBoton.zoomout = "d-none";
-                                MenuBoton.reload = "d-none";
-                            },
-                        },
-                        m("i.icofont-close", { "style": { "font-size": "x-large" } })
-                    )
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-close", { "style": { "font-size": "x-large" } })
+                )
 
-                ]
+            ]
 
             ),
             m("div.button-menu-right-reload-pte." + MenuBoton.reload, { "style": { "display": "flex" } }, [
-                    m("div.text-primary.mr-2", "Actualizar"),
-                    m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
-                            onclick: (e) => {
-                                e.preventDefault();
-                                MenuBoton.show = "";
-                                MenuBoton.close = "d-none";
-                                MenuBoton.zoomin = "d-none";
-                                MenuBoton.zoomout = "d-none";
-                                MenuBoton.reload = "d-none";
-                                verDocPDF.show = "";
+                m("div.text-primary.mr-2", "Actualizar"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                        verDocPDF.show = "";
 
-                                MenuBoton.setComand();
+                        MenuBoton.setComand();
 
 
-                            },
-                        },
-                        m("i.icofont-refresh", { "style": { "font-size": "x-large" } })
-                    )
-                ]
+                    },
+                },
+                    m("i.icofont-refresh", { "style": { "font-size": "x-large" } })
+                )
+            ]
 
             ),
             m("div.button-menu-right-zoomin." + MenuBoton.zoomin, { "style": { "display": "flex" } }, [
-                    m("div.text-primary.mr-2", "Aumentar"),
-                    m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
-                            onclick: (e) => {
-                                e.preventDefault();
-                                Formulario.zoom = 0.85;
-                                DetalleClinico.inZoom = "d-none";
-                                MenuBoton.show = "";
-                                MenuBoton.close = "d-none";
-                                MenuBoton.zoomin = "d-none";
-                                MenuBoton.zoomout = "d-none";
-                                MenuBoton.reload = "d-none";
-                            },
-                        },
-                        m("i.icofont-ui-zoom-in", { "style": { "font-size": "x-large" } })
-                    )
-                ]
+                m("div.text-primary.mr-2", "Aumentar"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        Formulario.zoom = 0.85;
+                        DetalleClinico.inZoom = "d-none";
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-ui-zoom-in", { "style": { "font-size": "x-large" } })
+                )
+            ]
 
             ),
             m("div.button-menu-right-zoomout." + MenuBoton.zoomout, { "style": { "display": "flex" } }, [
-                    m("div.text-primary.mr-2", "Disminuir"),
-                    m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
-                            onclick: (e) => {
-                                e.preventDefault();
-                                Formulario.zoom = 0.5;
-                                DetalleClinico.inZoom = "";
-                                MenuBoton.show = "";
-                                MenuBoton.close = "d-none";
-                                MenuBoton.zoomin = "d-none";
-                                MenuBoton.zoomout = "d-none";
-                                MenuBoton.reload = "d-none";
-                            },
-                        },
-                        m("i.icofont-ui-zoom-out", { "style": { "font-size": "x-large" } })
-                    )
+                m("div.text-primary.mr-2", "Disminuir"),
+                m("a.btn.fadeInDown-slide.position-relative.animated.pl-3.pr-3.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2", {
+                    onclick: (e) => {
+                        e.preventDefault();
+                        Formulario.zoom = 0.5;
+                        DetalleClinico.inZoom = "";
+                        MenuBoton.show = "";
+                        MenuBoton.close = "d-none";
+                        MenuBoton.zoomin = "d-none";
+                        MenuBoton.zoomout = "d-none";
+                        MenuBoton.reload = "d-none";
+                    },
+                },
+                    m("i.icofont-ui-zoom-out", { "style": { "font-size": "x-large" } })
+                )
 
-                ]
+            ]
 
             )
 
@@ -1886,13 +1878,13 @@ const DetalleClinico = {
             m("div.container",
                 m("div.m-pt-50.text-center", [
                     m(".alert.alert-danger[role='alert']", [
-                            DetallePaciente.error,
-                            " Ver Información disponible.",
-                            m("a", {
-                                href: "#!/resultados/paciente/" + Paciente.nhc
-                            }, " Click Aquí"),
+                        DetallePaciente.error,
+                        " Ver Información disponible.",
+                        m("a", {
+                            href: "#!/resultados/paciente/" + Paciente.nhc
+                        }, " Click Aquí"),
 
-                        ]
+                    ]
 
                     )
                 ])
@@ -1909,11 +1901,11 @@ const DetalleClinico = {
                 }),
                 m("div.overlay." + DetalleClinico.inZoom),
                 m("div.container", {
-                        class: (DetalleClinico.inZoom.length === 0) ? "" : "bg-white",
-                        style: {
-                            "height": "2500px"
-                        }
-                    },
+                    class: (DetalleClinico.inZoom.length === 0) ? "" : "bg-white",
+                    style: {
+                        "height": "2500px"
+                    }
+                },
                     m("div.row", [
                         m(DetallePaciente),
                         m("div", {
@@ -1988,13 +1980,13 @@ function _Main() {
         time: 1000
     });
 
-    $('.section-wave').each(function() {
+    $('.section-wave').each(function () {
 
         var self = $(this);
 
         $(this).waypoint({
             offset: '85%',
-            handler: function() {
+            handler: function () {
                 self.addClass('active')
             }
         });
@@ -2005,7 +1997,7 @@ function _Main() {
     var sitckyHeader = $('.navbar-sticky');
     if (sitckyHeader.length > 0) {
         var navOffset = $('.navbar-sticky').offset().top;
-        $(window).on('scroll', function() {
+        $(window).on('scroll', function () {
             var $cloneNav = $('.navbar-sticky').clone(true);
             $cloneNav.addClass('sticky-active');
             if ($(this).scrollTop() > navOffset) {
@@ -2031,13 +2023,13 @@ function _Main() {
 
 
     //Anime js
-    $('.ml12').each(function() {
+    $('.ml12').each(function () {
         $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
     });
 
     anime.timeline({
-            loop: false
-        })
+        loop: false
+    })
         .add({
             targets: '.ml12 .letter',
             translateX: [40, 0],
@@ -2045,10 +2037,10 @@ function _Main() {
             opacity: [0, 1],
             easing: "easeOutExpo",
             duration: 1200,
-            delay: function(el, i) {
+            delay: function (el, i) {
                 return 500 + 30 * i;
             },
-            complete: function() {
+            complete: function () {
                 anime({
                     targets: '.ml12 .letter',
                     opacity: 1,
@@ -2065,10 +2057,10 @@ function _Main() {
             opacity: [0, 1],
             easing: "easeOutCirc",
             duration: 800,
-            delay: function(el, i) {
+            delay: function (el, i) {
                 return 800 * i;
             },
-            complete: function() {
+            complete: function () {
                 anime({
                     targets: '.ml15 .word',
                     opacity: 1,
@@ -2091,36 +2083,36 @@ function _Main() {
         centerPadding: '0px',
         arrows: false,
         responsive: [{
-                breakpoint: 992,
-                settings: {
-                    centerMode: false,
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    centerMode: false,
-                    slidesToShow: 2
-
-                }
-            },
-            {
-                breakpoint: 577,
-                settings: {
-                    autoplay: true,
-                    centerMode: false,
-                    slidesToShow: 1
-                }
-            },
-            {
-                breakpoint: 300,
-                settings: {
-                    autoplay: false,
-                    centerMode: false,
-                    slidesToShow: 1
-                }
+            breakpoint: 992,
+            settings: {
+                centerMode: false,
+                slidesToShow: 2
             }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                centerMode: false,
+                slidesToShow: 2
+
+            }
+        },
+        {
+            breakpoint: 577,
+            settings: {
+                autoplay: true,
+                centerMode: false,
+                slidesToShow: 1
+            }
+        },
+        {
+            breakpoint: 300,
+            settings: {
+                autoplay: false,
+                centerMode: false,
+                slidesToShow: 1
+            }
+        }
         ]
 
     });
@@ -2143,23 +2135,23 @@ function _Main() {
         autoplaySpeed: 2000,
         arrows: false,
         responsive: [{
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 4
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 300,
-                settings: {
-                    slidesToShow: 1
-                }
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 4
             }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 300,
+            settings: {
+                slidesToShow: 1
+            }
+        }
         ]
 
     });
@@ -2171,23 +2163,23 @@ function _Main() {
         infinite: true,
         arrows: false,
         responsive: [{
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1
-                }
-            },
-            {
-                breakpoint: 300,
-                settings: {
-                    slidesToShow: 1
-                }
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 2
             }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 1
+            }
+        },
+        {
+            breakpoint: 300,
+            settings: {
+                slidesToShow: 1
+            }
+        }
         ]
 
     });
@@ -2196,7 +2188,7 @@ function _Main() {
 
 
     //Set background image for WordPress
-    $(".set-bg").each(function() {
+    $(".set-bg").each(function () {
         var thesrc = $(this).attr('data-bg');
         $(this).css("background-image", "url(" + thesrc + ")");
         $(this).css("background-position", "center");
@@ -2212,13 +2204,13 @@ function _Main() {
     $('.js-example-basic-single').select2();
 
     // Convert All Image to SVG
-    $('img.svg').each(function() {
+    $('img.svg').each(function () {
         var $img = $(this),
             imgID = $img.attr('id'),
             imgClass = $img.attr('class'),
             imgURL = $img.attr('src');
 
-        $.get(imgURL, function(data) {
+        $.get(imgURL, function (data) {
             var $svg = $(data).find('svg');
             if (typeof imgID !== 'undefined') {
                 $svg = $svg.attr('id', imgID);
@@ -2233,7 +2225,7 @@ function _Main() {
     });
 
     //Burget Menu
-    $('.burger_menu').on('click', function(e) {
+    $('.burger_menu').on('click', function (e) {
         e.preventDefault();
         if (isMobile) {
             moileMenu()
@@ -2259,7 +2251,7 @@ function _Main() {
     });
 
     //For drop down navigation
-    $('.hs_dropdown > a').on('click', function(e) {
+    $('.hs_dropdown > a').on('click', function (e) {
         var hash = this.hash;
         if ($(this).attr('href') != '' || hash) {
             e.preventDefault();
@@ -2272,7 +2264,7 @@ function _Main() {
 
     var wWidth = $(window).width();
     var isMobile = wWidth < 992;
-    $(window).on('resize', function() {
+    $(window).on('resize', function () {
         wWidth = $(window).width();
         isMobile = wWidth < 992;
         if (wWidth >= 992) {
@@ -2282,7 +2274,7 @@ function _Main() {
     });
 
     function moileMenu() {
-        $('.hs_dropdown').on('click', function(ev) {
+        $('.hs_dropdown').on('click', function (ev) {
             //ev.preventDefault();
             ev = window.event || ev;
             ev.stopPropagation();
@@ -2306,7 +2298,7 @@ function _Main() {
 
 
     //ripple Effect
-    $(".banenr").on('click', function(e) {
+    $(".banenr").on('click', function (e) {
 
         // Remove any old one
         $(".ripple").remove();
@@ -2343,21 +2335,21 @@ function _Main() {
     var documentHeight = $(document).height();
     var scrollableHeight = documentHeight / 1.70;
     $('.scroll-top').hide();
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         if ($(this).scrollTop() > scrollableHeight) {
             $('.scroll-top').show();
         } else {
             $('.scroll-top').hide();
         }
     });
-    $('.scroll-top').on('click', function() {
+    $('.scroll-top').on('click', function () {
         $("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
     //Venobox
     $('.venobox').venobox();
     //Check Content block children
-    $('.content-block').each(function(index, el) {
+    $('.content-block').each(function (index, el) {
         if ($(this).children().length > 0) {
             $(this).addClass('has-content')
         }
@@ -2366,7 +2358,7 @@ function _Main() {
 
     /* ----------------------------------
     ----------------------------------*/
-    $(document).on('mouseup', function(e) {
+    $(document).on('mouseup', function (e) {
         var container = $(".nav_outer,.burger_menu");
         if (!container.is(e.target) && container.has(e.target).length === 0) {
             $('.burger_menu').removeClass('is-open');
@@ -2379,7 +2371,7 @@ function _Main() {
 
     // Makin Wp Frindly Parallax image
 
-    $('.parallax-window').each(function() {
+    $('.parallax-window').each(function () {
         var image = $(this).attr('data-bg');
         $(this).parallax({
             imageSrc: image
@@ -2388,11 +2380,11 @@ function _Main() {
 
 
     //Mouse Move
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         var wrapper = document.querySelector('.banenr.type-2');
         if ($('.banenr.type-2').length > 0) {
             var layerOne = document.querySelector('.inner-image');
-            wrapper.addEventListener('mousemove', function(e) {
+            wrapper.addEventListener('mousemove', function (e) {
                 var pageX = e.clientX,
                     pageY = e.clientY;
                 layerOne.style.webkitTransform = 'translateX(' + pageX / 250 + '%) translateY(' + pageY / 250 + '%)';
@@ -2403,7 +2395,7 @@ function _Main() {
     });
 
     //Windows Load
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         var wrapper = document.querySelector('.banenr.type-4');
         if ($('.banenr.type-4').length > 0) {
             var layerOne = document.querySelector('.logo-box');
@@ -2411,7 +2403,7 @@ function _Main() {
             var layerThree = document.querySelector('.banenr.type-4  .btn');
             var layerFour = document.querySelector('.banenr.type-4  h1');
             var layerFive = document.querySelector('.banenr.type-4  .no-border');
-            wrapper.addEventListener('mousemove', function(e) {
+            wrapper.addEventListener('mousemove', function (e) {
                 var pageX = e.clientX,
                     pageY = e.clientY;
                 layerOne.style.webkitTransform = 'translateX(' + pageX / 240 + '%) translateY(' + pageY / 40 + '%)';
@@ -2438,12 +2430,12 @@ function _Main() {
 
 
 
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         if (windowHeight <= 800) {
-            $('.banenr.type-4 .banner-inner').each(function(index, el) {
+            $('.banenr.type-4 .banner-inner').each(function (index, el) {
                 $(this).addClass('full-height');
             });
-            $('.reversed-margin.appoint-area').each(function(index, el) {
+            $('.reversed-margin.appoint-area').each(function (index, el) {
                 $(this).addClass('low-banner-height');
             });
         } else {
@@ -2456,7 +2448,7 @@ function _Main() {
 
         });
 
-        $('.pricing-filter li').on('click', function() {
+        $('.pricing-filter li').on('click', function () {
             $(this).addClass('active').siblings().removeClass('active');
             var filterValue = $(this).attr('data-filter');
             $('.grid').isotope({
@@ -2467,13 +2459,13 @@ function _Main() {
 
         var grid = $('.grid');
         if (grid.length > 0) {
-            grid.each(function(index, el) {
+            grid.each(function (index, el) {
                 $('.grid').isotope({
                     itemSelector: '.grid-item'
 
                 });
 
-                $('.filter li').on('click', function() {
+                $('.filter li').on('click', function () {
                     $(this).addClass('active').siblings().removeClass('active');
                     var filterValue = $(this).attr('data-filter');
                     $('.grid').isotope({
@@ -2487,8 +2479,8 @@ function _Main() {
 
 
     // Content schedule
-    $(window).on("load resize scroll", function(e) {
-        $('.content-block').each(function() {
+    $(window).on("load resize scroll", function (e) {
+        $('.content-block').each(function () {
             if ($(this).children('div').length > 0) {
 
             } else {

@@ -1,127 +1,160 @@
 <!DOCTYPE html><html lang=es><head><base href=/ ><meta charset=utf-8><meta http-equiv=Cache-Control content="no-cache, no-store, must-revalidate"><meta http-equiv=Pragma content=no-cache><meta http-equiv=Expires content=0><meta name=robots content=noindex><meta name=googlebot content=noindex><meta content="IE=edge" http-equiv=X-UA-Compatible><meta content=#006fba name=theme-color><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name=viewport><title>Metrovirtual para Médicos | Hospital Metropolitano</title><link href=assets/favicon.ico rel="shortcut icon" type=image/x-icon><link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto:400,500" rel=stylesheet><link href=assets/dashforge/lib/datatables.net-dt/css/jquery.dataTables.min.css rel=stylesheet><link href=assets/dashforge/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css rel=stylesheet><link href=assets/dashforge/lib/select2/css/select2.min.css rel=stylesheet><link href=assets/css/plugins.css rel=stylesheet><link href=assets/medim/style.css rel=stylesheet><link rel=manifest href=manifest.json><script type=text/javascript>if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("sw.js");
 }</script><style>.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
-			.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
-			.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-				color: #fff !important;
-			}
+		.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+		.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+			color: #fff !important;
+		}
 
-			.button-menu-right-zoomout {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 200px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		.button-menu-right-zoomout {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 200px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.button-menu-right-zoomin {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 140px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		.button-menu-right-zoomin {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 140px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.button-menu-right-close {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 20px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		.button-menu-right-close {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 20px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.button-menu-right-plus {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 20px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		.button-menu-left-copy {
+			position: fixed;
+			z-index: 999;
+			left: 1rem;
+			bottom: 2px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.button-menu-right-reload-pte {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 80px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		
+		.button-menu-left-plus {
+			position: fixed;
+			z-index: 999;
+			left: 1rem;
+			bottom: 20px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.button-menu-right-reload {
-				position: fixed;
-				z-index: 999;
-				right: 1rem;
-				bottom: 20px;
-				border-radius: 50%;
-				cursor: pointer;
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
+		.button-menu-right-plus {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 20px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-			.imagen-button-menu {
-				position: fixed;
-				z-index: 999;
-				right: 0.5rem;
-				top: 10px;
-				border-radius: 50%;
-				box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20);
-				cursor: pointer;
-				background: rgba(20, 70, 234, 1);
-				background: -moz-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
-				background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(20, 70, 234, 1)), color-stop(98%, rgba(3, 220, 236, 1)), color-stop(100%, rgba(3, 220, 236, 1)));
-				background: -webkit-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
-				background: -o-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
-				background: -ms-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
-				background: linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
-				display: -webkit-flex;
-				display: -moz-flex;
-				display: -ms-flex;
-				display: -o-flex;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}</style><script defer=defer src=app-bb19c70.js></script></head><body><div id=app></div><script src=assets/js/jquery-2.2.4.min.js></script><script src=assets/dashforge/lib/jqueryui/jquery-ui.min.js></script><script src=assets/dashforge/lib/bootstrap/js/bootstrap.bundle.min.js></script><script src=assets/dashforge/lib/feather-icons/feather.min.js></script><script src=assets/dashforge/lib/perfect-scrollbar/perfect-scrollbar.min.js></script><script src=assets/dashforge/lib/moment/min/moment.min.js></script><script src=assets/dashforge/lib/pdf.js/build/pdf.js></script><script src=assets/dashforge/lib/prismjs/prism.js></script><script src=assets/dashforge/lib/select2/js/select2.min.js></script><script src=assets/dashforge/lib/datatables.net/js/jquery.dataTables.min.js></script><script src=assets/dashforge/lib/datatables.net-dt/js/dataTables.dataTables.min.js></script><script src=assets/dashforge/lib/datatables.net-responsive/js/dataTables.responsive.min.js></script><script src=assets/dashforge/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js></script><script src=assets/js/plugins.js></script><script src=assets/js/plugins/moment/moment.js></script><script src=assets/js/plugins/moment/es.js></script></body></html>
+		.button-menu-right-reload-pte {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 80px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.button-menu-right-reload {
+			position: fixed;
+			z-index: 999;
+			right: 1rem;
+			bottom: 20px;
+			border-radius: 50%;
+			cursor: pointer;
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.imagen-button-menu {
+			position: fixed;
+			z-index: 999;
+			right: 0.5rem;
+			top: 10px;
+			border-radius: 50%;
+			box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20);
+			cursor: pointer;
+			background: rgba(20, 70, 234, 1);
+			background: -moz-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
+			background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(20, 70, 234, 1)), color-stop(98%, rgba(3, 220, 236, 1)), color-stop(100%, rgba(3, 220, 236, 1)));
+			background: -webkit-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
+			background: -o-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
+			background: -ms-linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
+			background: linear-gradient(45deg, rgba(20, 70, 234, 1) 0%, rgba(3, 220, 236, 1) 98%, rgba(3, 220, 236, 1) 100%);
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}</style><script defer=defer src=app-6e2fb16.js></script></head><body><div id=app></div><script src=assets/js/jquery-2.2.4.min.js></script><script src=assets/dashforge/lib/jqueryui/jquery-ui.min.js></script><script src=assets/dashforge/lib/bootstrap/js/bootstrap.bundle.min.js></script><script src=assets/dashforge/lib/feather-icons/feather.min.js></script><script src=assets/dashforge/lib/perfect-scrollbar/perfect-scrollbar.min.js></script><script src=assets/dashforge/lib/moment/min/moment.min.js></script><script src=assets/dashforge/lib/pdf.js/build/pdf.js></script><script src=assets/dashforge/lib/prismjs/prism.js></script><script src=assets/dashforge/lib/select2/js/select2.min.js></script><script src=assets/dashforge/lib/datatables.net/js/jquery.dataTables.min.js></script><script src=assets/dashforge/lib/datatables.net-dt/js/dataTables.dataTables.min.js></script><script src=assets/dashforge/lib/datatables.net-responsive/js/dataTables.responsive.min.js></script><script src=assets/dashforge/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js></script><script src=assets/js/plugins.js></script><script src=assets/js/plugins/moment/moment.js></script><script src=assets/js/plugins/moment/es.js></script></body></html>
