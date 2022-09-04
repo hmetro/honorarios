@@ -63,14 +63,10 @@ const Imagen = {
                 }
             })
             .catch(function (e) {
-                Imagen.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { Imagen.fetch(); }, 5000);
             })
     },
-    oninit: () => {
 
-        Imagen.fetch();
-    },
     view: () => {
 
         return Imagen.error ? [
@@ -522,13 +518,10 @@ const Laboratorio = {
 
             })
             .catch(function (e) {
-                Laboratorio.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { Laboratorio.fetch(); }, 5000);
             })
     },
-    oninit: () => {
-        Laboratorio.fetch();
-    },
+
     view: () => {
 
         return Laboratorio.error ? [
@@ -661,7 +654,7 @@ const FOR005 = {
         })
 
     },
-    oninit: () => {
+    oncreate: () => {
         FOR005.secs = [];
         return Formulario.data.map(function (_v, _i, _contentData) {
             FOR005.parseDoc(Formulario.data[_i])
@@ -1058,12 +1051,11 @@ const Formulario = {
 
             })
             .catch(function (e) {
-                Formulario.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { Formulario.fetch(); }, 5000);
 
             })
     },
-    oninit: () => {
+    oncreate: () => {
         Formulario.fetch();
     },
     view: () => {
@@ -1120,15 +1112,11 @@ const Evoluciones = {
 
             })
             .catch(function (e) {
-                Evoluciones.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { Evoluciones.fetch(); }, 5000);
 
             })
     },
-    oninit: () => {
 
-        Evoluciones.fetch();
-    },
     view: () => {
 
 
@@ -1202,7 +1190,7 @@ const WidgetsSV = {
         PS: [],
         TA: [],
     },
-    oninit: () => {
+    oncreate: () => {
         WidgetsSV.isData = 0;
         SignosVitales.data.map(function (_v, _i, _contentData) {
 
@@ -1292,206 +1280,211 @@ const WidgetsSV = {
     },
     view: () => {
 
+        if (SignosVitales.data.length !== 0) {
 
-        if (SignosVitales.data.length !== 0 && WidgetsSV.isData !== 0) {
-            return [
-                Object.keys(WidgetsSV.data).map(function (_v, _i, _contentData) {
+            if (Object.keys(WidgetsSV.data).length !== 0) {
+                return [
+                    Object.keys(WidgetsSV.data).map(function (_v, _i, _contentData) {
 
-                    if ((_v == 'PAS' || _v == 'PAD') && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icon-heart-beat.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            WidgetsSV.data[_v].SIGNO
+                        if ((_v == 'PAS' || _v == 'PAD') && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icon-heart-beat.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + "mmHg."
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + "mmHg."
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'FC' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-default.rounded-circle.s-dp-1-3-15.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icon-heart-beat.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            WidgetsSV.data[_v].SIGNO
+                        if (_v == 'FC' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-default.rounded-circle.s-dp-1-3-15.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icon-heart-beat.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " LPM"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " LPM"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'FR' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-lungs.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            WidgetsSV.data[_v].SIGNO
+                        if (_v == 'FR' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-lungs.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " RPM"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                WidgetsSV.data[_v].SIGNO
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " RPM"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'SO' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-stethoscope.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            "SATURACIÓN DE OXIGENO"
+                        if (_v == 'SO' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-stethoscope.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " %"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "SATURACIÓN DE OXIGENO"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " %"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'FIO' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-stethoscope.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            "FIO2"
+                        if (_v == 'FIO' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-stethoscope.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " %"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "FIO2"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " %"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'TEMP' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-thermometer.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            "TEMPERATURA"
+                        if (_v == 'TEMP' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-thermometer.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " °C"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "TEMPERATURA"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " °C"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'PS' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-user-alt-1.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            "PESO"
+                        if (_v == 'PS' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-user-alt-1.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " °C"
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "PESO"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " °C"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    if (_v == 'TA' && WidgetsSV.data[_v].length !== 0) {
-                        return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
-                            m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
-                                m("div.media", [
-                                    m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
-                                        m("span.icofont-ruler.text-grad-1")
-                                    ),
-                                    m("div.media-body", [
-                                        m("h4.text-dark2.mb-3.position-relative.pt-2",
-                                            "TALLA"
+                        if (_v == 'TA' && WidgetsSV.data[_v].length !== 0) {
+                            return m("div.col-sm-10.offset-sm-1.col-md-12.offset-md-0.col-xl-6",
+                                m("div.single-service.bg-white.type-3.radius-10.position-relative.service-wrapper.s-dp-1-3.h-dp-10-60.m-mb-50",
+                                    m("div.media", [
+                                        m("div.service-circle.position-relative.mb-4.text-active.bg-white.rounded-circle.d-flex.align-items-center.justify-content-center.s-dp-1-3",
+                                            m("span.icofont-ruler.text-grad-1")
                                         ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].VALOR + " cm."
-                                        ),
-                                        m("p.mb-4.text-default.fz-poppins.text-Underline",
-                                            WidgetsSV.data[_v].FECHA
-                                        )
+                                        m("div.media-body", [
+                                            m("h4.text-dark2.mb-3.position-relative.pt-2",
+                                                "TALLA"
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].VALOR + " cm."
+                                            ),
+                                            m("p.mb-4.text-default.fz-poppins.text-Underline",
+                                                WidgetsSV.data[_v].FECHA
+                                            )
+                                        ])
                                     ])
-                                ])
+                                )
                             )
-                        )
-                    }
+                        }
 
 
 
-                })
-            ]
-        } else {
-            return [
-                m(".alert.alert-danger[role='alert']",
-                    "No existe información disponible."
-                )
-            ]
+                    })
+                ]
+            } else {
+                return [
+                    m(".alert.alert-danger[role='alert']",
+                        "No existe información disponible."
+                    )
+                ]
+
+            }
         }
+
+
 
 
 
@@ -1521,14 +1514,7 @@ const SignosVitales = {
             headers: {
                 "Authorization": localStorage.accessToken,
             },
-            extract: (xhr, options) => {
 
-                if (xhr.status !== 200) {
-                    SignosVitales.fetch();
-                }
-
-                return JSON.parse(xhr.responseText);
-            }
         })
             .then(function (result) {
                 if (result.status) {
@@ -1539,15 +1525,11 @@ const SignosVitales = {
 
             })
             .catch(function (e) {
-                SignosVitales.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { SignosVitales.fetch(); }, 5000);
 
             })
     },
-    oninit: () => {
 
-        SignosVitales.fetch();
-    },
     view: () => {
 
         return SignosVitales.error ? [
@@ -1622,6 +1604,13 @@ const DetallePaciente = {
     data: [],
     detalle: [],
     error: "",
+    loadPaciente: () => {
+        SignosVitales.fetch();
+        Evoluciones.fetch();
+        Laboratorio.fetch();
+        Imagen.fetch();
+
+    },
     fetch: () => {
         DetallePaciente.data = [];
         DetallePaciente.error = "";
@@ -1638,12 +1627,12 @@ const DetallePaciente = {
             .then(function (result) {
                 if (result.status) {
                     DetallePaciente.data = result.data;
+                    DetallePaciente.loadPaciente();
                 } else {
                     DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia ni Hospitalización.";
                 }
             })
             .catch(function (e) {
-                DetallePaciente.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
                 setTimeout(function () { DetallePaciente.fetch(); }, 5000);
             })
     },
@@ -1869,7 +1858,7 @@ const DetalleClinico = {
     editar: false,
     labelOperation: "Detalle:",
     inZoom: "",
-    oninit: () => {
+    oncreate: () => {
         MenuBoton.update = "SV";
         DetallePaciente.fetch();
     },

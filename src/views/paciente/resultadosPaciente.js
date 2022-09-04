@@ -154,14 +154,10 @@ const Imagen = {
             })
             .catch(function (e) {
                 Imagen.loader = false;
-                Imagen.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function () { Imagen.fetch(); }, 5000);
+                Imagen.fetch();
             })
     },
-    oninit: () => {
 
-        Imagen.fetch();
-    },
     view: () => {
 
         return (Imagen.error && !Imagen.loader) ? [
@@ -938,13 +934,10 @@ const Laboratorio = {
 
             })
             .catch(function (e) {
-                Laboratorio.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function () { Laboratorio.fetch(); }, 5000);
+                Laboratorio.fetch();
             })
     },
-    oninit: () => {
-        Laboratorio.fetch();
-    },
+
     view: () => {
 
 
@@ -970,7 +963,7 @@ const Laboratorio = {
                 [(verDocPDF.show.length == 0) ? [] : [
                     m("img.p-1.mb-2[src='assets/logo.metrovirtual.png'][alt='Metrovirtual'][width='200rem']")
                 ]],
-                m("h4.m-text-2.",
+                m("h4.m-text-2.mt-5",
                     m("i.icofont-laboratory.mr-2"), [(verDocPDF.show.length == 0) ? "Resultados de Laboratorio:" : "Visor de Resultados:"]
 
                 ),
@@ -1119,6 +1112,11 @@ const DetallePaciente = {
     data: [],
     detalle: [],
     error: "",
+    loadPaciente: () => {
+        Laboratorio.fetch();
+        Imagen.fetch();
+
+    },
     fetch: () => {
         DetallePaciente.data = [];
         DetallePaciente.error = "";
@@ -1141,6 +1139,7 @@ const DetallePaciente = {
 
                     if (result.status) {
                         DetallePaciente.data = result.data[0];
+                        DetallePaciente.loadPaciente();
                     } else {
                         DetallePaciente.error = "No existe información disponible. La ubicación del paciente ya no es Emergencia.";
                     }
@@ -1148,8 +1147,7 @@ const DetallePaciente = {
 
             })
             .catch(function (e) {
-                DetallePaciente.error = "Error de red inesperado. Lo reintetaremos por ti automaticamente en unos segundos. Si el inconveniente persiste comunícate con soporte. Ext: 2020 CONCAS.";
-                setTimeout(function () { DetallePaciente.fetch(); }, 5000);
+                DetallePaciente.fetch();
             })
     },
     view: () => {

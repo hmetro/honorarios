@@ -76,13 +76,8 @@ const Auth = {
                 }
 
             }).catch(function (error) {
-                Auth.imputDisabled = false;
-                Auth.statusHide = "d-none";
-                Auth.statusError = "warning";
-                Auth.messageError = "";
-                Auth.username = "";
-                Auth.password = "";
-                Auth.setError(_Error_.httpError);
+
+                Auth.login();
             });
     },
     isLogin: () => {

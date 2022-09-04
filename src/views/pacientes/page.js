@@ -10,6 +10,8 @@ const DataProviderInter = {
     show: "",
     fetch: () => {
 
+        DataProviderInter.filterData();
+
 
     },
     loadData: function () {
@@ -90,12 +92,12 @@ const DataProvider = {
                 PagePacientes.codMedico = result.codMedico;
                 DataProvider.data = result.dataTra;
                 DataProviderInter.data = result.dataInter;
+                DataProviderInter.loadData();
                 DataProvider.filterData();
-                DataProviderInter.filterData();
 
             })
             .catch(function (e) {
-
+                DataProvider.fetch();
             })
 
 
@@ -104,7 +106,6 @@ const DataProvider = {
     },
     loadData: function () {
         DataProvider.fetch();
-
     },
     filterData: function () {
         var to = Math.min(DataProvider.from + DataProvider.count, DataProvider.data.length + 1);
@@ -223,54 +224,57 @@ const dataViewInter = {
 
         return m('table.w-100.mt-5.' + dataViewInter.show, [
             m('tbody', DataProviderInter.filteredData.map(function (d) {
-                return m("div.p-5.mb-3.doctrs-info-card.grad-bg--1.position-relative.type-1.radius-10", [
-                    m("h4.text-white.mb-0", [
-                        m("i.icofont-ui-user"),
-                        " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
-                    ]
+                return [
+                    m("div.bg-white.pt-4.pl-4.pb-4.pr-4.info-box.m-mb-30.radius-5", {
+                        "style": { "border-color": "#0aa1eb" }
+                    },
+                        [
+                            m("h4.mb-0", [
+                                m("i.icofont-ui-user"),
+                                " " + ((d['CLASIFICACION_MEDICO'] == 'TRA') ? d['NOMBRE_PACIENTE'] : d['NOMBRE_PACIENTE'] + " - Interconsulta")
+                            ]
 
+                            ),
+                            m("div.media.",
+                                m("div.media-body",
+                                    [
+                                        m("p.designation.text-uppercase", [
+                                            d['EDAD'],
+                                            " Año(s)",
+                                            " Especialidad: ",
+                                            d['ESPECIALIDAD'],
+                                            " Médico: ",
+                                            d['NOMBRE_MEDICO'],
+                                        ]),
+
+                                        m("h6",
+                                            (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE",
+                                            (" Fecha Admisión: " + d['FECHA_ADMISION']),
+                                            (d['NRO_HABITACION'] !== null) ? " Ubicación: " + d['NRO_HABITACION'] : " Ubicación: NO DISPONIBLE",
+                                            ((PagePacientes.codMedico === "0") ? [
+                                                (d['DISCRIMINANTE'] == 'EMA') ? " En Emergencia " : " En Hospitalización "
+
+                                            ] : [
+                                                (d['CLASIFICACION_MEDICO'] === 'TRA') ? " MED: TRATANTE" : " MED: INTERCONSULTA ",
+
+                                            ])
+                                        ),
+
+                                        m("div.text-right", [
+                                            m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.bg-transparent.position-relative", {
+                                                href: "#!/paciente/" + d['HC']
+                                            },
+                                                " Ver Paciente "
+                                            )
+                                        ])
+
+                                    ]
+                                )
+                            )
+                        ]
                     ),
-                    m("p.text-white.designation.text-uppercase", [
-                        d['EDAD'],
-                        " Año(s)",
-                        " Especialidad: ",
-                        d['ESPECIALIDAD'],
-                    ]),
-                    m("p.text-white.designation.text-uppercase", [
-                        "Médico: ",
-                        d['NOMBRE_MEDICO'],
-                    ]),
-                    m("h6.text-white",
-                        (d['DG_PRINCIPAL'] !== null) ? "Dg: " + d['DG_PRINCIPAL'] : "Dg: NO DISPONIBLE"
-                    ),
-                    m("h6.text-white.pt-2", [
-                        m("i.icofont-calendar"),
-                        " Fecha Admisión: " + d['FECHA_ADMISION']
-                    ]),
-                    m("h6.text-white.pt-2", [
-                        m("i.icofont-patient-bed"),
-                        (d['NRO_HABITACION'] !== null) ? " Ubicación: " + d['NRO_HABITACION'] : " Ubicación: NO DISPONIBLE"
-                    ]), [
-                        ((PagePacientes.codMedico === "0") ? [
-                            m("h6.text-white.pt-2", [
-                                (d['DISCRIMINANTE'] == 'EMA') ? " En Emergencia " : " En Hospitalización "
-                            ])
-                        ] : [
-                            m("h6.text-white.pt-2", [
-                                (d['CLASIFICACION_MEDICO'] === 'TRA') ? " MED: TRATANTE" : " MED: INTERCONSULTA ",
-                            ])
-                        ])
-                    ],
 
-                    m("div.text-right", [
-                        m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.white-btn.bg-transparent.position-relative", {
-                            href: "#!/paciente/" + d['HC']
-                        },
-                            " Ver Paciente "
-                        )
-                    ])
-
-                ])
+                ]
             }))
         ]);
     }
