@@ -1,0 +1,117 @@
+body{
+	padding-top: 50px;
+	height: auto;
+	padding-bottom: 20px;  
+}
+
+#mensaje_alerta{
+	display: none;
+	position: fixed;
+	width: auto;
+	top:10%;
+	right: 1%;
+	z-index: 2;
+}
+
+#mensaje_alerta_login{
+	display: none;
+}
+
+#linea_menu{
+	position: fixed;
+	height: 7px;
+	width: 100%;
+	z-index: 2;
+	background-color: #196a89;
+}
+
+	
+#grupo_boton_sesion{
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+#container{
+	background-color: #ededed;
+	padding: 15px;
+}
+
+.certicado1{
+	background-image: url("http://seotecuador.com/sistema/vista/imagenes/asis_normal.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 700px;
+	height: 1000px;
+}
+
+.certicado2{
+	background-image: url("http://seotecuador.com/sistema/vista/imagenes/asis_posna.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 700px;
+	height: 1000px;
+}
+
+.certicado3{
+	background-image: url("http://seotecuador.com/sistema/vista/imagenes/asis_trauma_rehabili.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 700px;
+	height: 1000px;
+}
+
+.letra_btn{
+	font-size: 18px;
+}
+
+#icon{
+	padding-right: 10px;
+}
+
+#icon_pdf{
+	padding-left: 10px;
+}
+
+.certicado4{
+	background-image: url("http://seotecuador.com/sistema/vista/imagenes/conferencista.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 700px;
+	height: 1000px;
+}
+
+.nombre_usuario1{
+	position: relative;
+	top: 455px;
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.nombre_usuario2{
+	position: relative;
+	top: 440px;
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.nombre_usuario3{
+	position: relative;
+	top: 440px;
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.nombre_usuario4{
+	position: relative;
+	top: 455px;
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: uppercase;
+}

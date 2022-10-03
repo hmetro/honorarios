@@ -1,0 +1,114 @@
+@media only screen and (max-width: 767px) {
+
+	#cerrar_sesion_telefono{
+		display: none;
+	}
+
+	#navbar-header{
+	background-color: white !important;
+
+	}
+
+	#logo_menu_texto{
+		display: none;
+	}
+
+	#logo_menu{
+		display: block;
+	}
+
+	#img_flecha_invertida{
+		display: block !important;
+	}
+
+	/*#btn_descargar_pdf{
+		display: none;
+	}*/
+
+	.img_flecha{
+		width: 8% !important;
+	}
+
+	.texto_migas{
+		padding-top: 5.5px !important;
+		color: #378d9c !important;
+		float: right;
+		padding-right: 10px !important;
+	}
+
+	.fondo_nav_bar{
+
+		box-shadow: 0px 2px 2px grey;
+	}
+
+	.navbar_general{
+		height: 60px !important;
+	}
+
+	#menu-navbar{
+		padding-top: 30px !important;
+	}
+
+	.btn_nav_bar_zindex{
+		z-index: 100000;
+	}
+
+	.img_bienvenida{
+	 	display: none;
+	}
+
+	.fondo_bienvenido{
+		position: fixed;
+		float: left !important;
+		width: 110% !important;
+		height: 200% !important;
+		top: 102px;
+	}
+
+	.img_bienvenida_doctor{
+		position: fixed !important;
+		float: left !important;
+		width: 120%;
+	 	z-index: 100;
+	 	display: block;
+	 	top: 102px;
+	 	
+	}
+
+	.icono_pago{
+		position: fixed !important;
+		width: 20% !important;
+		left: 8%;
+		z-index: 100;
+		top: 60%;
+	}
+
+	.icono_texto_pago{
+		position: fixed !important;
+		width: 30% !important;
+		left: 34%;
+		z-index: 100;
+		top: 60%;
+		color: white;
+	}
+
+	.icono_prealta{
+		position: fixed !important;
+		width: 20% !important;
+		left: 8%;
+		z-index: 100;
+		top: 75%;
+	}
+
+	.icono_texto_prealta{
+		position: fixed !important;
+		width: 30% !important;
+		left: 34%;
+		z-index: 100;
+		top: 75%;
+		color: white;
+	}
+
+
+
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="imagen/x-icon" href="imagen/logo.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hospital Metropolitano</title>
+
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- Custom CSS -->
+    <link href="vista/css/estilos_login.css" rel="stylesheet"> 
+    <link href="vista/css/preloader.css" rel="stylesheet"> 
+</head>
+
+<body>
+    <div id="fade" class="overlay"></div>
+     <div id="light" class="preloader">
+        <center>  
+            <p><b>Procesando...</b></p>
+            <img src="vista/imagen/66.gif">
+        </center>    
+    </div>
+    <div class="container">
+    	<br>
+    	<div align="center">
+    		<img src="vista/imagen/logo.jpg">
+    	</div>	
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><b>Honorarios médicos</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="form_sesion">
+                            <fieldset>
+                                <div class="alert alert-danger text-center" id="mensaje_alerta">
+                                    <span id="texto_mensaje_alerta"></span>
+                                </div>
+                                <div class="form-group" id="div_error_codigo"> 
+                                    <label class="control-label">Código del médico</label>
+                                    <input class="form-control" placeholder="Ingrese Código" maxlength="15" name="codigo" type="number" autofocus>
+                                </div>
+                                <div class="form-group" id="div_error_contrasena">
+                                    <label class="control-label">Contraseña</label>
+                                    <input class="form-control" placeholder="Ingrese Contraseña" id="contrasena" maxlength="15" name="contrasena" type="password">
+                                </div>
+                                <div class="form-group" id="div_error_contrasena"  align="center">
+                                    <label class="control-label"><a href="contrasena">¿ Olvidó su contraseña ?</a></label>
+                                </div>                                
+                            </fieldset>
+                        </form>                
+                        <button  onclick="validar_datos()" class="btn btn-lg btn-info btn-block">Iniciar sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="plugins/jquery/jquery-3.1.1.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="librerias/sesion/sesion.js?v=1"></script>
+</body>
+
+</html>

@@ -1,6 +1,8 @@
 var _modulos_ = [
     { id: 1, title: "Mis Pacientes", icon: "doctor", url: "#!/pacientes" },
-    { id: 2, title: "Resultados de Imagen y Laboratorio", icon: "doctor", url: "#!/resultados" },
+    { id: 2, title: "Mis Honorarios", icon: "doctor", url: "#!/honorarios" },
+    { id: 3, title: "Resultados de Imagen y Laboratorio", icon: "doctor", url: "#!/resultados" },
+
 ];
 
 const Modulos = {
@@ -22,7 +24,27 @@ const Modulos = {
                 )
             }
 
+
             if (i.id == 2) {
+                return m("div.col-sm-12.col-md-12.col-lg-6",
+                    m("a", {
+                        href: i.url,
+
+                    }, [
+                        m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
+                            m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
+                                m("span.icofont-letter.text-grad-1.fz-50"),
+                            ),
+                            m("h5.text-dark2.mb-3.position-relative.pt-2",
+                                i.title
+                            )
+                        ])
+                    ])
+                )
+            }
+
+
+            if (i.id == 3) {
                 return m("div.col-sm-12.col-md-12.col-lg-6",
                     m("a", {
                         href: i.url,
@@ -40,6 +62,10 @@ const Modulos = {
                     ])
                 )
             }
+
+
+
+
 
 
 

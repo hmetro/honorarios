@@ -1,0 +1,1 @@
+@%comspec% /K sent.exe

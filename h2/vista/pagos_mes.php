@@ -1,0 +1,198 @@
+	<?php
+	require_once("../controlador/sesion/comprobar_sesion.php");
+	comprobar_sesion();
+?>
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0 maximun-scale=1.0, minimum-scale=1.0">
+		<link rel="shortcut icon" type="image/x-icon" href="imagen/logo.ico" />
+		<title>Hospital Metropolitano</title>
+	</head>
+	<body onload="lista_pagos_mes(
+			'<?php echo $_SESSION['vgc_codigo']; ?>',
+			'<?php echo date("Y-m-01"); ?>',
+			'<?php echo date("d-m-Y"); ?>',
+			'simple'
+	);">
+
+<?php  
+	require_once("header/header.php");
+?>
+		<div class= "container">
+			<!-- Código de Proveedor oculto -->
+			<input type="hidden" name="proveedor_oculto" id="proveedor_oculto" value="<?php echo $_SESSION['vgc_codigo']; ?>">
+			<div class="panel panel-primary">
+				<div class="panel-heading"><b>Pagos procesados</b></div>
+					<div class="panel-body">
+						<div id="pago_vacio_txt" align="center">
+							<h5>Al momento no tiene pagos</h5>
+						</div>
+						<div class="form-group">
+		        	        <div id="lista"></div>
+		        	        <div align="center"> <img id="img_flecha_invertida" class="img_flecha ocultar_general" src="vista/imagen/flecha_invertida.png"></div>
+		        	    </div>
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class= "container">
+			<div class="panel" id="panel_buscar">
+				<div class="panel-heading" id="panel_heading_buscar"><b>Consulta de pagos</b></div>
+					<div class="panel-body">
+						<div class="row form-horizontal">
+							<div class="form-group">
+								<label for="ruc" class="col-xs-offset-1 control-label col-xs-3 col-md-4"><span id="campo_vacio_crear_empresa"></span> Buscar:</label>	
+								<div class="col-xs-5 col-md-2">
+									<select name="select_tipo_busqueda" id="select_tipo_busqueda" class="selectpicker form-control">
+										<option value="FECHA">Fecha</option>
+										<option value="PACIENTE">Paciente</option>
+										<option value="FACTURA">Factura</option>
+									</select>
+								</div>
+							</div>
+							<div id="grupo_fecha_busqueda">
+								<!--<div class="form-group">
+									<label for="nombre" class="col-xs-offset-1 control-label col-xs-3 control-label col-md-4"> Año:</label>
+									<div class="col-xs-5 col-md-2">	
+										<select class="selectpicker form-control" name="select_anio">
+											<?php 
+												$vgc_anio="2016";
+												$vgc_anio_actual=date("Y"); 
+												while ( $vgc_anio < $vgc_anio_actual) 
+												{
+													echo "<option value='$vgc_anio'>$vgc_anio</option>";
+													$vgc_anio++;
+												}
+											?>
+											<option value='<?php echo date("Y"); ?>' selected><?php echo date("Y"); ?></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ruc" class="col-xs-offset-1 control-label col-xs-3 col-md-4"> Mes:</label>	
+									<div class="col-xs-5 col-md-2">
+										<select name="select_mes" id="select_mes" class="selectpicker form-control">
+											<option value="01">Enero</option>
+											<option value="02">Febrero</option>
+											<option value="03">Marzo</option>
+											<option value="04">Abril</option>
+											<option value="05">Mayo</option>
+											<option value="06">Junio</option>
+											<option value="07">Julio</option>
+											<option value="08">Agosto</option>
+											<option value="09">Septiembre</option>
+											<option value="10">Octubre</option>
+											<option value="11">Noviembre</option>
+											<option value="12">Diciembre</option>
+										</select>
+									</div>
+								</div> -->
+								<div class="form-group">
+									<label for="nombre" class="col-xs-offset-1 control-label col-xs-3 control-label col-md-4"> Fecha desde:</label>
+									<div class="col-xs-5 col-md-2">	
+										<input type="date" name="fecha_desde_pagos" class="form-control" id="fecha_desde_pagos">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="nombre" class="col-xs-offset-1 control-label col-xs-3 control-label col-md-4"> Fecha hasta:</label>
+									<div class="col-xs-5 col-md-2">	
+										<input type="date" name="fecha_hasta_pagos" class="form-control" id="fecha_hasta_pagos">
+									</div>
+								</div>																									
+							</div>	
+
+							<div id="grupo_paciente_busqueda" class="ocultar_general">
+								<div class="form-group">
+									<label for="ruc" class="col-xs-offset-1 control-label col-xs-3 col-md-4"> Paciente:</label>	
+									<div class="col-xs-5 col-md-2">
+										<input type="text" class="form-control" name="paciente_busqueda" id="paciente_busqueda">
+									</div>
+								</div>								
+							</div>
+
+							<div id="grupo_factura_busqueda" class="ocultar_general">
+								<div class="form-group">
+									<label for="ruc" class="col-xs-offset-1 control-label col-xs-3 col-md-4"> Factura:</label>	
+									<div class="col-xs-5 col-md-2">
+										<input type="text" class="form-control" name="factura_busqueda" id="factura_busqueda">
+									</div>
+								</div>								
+							</div>																					
+							
+							<div class="form-group">	
+								<div class="col-xs-offset-4 col-md-5 col-xs-7 col-md-offset-5">
+									<button type="button" class="btn btn-default col-md-4 col-xs-8" id="boton_buscar"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+								</div>
+							</div>
+							<!-- <div class="form-group">	
+								<div class="col-xs-offset-4 col-md-5 col-md-offset-5">
+									<button type="button" class="btn btn-default col-md-4 col-xs-8" id="boton_buscar_todos"><span class="glyphicon glyphicon-search"></span> Buscar todos</button>
+								</div>
+							</div>-->
+						</div>						
+					</div>	
+				</div>
+			</div>	
+		</div>	
+
+		<div class="modal fade " id="ver_detalle" data-backdrop="static" data-keyboard="false">
+			<div  class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Detalle de facturas</h4>
+					</div>
+
+					<div class="modal-body">
+						<div id="light_modal_detalle" class="preloader_modal">
+       						<center>  
+       							<p><b>Procesando...</b></p>
+       							<img src="vista/imagen/66.gif">
+       						</center>    
+    					</div>
+	
+						<div class="form-group">
+							<div class='table-responsive'>
+		        		    	<div id="lista_factura_detalle"></div>
+		        		    	<table class="table table-condensed" id='cabecera_tabla_total'>
+		        		    		<tbody>
+		        		    		<tr>
+		        		    			<td id="campo_vacio_tabla"></td>
+		        		    			<td id="campo_vacio_tabla"></td>
+		        		    			<td id="campo_vacio_tabla"></td>
+		        		    			<td id="campo_vacio_tabla"></td>
+		        		    			<td id="campo_vacio_tabla"></td>
+		        		    			<td id="campo_vacio_tabla"></td>
+
+		        		    			<td  id="total_saldo_detalle_factura"></td>
+		        			 	  		<td  id="total_cancela_detalle_factura"></td>
+		        			 	  		<td  id="total_monto_detalle_factura"></td>
+
+		        			 	  		<td  id="detalle_factura_total">Total</td>
+										
+									</tr>
+									</tbody>
+								</table>
+		        		   	</div>
+						</div>
+					</div>				
+					<div class="modal-footer">  
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>				
+				</div>
+			</div>
+		</div>
+		<!-- Siempre antess del body -->	
+		<script src="plugins/jquery/jquery-3.1.1.min.js"></script>
+		<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="plugins/toastr/toastr.js"></script>
+		<script type="text/javascript" src="plugins/sweetalert/sweetalert.js"></script>	
+		<script src="librerias/pagos_mes/pagos_mes.js?v=5"></script>
+		<script src="librerias/pagos_mes/planilla_pagos.js?v=5"></script>			
+	</body>
+
+</html>

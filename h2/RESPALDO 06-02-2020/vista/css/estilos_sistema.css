@@ -1,0 +1,338 @@
+*,*:after, *:before{
+     margin: 0;
+     padding: 0;
+     -webkit-box-sizing: border-box;
+     -moz-box-sizibg: border-box;
+     box-sizing: :border-box;
+}
+
+.overlayWeb{
+     background-color: #259cdb;
+     height: 100%;
+     width: 100%;
+     position: fixed;
+     -webkit-transition: all 1s ease;
+     -o-transition: all 1s ease;
+     transition: all 1s ease;
+     z-index: 1000000;
+}
+
+.preloaderWeb {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     margin: auto;
+     border-radius: 50px;
+     box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+     width: 221px;
+     height:70px;
+     background: #fff;
+     padding: 5px;
+     color: #333;
+     z-index:1000000;
+     overflow: auto;
+}
+
+body {
+  background-color:#F8F8F8 !important;
+}
+
+header{
+	padding-top: 70px;
+}
+
+
+
+.icono_color{
+	background-color: black !important;
+}
+
+.icon-bar{
+	background-color: white !important;
+}
+
+#mensaje_alerta{
+  display: none;
+}
+
+#tabla_pagos_mes{
+	text-align: center !important;
+}
+
+#tabla_facturas_mes{
+	text-align: center !important;
+}
+
+#tabla_pagos_mes th{
+	text-align: center !important;
+}
+
+#tabla_facturas_mes th{
+	text-align: center !important;
+}
+
+#tabla_pagos_mes_monto {
+	text-align: right !important;
+}
+
+#tabla_facturas_mes_monto {
+	text-align: right !important;
+}
+
+#cabecera_tabla {
+	font-size: 11px !important;
+	text-align: center !important;
+	width: 900px !important;
+}
+
+#cabecera_tabla th {
+	text-align: center !important;
+}
+
+#cabecera_tabla_total {
+	text-align: center !important;
+	width: 900px ;
+	font-size: 11px;
+}
+
+.letra_tabla_cabecera{
+	font-size: 11px !important;
+	text-align: center !important;
+}
+
+#pagos_mes_fecha{
+	width: 100px !important;
+}
+
+#facturas_mes_fecha{
+	width: 100px;
+}
+
+#factura_pago_mes{
+
+	width: 120px !important;
+}
+
+#panel_heading_buscar{
+	color: #ffffff;
+	background-color: #259cdb !important;
+}
+
+.color_menu_nav{
+	color: #ffffff;
+	background-color: #002f5e !important;	
+}
+
+#panel_buscar{
+	border-color: #259cdb !important;
+}
+
+#tabla_celda_izquierdo{
+	min-width: 160px;
+	text-align: left !important;
+}
+
+#facturas_tipo{
+	width: 100px;
+}
+
+#factura_vacia_txt{
+	display: none;
+}
+
+#pago_vacio_txt{
+	display: none;
+}
+
+#logo_menu{
+	display: none;
+}
+
+@media only screen and (max-width: 767px) {
+
+	#cerrar_sesion_telefono{
+		display: none;
+	}
+
+	#navbar-header{
+	background-color: white !important;
+
+
+	}
+
+	#logo_menu_texto{
+		display: none;
+	}
+
+	#logo_menu{
+		display: block;
+	}
+
+	#img_flecha_invertida{
+		display: block !important;
+	}
+
+	/*#btn_descargar_pdf{
+		display: none;
+	}*/
+}
+
+#logo_menu{
+	width: 47% !important;
+	height: 30% !important;
+	padding: 0px !important;
+}
+
+#txt_mensaje_clave{
+	display: none;
+}
+
+#txt_clave{
+	display: none;
+	font-size: 35px;
+}
+
+#txt_mensaje_clave_generada{
+	display: none;
+}
+
+#icono_menu{
+	padding-left: 10px;
+	padding-right: 15px;
+}
+
+#tabla_pagos_mes_body{
+	font-size: 11px;
+}
+
+#tabla_facturas_mes_body{
+	font-size: 11px;
+}
+
+#tabla_facturas_body{
+	font-size: 11px;
+}
+
+.menu_subdatos{
+	padding-left: 25px !important;
+}
+
+#txt_planilla{
+	display: none;
+}
+
+#detalle_factura_total{
+	width: 70px !important;
+	float: right;
+	padding: 5px;
+	font-weight: bold;
+}
+
+#total_monto_detalle_factura{
+	width: 60px !important;
+	text-align: right;
+	float: right;
+	font-weight: bold;
+}
+
+#total_saldo_detalle_factura{
+
+	padding-right: 8px !important;
+	width: 53px !important;
+	text-align: right;
+	padding-top: 5px;
+	float: right;
+	font-weight: bold;
+}
+
+#total_cancela_detalle_factura{
+
+	width: 82px !important;
+	text-align: right;
+	float: right;
+	padding-top: 5px;
+	font-weight: bold;
+}
+
+#campo_vacio_tabla{
+	border-top-color: #ffffff;
+}
+
+.letra_color{
+	color: #ffffff !important;
+}
+
+.letra_color:hover { 
+  color: #002f5e !important;
+}
+
+.ocultar_general
+{
+	display: none !important;
+}
+
+.opcion_buscador
+{
+	width: 100% !important;
+}
+
+.buscador_dropdown{
+	min-width: 40% !important;
+}
+
+.body_scrollspy {
+	position: relative;
+}
+
+.body_scrollspy.div.div.nav.ul.nav-pills {
+	top: 10% !important;
+    position: fixed;
+}
+
+.body_scrollspy.div.col-sm-9 div {
+	height: 100px !important;
+	font-size: 28px;
+}
+
+
+@media screen and (max-width: 800px) {
+    #section1, #section2, #section3, #section41, #section42  {
+      margin-left: 130px;
+    }
+}
+
+.imagen_guia_usuario{
+	width: 100% !important;
+}
+
+.span_drop{
+
+	padding-right: 20px !important;
+}
+
+.span_href_1{
+	padding-bottom: 9px !important;
+	padding-top: 9px !important;
+	background-color: #259cdb !important;
+	
+}
+
+.span_href_2{
+	padding-bottom: 9px !important;
+	padding-top: 9px !important;
+	background : white !important;
+}
+
+.color_a_drop{
+	color: #ffffff !important;
+}
+
+.ancho_tabla_descripcion{
+	width: 300px !important;
+}
+
+.img_flecha{
+	width: 8% !important;
+}

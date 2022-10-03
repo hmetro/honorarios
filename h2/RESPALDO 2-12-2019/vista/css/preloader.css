@@ -1,0 +1,110 @@
+.overlay{
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: #000;
+     z-index:1001;
+     opacity:.75;
+     -moz-opacity: 0.75;
+     filter: alpha(opacity=75);
+}
+
+
+.preloader {
+     display: none;
+     border-radius: 10px;
+     box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+     position: fixed;
+     top: 38%;
+     left: 43%;
+     width: auto;
+     height:auto;
+     background: #fff;
+     padding: 5px;
+     color: #333;
+     z-index:1002;
+     overflow: auto;
+}
+
+.preloader_modal {
+     display: none;
+     width: auto;
+     height:auto;
+     background: #fff;
+     padding: 5px;
+     color: #333;
+     z-index:1002;
+     overflow: auto;
+}
+
+@media only screen and (max-width: 1000px) {
+
+     .overlay  {
+     display: none;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 2000px;
+     background: #000;
+     z-index:1001;
+     opacity:.75;
+     -moz-opacity: 0.75;
+     filter: alpha(opacity=75);
+     }
+
+     .preloader {
+          display: none;
+          border-radius: 10px;
+          box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+          position: fixed;
+          top: 38%;
+          left: 30%;
+          min-width: 228px;
+          min-height: 80px;
+          width: 40%;
+          height:13%;
+          background: #fff;
+          padding: 5px;
+          color: #333;
+          z-index:1002;
+          overflow: auto;
+     }
+}
+
+@media only screen and (max-width: 500px) {
+     .overlay  {
+     display: none;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 2000px;
+     background: #000;
+     z-index:1001;
+     opacity:.75;
+     -moz-opacity: 0.75;
+     filter: alpha(opacity=75);
+     }
+
+     .preloader {
+          display: none;
+          border-radius: 10px;
+          box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+          position: fixed;
+          top: 38%;
+          left: 20%;
+          min-width: 228px;
+          min-height: 80px;
+          width: 40%;
+          height:13%;
+          background: #fff;
+          padding: 5px;
+          color: #333;
+          z-index:1002;
+          overflow: auto;
+     }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="imagen/x-icon" href="imagen/logo.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hospital Metropolitano</title>
+
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- Custom CSS -->
+    <link href="vista/css/estilos_login.css" rel="stylesheet"> 
+    <link href="vista/css/preloader.css" rel="stylesheet"> 
+</head>
+
+<body>
+    <div id="fade" class="overlay"></div>
+     <div id="light" class="preloader">
+        <center>  
+            <p><b>Procesando...</b></p>
+            <img src="vista/imagen/66.gif">
+        </center>    
+    </div>    
+    <div class="container">
+    	<br>
+    	<div align="center">
+    		<img src="vista/imagen/logo.jpg">
+    	</div>	
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><b>Recuperar contraseña</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="form_olvidar_contrasena">
+                            <fieldset>
+                                <div class="alert alert-danger text-center" id="mensaje_alerta">
+                                    <span id="texto_mensaje_alerta"></span>
+                                </div>
+                                <div class="form-group" id="div_error_codigo" align="center"> 
+                                    <label class="control-label">Por favor ingrese su código</label>
+                                    <input class="form-control" placeholder="Ingrese Código" min="1" id="codigo" max="6" maxlength="6" name="codigo" type="number" autofocus>
+                                </div>
+                                <div align="center">
+                                    <label>Se enviará un correo electrónico a la dirección registrada indicando su nueva contraseña de acceso. Sino dispone de una, por favor comuníquese con el departamento de cuentas por pagar</label>
+                                </div>
+                                <div>
+                                    <br>
+                                </div>
+                                <div class="form-group" id="div_error_contrasena" align="center">
+                                    <label class="control-label"><a href="login">Acceder al sistema</a></label>
+                                </div>                                
+                            </fieldset>
+                        </form>                
+                        <button  onclick="validar_contrasena()" class="btn btn-lg btn-success btn-block">Enviar petición</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="plugins/jquery/jquery-3.1.1.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="librerias/sesion/sesion.js"></script>
+</body>
+
+</html>

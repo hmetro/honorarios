@@ -1,0 +1,65 @@
+.overlay{
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: #000;
+     z-index:100000;
+     opacity:.75;
+     -moz-opacity: 0.75;
+     filter: alpha(opacity=75);
+}
+
+
+.preloader {
+     display: none;
+     border-radius: 40px;
+     box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+     position: fixed;
+     top: 38%;
+     left: 43%;
+     width: auto;
+     height:auto;
+     background: #fff;
+     padding: 5px;
+     color: #333;
+     z-index:1000000;
+     overflow: auto;
+}
+
+@media only screen and (max-width: 767px) {
+     .overlay  {
+     display: none;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 2000px;
+     background: #000;
+     z-index:10000;
+     opacity:.75;
+     -moz-opacity: 0.75;
+     filter: alpha(opacity=75);
+     }
+
+     .preloader {
+          display: none;
+          border-radius: 40px;
+          box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+          position: fixed;
+          top: 45%;
+          left: 23%;
+          right: 25%;
+          min-width: 228px;
+          min-height: 35px;
+          width: 216px;
+          height:6%;
+          background: #fff;
+          padding: 5px;
+          color: #333;
+          z-index:1000000;
+          overflow: auto;
+     }
+}

@@ -1,0 +1,16 @@
+Options -Indexes
+
+
+<IfModule mod_rewrite.c>
+
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^pagos_mes$ /honorarios/vista/pagos_mes.php [L]
+RewriteRule ^facturas_pendientes$ /honorarios/vista/facturas_pendientes.php [L]
+RewriteRule ^facturas_mes$ /honorarios/vista/facturas_mes.php [L]
+RewriteRule ^login$ /honorarios/vista/login.html [L]
+RewriteRule ^contrasena$ /honorarios/vista/contrasena.html [L]
+RewriteRule ^sesion$ /honorarios/controlador/sesion/sesion.php [L]
+RewriteRule ^facturas_buscar$ /honorarios/vista/facturas_buscar.php [L]
+RewriteRule ^cpt$ /honorarios/vista/cpt.php [L]
+</IfModule>

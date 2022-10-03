@@ -1,0 +1,222 @@
+
+body {
+  background-color:#F8F8F8 !important;
+}
+
+header{
+	padding-top: 70px;
+}
+
+
+.icono_color{
+	background-color: black !important;
+}
+
+.icon-bar{
+	background-color: white !important;
+}
+
+#mensaje_alerta{
+  display: none;
+}
+
+#tabla_pagos_mes{
+	text-align: center !important;
+}
+
+#tabla_facturas_mes{
+	text-align: center !important;
+}
+
+#tabla_pagos_mes th{
+	text-align: center !important;
+}
+
+#tabla_facturas_mes th{
+	text-align: center !important;
+}
+
+#tabla_pagos_mes_monto {
+	text-align: right !important;
+}
+
+#tabla_facturas_mes_monto {
+	text-align: right !important;
+}
+
+#cabecera_tabla {
+	font-size: 11px !important;
+	text-align: center !important;
+	width: 900px !important;
+}
+
+#cabecera_tabla th {
+	text-align: center !important;
+}
+
+#cabecera_tabla_total {
+	text-align: center !important;
+	width: 900px ;
+	font-size: 11px;
+}
+
+
+#pagos_mes_fecha{
+	width: 100px !important;
+}
+
+#facturas_mes_fecha{
+	width: 100px;
+}
+
+#factura_pago_mes{
+
+	width: 120px !important;
+}
+
+#panel_heading_buscar{
+	color: #ffffff;
+	background-color: #259cdb !important;
+}
+
+.color_menu_nav{
+	color: #ffffff;
+	background-color: #002f5e !important;	
+}
+
+#panel_buscar{
+	border-color: #259cdb !important;
+}
+
+#tabla_celda_izquierdo{
+	min-width: 160px;
+	text-align: left !important;
+}
+
+#facturas_tipo{
+	width: 100px;
+}
+
+#factura_vacia_txt{
+	display: none;
+}
+
+#pago_vacio_txt{
+	display: none;
+}
+
+#logo_menu{
+	display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+	#navbar-header{
+	background-color: white !important;
+
+
+	}
+
+	#logo_menu_texto{
+		display: none;
+	}
+
+	#logo_menu{
+		display: block;
+	}
+
+	
+}
+
+#logo_menu{
+	width: 47% !important;
+	height: 30% !important;
+	padding: 0px !important;
+}
+
+#txt_mensaje_clave{
+	display: none;
+}
+
+#txt_clave{
+	display: none;
+	font-size: 35px;
+}
+
+#txt_mensaje_clave_generada{
+	display: none;
+}
+
+#icono_menu{
+	padding-left: 10px;
+	padding-right: 15px;
+}
+
+#tabla_pagos_mes_body{
+	font-size: 11px;
+}
+
+#tabla_facturas_mes_body{
+	font-size: 11px;
+}
+
+#tabla_facturas_body{
+	font-size: 11px;
+}
+
+.menu_subdatos{
+	padding-left: 25px !important;
+}
+
+#txt_planilla{
+	display: none;
+}
+
+#detalle_factura_total{
+	width: 70px !important;
+	float: right;
+	padding: 5px;
+	font-weight: bold;
+}
+
+#total_monto_detalle_factura{
+	width: 60px !important;
+	text-align: right;
+	float: right;
+	font-weight: bold;
+}
+
+#total_saldo_detalle_factura{
+
+	padding-right: 8px !important;
+	width: 53px !important;
+	text-align: right;
+	padding-top: 5px;
+	float: right;
+	font-weight: bold;
+}
+
+#total_cancela_detalle_factura{
+
+	width: 82px !important;
+	text-align: right;
+	float: right;
+	padding-top: 5px;
+	font-weight: bold;
+}
+
+#campo_vacio_tabla{
+	border-top-color: #ffffff;
+}
+
+.letra_color{
+	color: #ffffff !important;
+}
+
+.letra_color:hover { 
+  color: #002f5e !important;
+}
+
+.ocultar_general
+{
+	display: none !important;
+}

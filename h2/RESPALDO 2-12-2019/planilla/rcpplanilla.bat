@@ -1,0 +1,1 @@
+c:\orant\bin\rwrun60 report=c:\wamp64\www\honorarios\planilla\rcpplanilla.rep userid=naf/na1604@conclina paramform=NO desformat=PDF destype=FILE desname=c:\wamp64\www\honorarios\planilla\rcpplanilla.pdf printjob=NO
