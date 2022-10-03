@@ -13,6 +13,7 @@ import ResultadoPaciente from '../views/paciente/resultadosPaciente';
 import MiPerfil from '../views/perfil/perfil';
 import _404 from '../views/404'
 import CommingSoon from '../views/commingSoon'
+import CuentaHonorarios from '../views/honorarios/estadoCuenta'
 
 
 
@@ -25,7 +26,7 @@ const Routes = {
     '/honorarios': InicioHonorarios, // InicioHonorarios
     '/honorarios/facturas-pagadas': FacturasPagadas, // FacturasPagadas
     '/honorarios/facturas-pendientes': FacturasPendientes, // FacturasPendientes
-    '/honorarios/estado-de-cuenta': CommingSoon, // CommingSoon
+    '/honorarios/estado-de-cuenta': CuentaHonorarios, // CommingSoon
     '/paciente/:nhc': Paciente, // Pacientes
     '/resultados': Resultados, // Resultados
     '/resultados/paciente/:nhc': ResultadoPaciente, // Resultados de Paciente

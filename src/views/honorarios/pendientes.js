@@ -1,7 +1,518 @@
 import Auth from '../../models/auth';
 import App from '../app';
 import Loader from '../loader';
+import HeaderPrivate from '../layout/header-private';
 
+
+const DataProviderPublicas = {
+    data: [],
+    filteredData: [],
+    searchField: "",
+    show: "",
+    fetch: () => {
+
+
+
+        DataProviderPublicas.data = [];
+        Loader.show = "";
+        Loader.buttonShow = "";
+        m.request({
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pendientes?typeFilter=" + dataViewPublicas.typeFilter,
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
+                Loader.show = "d-none";
+                Loader.buttonShow = "d-none";
+                PendienteHonorarios.codMedico = result.codMedico;
+                DataProviderPublicas.data = result.data;
+                DataProviderPublicas.filterData();
+            })
+            .catch(function(e) {
+                DataProviderPublicas.fetch();
+            })
+
+
+
+
+    },
+    loadData: function() {
+        DataProviderPublicas.fetch();
+    },
+    filterData: function() {
+        var to = Math.min(DataProviderPublicas.from + DataProviderPublicas.count, DataProviderPublicas.data.length + 1);
+        DataProviderPublicas.filteredData = [];
+        for (var i = DataProviderPublicas.from - 1; i < to - 1; i++) {
+            DataProviderPublicas.filteredData.push(DataProviderPublicas.data[i]);
+        }
+    },
+    from: 1,
+    count: 10,
+    setFrom: function(from) {
+        DataProviderPublicas.from = parseInt(from);
+        DataProviderPublicas.filterData();
+    },
+    setCount: function(count) {
+        DataProviderPublicas.count = parseInt(count);
+        DataProviderPublicas.filterData();
+    },
+    nextPage: function() {
+        var from = DataProviderPublicas.from + DataProviderPublicas.count;
+        if (from > DataProviderPublicas.data.length)
+            return;
+        DataProviderPublicas.from = from;
+        DataProviderPublicas.filterData();
+    },
+    lastPage: function() {
+        DataProviderPublicas.from = DataProviderPublicas.data.length - DataProviderPublicas.count + 1;
+        DataProviderPublicas.filterData();
+    },
+    prevPage: function() {
+        DataProviderPublicas.from = Math.max(1, DataProviderPublicas.from - DataProviderPublicas.count);
+        DataProviderPublicas.filterData();
+    },
+    firstPage: function() {
+        DataProviderPublicas.from = 1;
+        DataProviderPublicas.filterData();
+    },
+    rowBack: function() {
+        DataProviderPublicas.from = Math.max(1, DataProviderPublicas.from - 1);
+        DataProviderPublicas.filterData();
+    },
+    rowFwd: function() {
+        if (DataProviderPublicas.from + DataProviderPublicas.count - 1 >= DataProviderPublicas.data.length)
+            return;
+        DataProviderPublicas.from += 1;
+        DataProviderPublicas.filterData();
+    }
+};
+
+const dataViewPublicas = {
+    show: "d-none",
+    typeFilter: 3,
+    plFechaTransaccion: "",
+    plNumeroTransaccion: "",
+    oninit: DataProviderPublicas.loadData,
+    view: () => {
+        return m('table.w-100.mt-5.' + dataViewPublicas.show, [
+            m('tbody', DataProviderPublicas.filteredData.map(function(d) {
+                return [
+                    m("div.bg-white.pt-4.pl-4.pb-4.pr-4.info-box.m-mb-30.radius-5", {
+                        "style": { "border-color": "#0aa1eb" }
+                    }, [
+                        m("h4.mb-0", [
+                                m("i.icofont-bank.mr-1"),
+                                'N° de Prefactura: ' + d['PREFACTURA']
+                            ]
+
+                        ),
+                        m("div.media.",
+                            m("div.media-body", [
+
+
+                                m("h6.mt-2",
+                                    "Fecha: " + d['FECHA']
+                                ),
+                                m("h6.mt-2",
+                                    "N° Factura: " + d['FACTURA']
+                                ),
+                                m("h6",
+                                    "NHC: " + d['HISTORIA_CLINICA']
+                                ),
+                                m("h6",
+                                    "Paciente: " + d['PACIENTE']
+                                ),
+                                m("h6",
+                                    "Monto: " + d['MONTO']
+                                ),
+                                m("h6",
+                                    "Saldo: " + d['SALDO']
+                                ),
+
+                                m("h6",
+                                    "Cliente: " + d['CLIENTE']
+                                ),
+
+
+                            ])
+                        )
+                    ]),
+
+                ]
+            }))
+        ]);
+    }
+};
+
+
+const pageToolPublicas = {
+    view: () => {
+
+        if (DataProviderPublicas.data !== undefined && dataViewPublicas.show == "") {
+            if (DataProviderPublicas.data.length === 0) {
+
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(0) Resultado(s)'),
+                    ]),
+                ]
+
+            } else if (DataProviderPublicas.data.length > 10) {
+
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(' + DataProviderPublicas.data.length + ') Resultado(s) '),
+                    ]),
+                    m('div.d-flex.w-100.text-center.mt-5', [
+                        m("div.w-50.w-20", [
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.rowBack(); }
+                                },
+                                " << Anterior "
+                            ),
+                        ]),
+
+                        m("div.w-50.w-20", [
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.rowFwd(); }
+                                },
+                                " Siguiente >>"
+                            ),
+
+
+
+                        ])
+                    ]),
+                    m('div.d-flex.w-100.text-center.mt-5', [
+                        m("div.w-50.w-20", [
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.firstPage(); }
+                                },
+                                " | Inicio "
+                            ),
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.prevPage(); }
+                                },
+                                " < Pág. Ant. "
+                            ),
+
+                        ]),
+
+                        m("div.w-50.w-20", [
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.nextPage(); }
+                                },
+                                " Pág. Sig. > "
+                            ),
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderPublicas.lastPage(); }
+                                },
+                                " Fin | "
+                            ),
+
+                        ])
+                    ])
+
+                ]
+
+            } else {
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(' + DataProviderPublicas.data.length + ') Resultado(s) '),
+                    ]),
+                ]
+
+
+            }
+        }
+
+
+    }
+};
+
+
+const DataProviderHM = {
+    data: [],
+    filteredData: [],
+    searchField: "",
+    show: "",
+    fetch: () => {
+
+
+
+        DataProviderHM.data = [];
+        Loader.show = "";
+        Loader.buttonShow = "";
+        m.request({
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pendientes?typeFilter=" + dataViewHM.typeFilter,
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
+                Loader.show = "d-none";
+                Loader.buttonShow = "d-none";
+                PendienteHonorarios.codMedico = result.codMedico;
+                DataProviderHM.data = result.data;
+                DataProviderHM.filterData();
+            })
+            .catch(function(e) {
+                DataProviderHM.fetch();
+            })
+
+
+
+
+    },
+    loadData: function() {
+        DataProviderHM.fetch();
+    },
+    filterData: function() {
+        var to = Math.min(DataProviderHM.from + DataProviderHM.count, DataProviderHM.data.length + 1);
+        DataProviderHM.filteredData = [];
+        for (var i = DataProviderHM.from - 1; i < to - 1; i++) {
+            DataProviderHM.filteredData.push(DataProviderHM.data[i]);
+        }
+    },
+    from: 1,
+    count: 10,
+    setFrom: function(from) {
+        DataProviderHM.from = parseInt(from);
+        DataProviderHM.filterData();
+    },
+    setCount: function(count) {
+        DataProviderHM.count = parseInt(count);
+        DataProviderHM.filterData();
+    },
+    nextPage: function() {
+        var from = DataProviderHM.from + DataProviderHM.count;
+        if (from > DataProviderHM.data.length)
+            return;
+        DataProviderHM.from = from;
+        DataProviderHM.filterData();
+    },
+    lastPage: function() {
+        DataProviderHM.from = DataProviderHM.data.length - DataProviderHM.count + 1;
+        DataProviderHM.filterData();
+    },
+    prevPage: function() {
+        DataProviderHM.from = Math.max(1, DataProviderHM.from - DataProviderHM.count);
+        DataProviderHM.filterData();
+    },
+    firstPage: function() {
+        DataProviderHM.from = 1;
+        DataProviderHM.filterData();
+    },
+    rowBack: function() {
+        DataProviderHM.from = Math.max(1, DataProviderHM.from - 1);
+        DataProviderHM.filterData();
+    },
+    rowFwd: function() {
+        if (DataProviderHM.from + DataProviderHM.count - 1 >= DataProviderHM.data.length)
+            return;
+        DataProviderHM.from += 1;
+        DataProviderHM.filterData();
+    }
+};
+
+const dataViewHM = {
+    show: "d-none",
+    typeFilter: 2,
+    plFechaTransaccion: "",
+    plNumeroTransaccion: "",
+    oninit: DataProviderHM.loadData,
+
+    view: () => {
+        return m('table.w-100.mt-5.' + dataViewHM.show, [
+            m('tbody', DataProviderHM.filteredData.map(function(d) {
+                return [
+                    m("div.bg-white.pt-4.pl-4.pb-4.pr-4.info-box.m-mb-30.radius-5", {
+                        "style": { "border-color": "#0aa1eb" }
+                    }, [
+                        m("h4.mb-0", [
+                                m("i.icofont-bank.mr-1"),
+                                'N° de Prefactura: ' + d['PREFACTURA']
+                            ]
+
+                        ),
+                        m("div.media.",
+                            m("div.media-body", [
+
+
+                                m("h6.mt-2",
+                                    "Fecha: " + d['FECHA']
+                                ),
+                                m("h6.mt-2",
+                                    "N° Factura: " + d['FACTURA']
+                                ),
+                                m("h6",
+                                    "NHC: " + d['HISTORIA_CLINICA']
+                                ),
+                                m("h6",
+                                    "Paciente: " + d['PACIENTE']
+                                ),
+                                m("h6",
+                                    "Monto: " + d['MONTO']
+                                ),
+                                m("h6",
+                                    "Saldo: " + d['SALDO']
+                                ),
+
+                                m("h6",
+                                    "Cliente: " + d['CLIENTE']
+                                ),
+
+
+                            ])
+                        )
+                    ]),
+
+                ]
+            }))
+        ]);
+    }
+};
+
+
+const pageToolHM = {
+    view: () => {
+
+        if (DataProviderHM.data !== undefined && dataViewHM.show == "") {
+            if (DataProviderHM.data.length === 0) {
+
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(0) Resultado(s)'),
+                    ]),
+                ]
+
+            } else if (DataProviderHM.data.length > 10) {
+
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(' + DataProviderHM.data.length + ') Resultado(s) '),
+                    ]),
+                    m('div.d-flex.w-100.text-center.mt-5', [
+                        m("div.w-50.w-20", [
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.rowBack(); }
+                                },
+                                " << Anterior "
+                            ),
+                        ]),
+
+                        m("div.w-50.w-20", [
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.rowFwd(); }
+                                },
+                                " Siguiente >>"
+                            ),
+
+
+
+                        ])
+                    ]),
+                    m('div.d-flex.w-100.text-center.mt-5', [
+                        m("div.w-50.w-20", [
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.firstPage(); }
+                                },
+                                " | Inicio "
+                            ),
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.prevPage(); }
+                                },
+                                " < Pág. Ant. "
+                            ),
+
+                        ]),
+
+                        m("div.w-50.w-20", [
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.nextPage(); }
+                                },
+                                " Pág. Sig. > "
+                            ),
+
+
+                            m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
+
+                                    onclick: function() { DataProviderHM.lastPage(); }
+                                },
+                                " Fin | "
+                            ),
+
+                        ])
+                    ])
+
+                ]
+
+            } else {
+                return [
+                    m("div.text-center.w-100.mt-5", [
+                        m('span', '(' + DataProviderHM.data.length + ') Resultado(s) '),
+                    ]),
+                ]
+
+
+            }
+        }
+
+
+    }
+};
 
 
 const DataProvider = {
@@ -17,27 +528,20 @@ const DataProvider = {
         Loader.show = "";
         Loader.buttonShow = "";
         m.request({
-            method: "POST",
-            url: "https://api.hospitalmetropolitano.org/h2/h0/controlador/facturas_mes/facturas_mes",
-            body: {
-                proveedor: '000755',
-                boton: 'buscar_seguros',
-                fecha_desde: '2022-09-01',
-                fecha_hasta: '2022-09-30'
-            },
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pendientes?typeFilter=" + dataViewSeguros.typeFilter,
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
                 PendienteHonorarios.codMedico = result.codMedico;
                 DataProvider.data = result.data;
                 DataProvider.filterData();
-
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 DataProvider.fetch();
             })
 
@@ -45,10 +549,10 @@ const DataProvider = {
 
 
     },
-    loadData: function () {
+    loadData: function() {
         DataProvider.fetch();
     },
-    filterData: function () {
+    filterData: function() {
         var to = Math.min(DataProvider.from + DataProvider.count, DataProvider.data.length + 1);
         DataProvider.filteredData = [];
         for (var i = DataProvider.from - 1; i < to - 1; i++) {
@@ -57,38 +561,38 @@ const DataProvider = {
     },
     from: 1,
     count: 10,
-    setFrom: function (from) {
+    setFrom: function(from) {
         DataProvider.from = parseInt(from);
         DataProvider.filterData();
     },
-    setCount: function (count) {
+    setCount: function(count) {
         DataProvider.count = parseInt(count);
         DataProvider.filterData();
     },
-    nextPage: function () {
+    nextPage: function() {
         var from = DataProvider.from + DataProvider.count;
         if (from > DataProvider.data.length)
             return;
         DataProvider.from = from;
         DataProvider.filterData();
     },
-    lastPage: function () {
+    lastPage: function() {
         DataProvider.from = DataProvider.data.length - DataProvider.count + 1;
         DataProvider.filterData();
     },
-    prevPage: function () {
+    prevPage: function() {
         DataProvider.from = Math.max(1, DataProvider.from - DataProvider.count);
         DataProvider.filterData();
     },
-    firstPage: function () {
+    firstPage: function() {
         DataProvider.from = 1;
         DataProvider.filterData();
     },
-    rowBack: function () {
+    rowBack: function() {
         DataProvider.from = Math.max(1, DataProvider.from - 1);
         DataProvider.filterData();
     },
-    rowFwd: function () {
+    rowFwd: function() {
         if (DataProvider.from + DataProvider.count - 1 >= DataProvider.data.length)
             return;
         DataProvider.from += 1;
@@ -96,53 +600,59 @@ const DataProvider = {
     }
 };
 
-const dataView = {
+const dataViewSeguros = {
     show: "",
-    typeFilter: 4,
+    typeFilter: 1,
     plFechaTransaccion: "",
     plNumeroTransaccion: "",
     oninit: DataProvider.loadData,
     downloadPlanilla: () => {
-        window.location = 'https://api.hospitalmetropolitano.org/h2/v0/controlador/descarga_documentos/preparar_planilla_pago.php?proveedor=' + PendienteHonorarios.codMedico + '&fecha_transaccion=' + dataView.plFechaTransaccion + '&numero_transaccion=' + dataView.plNumeroTransaccion + '&tipo_imprime=PAGOS';
+        window.location = 'https://api.hospitalmetropolitano.org/h2/v0/controlador/descarga_documentos/preparar_planilla_pago.php?proveedor=' + PendienteHonorarios.codMedico + '&fecha_transaccion=' + dataViewSeguros.plFechaTransaccion + '&numero_transaccion=' + dataViewSeguros.plNumeroTransaccion + '&tipo_imprime=PAGOS';
     },
     view: () => {
-        return m('table.w-100.mt-5.' + dataView.show, [
-            m('tbody', DataProvider.filteredData.map(function (d) {
+        return m('table.w-100.mt-5.' + dataViewSeguros.show, [
+            m('tbody', DataProvider.filteredData.map(function(d) {
                 return [
                     m("div.bg-white.pt-4.pl-4.pb-4.pr-4.info-box.m-mb-30.radius-5", {
                         "style": { "border-color": "#0aa1eb" }
-                    },
-                        [
-                            m("h4.mb-0", [
+                    }, [
+                        m("h4.mb-0", [
                                 m("i.icofont-bank.mr-1"),
-                                'N° de Transacción: ' + d['NO_TRANSACCION']
+                                'N° de Prefactura: ' + d['PREFACTURA']
                             ]
 
-                            ),
-                            m("div.media.",
-                                m("div.media-body",
-                                    [
+                        ),
+                        m("div.media.",
+                            m("div.media-body", [
 
 
-                                        m("h6.mt-2",
-                                            "Fecha: " + d['FECHA']
-                                        ),
-                                        m("h6",
-                                            "Monto: " + d['MONTO']
-                                        ),
-                                        m("h6",
-                                            "SubTotal: " + d['SUBTOTAL']
-                                        ),
-                                        m("h6",
-                                            "Retención: " + d['RETENCION']
-                                        ),
+                                m("h6.mt-2",
+                                    "Fecha: " + d['FECHA']
+                                ),
+                                m("h6.mt-2",
+                                    "N° Factura: " + d['FACTURA']
+                                ),
+                                m("h6",
+                                    "NHC: " + d['HISTORIA_CLINICA']
+                                ),
+                                m("h6",
+                                    "Paciente: " + d['PACIENTE']
+                                ),
+                                m("h6",
+                                    "Monto: " + d['MONTO']
+                                ),
+                                m("h6",
+                                    "Saldo: " + d['SALDO']
+                                ),
+
+                                m("h6",
+                                    "Cliente: " + d['CLIENTE']
+                                ),
 
 
-                                    ]
-                                )
-                            )
-                        ]
-                    ),
+                            ])
+                        )
+                    ]),
 
                 ]
             }))
@@ -151,10 +661,10 @@ const dataView = {
 };
 
 
-const pageTool = {
+const pageToolSeguros = {
     view: () => {
 
-        if (DataProvider.data !== undefined && dataView.show == "") {
+        if (DataProvider.data !== undefined && dataViewSeguros.show == "") {
             if (DataProvider.data.length === 0) {
 
                 return [
@@ -174,11 +684,11 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowBack(); }
-                            },
+                                    onclick: function() { DataProvider.rowBack(); }
+                                },
                                 " << Anterior "
                             ),
                         ]),
@@ -186,11 +696,11 @@ const pageTool = {
                         m("div.w-50.w-20", [
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowFwd(); }
-                            },
+                                    onclick: function() { DataProvider.rowFwd(); }
+                                },
                                 " Siguiente >>"
                             ),
 
@@ -201,20 +711,20 @@ const pageTool = {
                     m('div.d-flex.w-100.text-center.mt-5', [
                         m("div.w-50.w-20", [
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.firstPage(); }
-                            },
+                                    onclick: function() { DataProvider.firstPage(); }
+                                },
                                 " | Inicio "
                             ),
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.prevPage(); }
-                            },
+                                    onclick: function() { DataProvider.prevPage(); }
+                                },
                                 " < Pág. Ant. "
                             ),
 
@@ -224,21 +734,21 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.nextPage(); }
-                            },
+                                    onclick: function() { DataProvider.nextPage(); }
+                                },
                                 " Pág. Sig. > "
                             ),
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.lastPage(); }
-                            },
+                                    onclick: function() { DataProvider.lastPage(); }
+                                },
                                 " Fin | "
                             ),
 
@@ -308,8 +818,8 @@ const iPaciente = {
                 ]),
                 m("div.text-right", [
                     m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
-                        href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
-                    },
+                            href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
+                        },
                         " Ver Paciente "
                     )
                 ]),
@@ -333,11 +843,13 @@ const PendienteHonorarios = {
     oncreate: () => {
         document.title = "Facturas Pendientes | " + App.title;
         submitBusqueda();
-
+        setTimeout(function() { document.getElementById("paciente").click(); }, 500);
     },
     view: () => {
         return [
             m(Loader),
+            m(HeaderPrivate),
+
             m("section.m-bg-1",
                 m("div.container",
                     m("div.row",
@@ -358,16 +870,20 @@ const PendienteHonorarios = {
                                         "font-size": "large"
                                     }
                                 }, [
-                                    m("input.custom-control-input[type='radio'][id='paciente'][name='typeShow'][value='paciente']", {
+                                    m("input.custom-control-input[type='radio'][id='paciente'][name='typeFilter'][value='1']", {
                                         onclick: (e) => {
                                             if (e.target.checked) {
-                                                dataView.typeFilter = 1;
+                                                dataViewSeguros.typeFilter = 1;
+                                                dataViewSeguros.show = "";
+                                                dataViewHM.show = "d-none";
+                                                dataViewPublicas.show = "d-none";
+
                                             }
                                         }
 
                                     }),
                                     m("label.custom-control-label[for='paciente']",
-                                        "Pagos de Seguros"
+                                        "Seguros"
                                     )
                                 ]),
                                 m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2", {
@@ -375,15 +891,19 @@ const PendienteHonorarios = {
                                         "font-size": "large"
                                     }
                                 }, [
-                                    m("input.custom-control-input[type='radio'][id='factura'][name='typeShow'][value='factura']", {
+                                    m("input.custom-control-input[type='radio'][id='hm'][name='typeFilter'][value='2']", {
                                         onclick: (e) => {
                                             if (e.target.checked) {
-                                                dataView.typeFilter = 2;
+                                                dataViewHM.typeFilter = 2;
+                                                dataViewSeguros.show = "d-none";
+                                                dataViewHM.show = "";
+                                                dataViewPublicas.show = "d-none";
+
                                             }
                                         }
                                     }),
-                                    m("label.custom-control-label[for='factura']",
-                                        "Por N° de Factura"
+                                    m("label.custom-control-label[for='hm']",
+                                        "Hospital Metropolitano"
                                     )
                                 ]),
                                 m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2", {
@@ -391,15 +911,18 @@ const PendienteHonorarios = {
                                         "font-size": "large"
                                     }
                                 }, [
-                                    m("input.custom-control-input[type='radio'][id='fechasFacturas'][name='typeShow'][value='fechasFacturas']", {
+                                    m("input.custom-control-input[type='radio'][id='publicas'][name='typeFilter'][value='3']", {
                                         onclick: (e) => {
                                             if (e.target.checked) {
-                                                dataView.typeFilter = 3;
+                                                dataViewPublicas.typeFilter = 3;
+                                                dataViewSeguros.show = "d-none";
+                                                dataViewHM.show = "d-none";
+                                                dataViewPublicas.show = "";
                                             }
                                         }
                                     }),
-                                    m("label.custom-control-label[for='fechasFacturas']",
-                                        "Por Fechas"
+                                    m("label.custom-control-label[for='publicas']",
+                                        "Instituciones Públicas"
                                     )
                                 ]),
 
@@ -411,8 +934,12 @@ const PendienteHonorarios = {
                     ),
                     m("div.row.m-pt-20.m-pb-60.m-mt-20", [
                         m("div.col-12.pd-r-0.pd-l-0.pd-b-20",
-                            m(dataView),
-                            m(pageTool),
+                            m(dataViewSeguros),
+                            m(pageToolSeguros),
+                            m(dataViewHM),
+                            m(pageToolHM),
+                            m(dataViewPublicas),
+                            m(pageToolPublicas),
                         ),
 
                     ])
@@ -430,7 +957,7 @@ const PendienteHonorarios = {
 };
 
 function submitBusqueda() {
-    document.onkeypress = function (e) {
+    document.onkeypress = function(e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {
