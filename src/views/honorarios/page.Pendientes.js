@@ -185,7 +185,7 @@ const dataView = {
                                             m("a.btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.bg-transparent.position-relative", {
                                                 href: "#!/paciente/" + d['HC']
                                             },
-                                                " Ver Planilla "
+                                                " Ver Documento "
                                             )
                                         ])
 

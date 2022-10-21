@@ -18,7 +18,7 @@ const DataProvider = {
         Loader.buttonShow = "";
         m.request({
             method: "POST",
-            url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pagadas?typeFilter=" + dataView.typeFilter + "&start=0&length=1000",
+            url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pagadas?typeFilter=" + dataView.typeFilter + "&start=0&length=1000" + (dataView.typeFilter == 3 ? "&fechaDesde=" + PageHonorarios.fechaDesde + "&fechaHasta=" + PageHonorarios.fechaHasta : ""),
             body: {
                 searchField: DataProvider.searchField
             },
@@ -100,6 +100,10 @@ const dataView = {
     plNumeroTransaccion: "",
     oninit: DataProvider.loadData,
     downloadPlanilla: () => {
+
+        console.log('codMedico', PageHonorarios);
+        console.log('dataView', dataView);
+
         window.location = 'https://api.hospitalmetropolitano.org/h2/v0/controlador/descarga_documentos/preparar_planilla_pago.php?proveedor=' + PageHonorarios.codMedico + '&fecha_transaccion=' + dataView.plFechaTransaccion + '&numero_transaccion=' + dataView.plNumeroTransaccion + '&tipo_imprime=PAGOS';
     },
     view: () => {
@@ -143,7 +147,7 @@ const dataView = {
                                                     dataView.downloadPlanilla();
                                                 }
                                             },
-                                                " Ver Planilla "
+                                                " Ver Documento "
                                             )
                                         ])
 
@@ -331,6 +335,10 @@ const iPaciente = {
 
 const PageHonorarios = {
     codMedico: "",
+    showFechas: "d-none",
+    showSearch: "",
+    fechaDesde: "",
+    fechaHasta: "",
     oninit: () => {
         Loader.show = "";
         Loader.buttonShow = "";
@@ -371,6 +379,8 @@ const PageHonorarios = {
                                         onclick: (e) => {
                                             if (e.target.checked) {
                                                 dataView.typeFilter = 1;
+                                                PageHonorarios.showSearch = "";
+                                                PageHonorarios.showFechas = "d-none";
                                             }
                                         }
 
@@ -388,6 +398,8 @@ const PageHonorarios = {
                                         onclick: (e) => {
                                             if (e.target.checked) {
                                                 dataView.typeFilter = 2;
+                                                PageHonorarios.showSearch = "";
+                                                PageHonorarios.showFechas = "d-none";
                                             }
                                         }
                                     }),
@@ -404,6 +416,8 @@ const PageHonorarios = {
                                         onclick: (e) => {
                                             if (e.target.checked) {
                                                 dataView.typeFilter = 3;
+                                                PageHonorarios.showSearch = "d-none";
+                                                PageHonorarios.showFechas = "";
                                             }
                                         }
                                     }),
@@ -414,7 +428,9 @@ const PageHonorarios = {
 
 
                             ]),
-                            m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", [
+                            m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", {
+                                class: PageHonorarios.showSearch
+                            }, [
                                 m("input.form-control[type='text'][placeholder='Buscar']", {
                                     oninput: function (e) {
                                         e.target.value = e.target.value.toUpperCase();
@@ -442,7 +458,37 @@ const PageHonorarios = {
 
                                 )
                             ]),
+                            m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", {
+                                class: PageHonorarios.showFechas
+                            }, [
+                                m("label.d-inline", 'Desde:'),
+                                m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
+                                    oninput: function (e) {
+                                        PageHonorarios.fechaDesde = e.target.value;
+                                    },
+                                    value: PageHonorarios.fechaDesde,
+                                }),
+                                m("label.d-inline", 'Hasta:'),
+                                m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
+                                    oninput: function (e) {
+                                        PageHonorarios.fechaHasta = e.target.value;
+                                    },
+                                    value: PageHonorarios.fechaHasta,
+                                }),
+                                m("div.input-group-append",
+
+                                    m("button.btn[type='button'][id='actBuscar']", {
+                                        onclick: () => {
+                                            DataProvider.fetch();
+                                        },
+                                    },
+                                        "Buscar"
+                                    ),
+
+                                )
+                            ]),
                         ]),
+
 
                     ),
                     m("div.row.m-pt-20.m-pb-60.m-mt-20", [
