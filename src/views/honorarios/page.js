@@ -17,16 +17,16 @@ const DataProvider = {
         Loader.show = "";
         Loader.buttonShow = "";
         m.request({
-            method: "POST",
-            url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pagadas?typeFilter=" + dataView.typeFilter + "&start=0&length=1000" + (dataView.typeFilter == 3 ? "&fechaDesde=" + PageHonorarios.fechaDesde + "&fechaHasta=" + PageHonorarios.fechaHasta : ""),
-            body: {
-                searchField: DataProvider.searchField
-            },
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pagadas?typeFilter=" + dataView.typeFilter + "&start=0&length=1000" + (dataView.typeFilter == 3 ? "&fechaDesde=" + PageHonorarios.fechaDesde + "&fechaHasta=" + PageHonorarios.fechaHasta : ""),
+                body: {
+                    searchField: DataProvider.searchField
+                },
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
                 PageHonorarios.codMedico = result.codMedico;
@@ -34,7 +34,7 @@ const DataProvider = {
                 DataProvider.filterData();
 
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 DataProvider.fetch();
             })
 
@@ -42,10 +42,10 @@ const DataProvider = {
 
 
     },
-    loadData: function () {
+    loadData: function() {
         DataProvider.fetch();
     },
-    filterData: function () {
+    filterData: function() {
         var to = Math.min(DataProvider.from + DataProvider.count, DataProvider.data.length + 1);
         DataProvider.filteredData = [];
         for (var i = DataProvider.from - 1; i < to - 1; i++) {
@@ -54,38 +54,38 @@ const DataProvider = {
     },
     from: 1,
     count: 10,
-    setFrom: function (from) {
+    setFrom: function(from) {
         DataProvider.from = parseInt(from);
         DataProvider.filterData();
     },
-    setCount: function (count) {
+    setCount: function(count) {
         DataProvider.count = parseInt(count);
         DataProvider.filterData();
     },
-    nextPage: function () {
+    nextPage: function() {
         var from = DataProvider.from + DataProvider.count;
         if (from > DataProvider.data.length)
             return;
         DataProvider.from = from;
         DataProvider.filterData();
     },
-    lastPage: function () {
+    lastPage: function() {
         DataProvider.from = DataProvider.data.length - DataProvider.count + 1;
         DataProvider.filterData();
     },
-    prevPage: function () {
+    prevPage: function() {
         DataProvider.from = Math.max(1, DataProvider.from - DataProvider.count);
         DataProvider.filterData();
     },
-    firstPage: function () {
+    firstPage: function() {
         DataProvider.from = 1;
         DataProvider.filterData();
     },
-    rowBack: function () {
+    rowBack: function() {
         DataProvider.from = Math.max(1, DataProvider.from - 1);
         DataProvider.filterData();
     },
-    rowFwd: function () {
+    rowFwd: function() {
         if (DataProvider.from + DataProvider.count - 1 >= DataProvider.data.length)
             return;
         DataProvider.from += 1;
@@ -108,54 +108,53 @@ const dataView = {
     },
     view: () => {
         return m('table.w-100.mt-5.' + dataView.show, [
-            m('tbody', DataProvider.filteredData.map(function (d) {
+            m('tbody', DataProvider.filteredData.map(function(d) {
                 return [
                     m("div.bg-white.pt-4.pl-4.pb-4.pr-4.info-box.m-mb-30.radius-5", {
                         "style": { "border-color": "#0aa1eb" }
-                    },
-                        [
-                            m("h4.mb-0", [
+                    }, [
+                        m("h4.mb-0", [
                                 m("i.icofont-file-alt.mr-1"),
                                 'N° de Transacción: ' + d['NO_TRANSACCION']
                             ]
 
-                            ),
-                            m("div.media.",
-                                m("div.media-body",
-                                    [
+                        ),
+                        m("div.media.",
+                            m("div.media-body", [
 
 
-                                        m("h6.mt-2",
-                                            "Fecha: " + d['FECHA']
-                                        ),
-                                        m("h6",
-                                            "Monto: " + d['MONTO']
-                                        ),
-                                        m("h6",
-                                            "SubTotal: " + d['SUBTOTAL']
-                                        ),
-                                        m("h6",
-                                            "Retención: " + d['RETENCION']
-                                        ),
+                                m("h6.mt-2",
+                                    "Fecha: " + d['FECHA']
+                                ),
+                                m("h6.mt-2",
+                                    "Paciente: " + d['PACIENTE']
+                                ),
+                                m("h6",
+                                    "Monto: " + d['MONTO']
+                                ),
+                                m("h6",
+                                    "SubTotal: " + d['SUBTOTAL']
+                                ),
+                                m("h6",
+                                    "Retención: " + d['RETENCION']
+                                ),
 
 
-                                        m("div.text-right", [
-                                            m(".btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.bg-transparent.position-relative", {
-                                                onclick: () => {
-                                                    dataView.plFechaTransaccion = d['FECHA'];
-                                                    dataView.plNumeroTransaccion = d['NO_TRANSACCION'];
-                                                    dataView.downloadPlanilla();
-                                                }
-                                            },
-                                                " Ver Documento "
-                                            )
-                                        ])
+                                m("div.text-right", [
+                                    m(".btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.bg-transparent.position-relative", {
+                                            onclick: () => {
+                                                dataView.plFechaTransaccion = d['FECHA'];
+                                                dataView.plNumeroTransaccion = d['NO_TRANSACCION'];
+                                                dataView.downloadPlanilla();
+                                            }
+                                        },
+                                        " Ver Documento "
+                                    )
+                                ])
 
-                                    ]
-                                )
-                            )
-                        ]
-                    ),
+                            ])
+                        )
+                    ]),
 
                 ]
             }))
@@ -187,11 +186,11 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowBack(); }
-                            },
+                                    onclick: function() { DataProvider.rowBack(); }
+                                },
                                 " << Anterior "
                             ),
                         ]),
@@ -199,11 +198,11 @@ const pageTool = {
                         m("div.w-50.w-20", [
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.rowFwd(); }
-                            },
+                                    onclick: function() { DataProvider.rowFwd(); }
+                                },
                                 " Siguiente >>"
                             ),
 
@@ -214,20 +213,20 @@ const pageTool = {
                     m('div.d-flex.w-100.text-center.mt-5', [
                         m("div.w-50.w-20", [
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.firstPage(); }
-                            },
+                                    onclick: function() { DataProvider.firstPage(); }
+                                },
                                 " | Inicio "
                             ),
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.prevPage(); }
-                            },
+                                    onclick: function() { DataProvider.prevPage(); }
+                                },
                                 " < Pág. Ant. "
                             ),
 
@@ -237,21 +236,21 @@ const pageTool = {
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.nextPage(); }
-                            },
+                                    onclick: function() { DataProvider.nextPage(); }
+                                },
                                 " Pág. Sig. > "
                             ),
 
 
                             m("btn.fadeInDown-slide.position-relative.animated.pl-4.pr-4.lsp-0.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-white.s-dp-1-2.mr-2", {
-                                type: "button",
-                                "style": { "cursor": "pointer" },
+                                    type: "button",
+                                    "style": { "cursor": "pointer" },
 
-                                onclick: function () { DataProvider.lastPage(); }
-                            },
+                                    onclick: function() { DataProvider.lastPage(); }
+                                },
                                 " Fin | "
                             ),
 
@@ -321,8 +320,8 @@ const iPaciente = {
                 ]),
                 m("div.text-right", [
                     m("a.btn.fadeInDown-slide.mt-4.animated.no-border.bg-transparent.medim-btn.grad-bg--3.solid-btn.mt-0.text-medium.radius-pill.text-active.text-uppercase.text-white", {
-                        href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
-                    },
+                            href: "#!/paciente/" + _data.attrs.HC.slice(0, -2)
+                        },
                         " Ver Paciente "
                     )
                 ]),
@@ -432,7 +431,7 @@ const PageHonorarios = {
                                 class: PageHonorarios.showSearch
                             }, [
                                 m("input.form-control[type='text'][placeholder='Buscar']", {
-                                    oninput: function (e) {
+                                    oninput: function(e) {
                                         e.target.value = e.target.value.toUpperCase();
                                         DataProvider.searchField = e.target.value;
                                     },
@@ -449,10 +448,10 @@ const PageHonorarios = {
                                         },
                                     }),
                                     m("button.btn[type='button'][id='actBuscar']", {
-                                        onclick: () => {
-                                            DataProvider.fetch();
+                                            onclick: () => {
+                                                DataProvider.fetch();
+                                            },
                                         },
-                                    },
                                         "Buscar"
                                     ),
 
@@ -463,14 +462,14 @@ const PageHonorarios = {
                             }, [
                                 m("label.d-inline", 'Desde:'),
                                 m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
-                                    oninput: function (e) {
+                                    oninput: function(e) {
                                         PageHonorarios.fechaDesde = e.target.value;
                                     },
                                     value: PageHonorarios.fechaDesde,
                                 }),
                                 m("label.d-inline", 'Hasta:'),
                                 m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
-                                    oninput: function (e) {
+                                    oninput: function(e) {
                                         PageHonorarios.fechaHasta = e.target.value;
                                     },
                                     value: PageHonorarios.fechaHasta,
@@ -478,10 +477,10 @@ const PageHonorarios = {
                                 m("div.input-group-append",
 
                                     m("button.btn[type='button'][id='actBuscar']", {
-                                        onclick: () => {
-                                            DataProvider.fetch();
+                                            onclick: () => {
+                                                DataProvider.fetch();
+                                            },
                                         },
-                                    },
                                         "Buscar"
                                     ),
 
@@ -512,7 +511,7 @@ const PageHonorarios = {
 };
 
 function submitBusqueda() {
-    document.onkeypress = function (e) {
+    document.onkeypress = function(e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {
