@@ -115,7 +115,7 @@ const dataView = {
                     }, [
                         m("h4.mb-0", [
                                 m("i.icofont-file-alt.mr-1"),
-                                'N° de Transacción: ' + d['NO_TRANSACCION']
+                                'N° de Factura: ' + d['FACTURA']
                             ]
 
                         ),
@@ -124,19 +124,13 @@ const dataView = {
 
 
                                 m("h6.mt-2",
-                                    "Fecha: " + d['FECHA']
+                                    "Fecha Pago: " + d['FECHA']
                                 ),
                                 m("h6.mt-2",
-                                    "Paciente: " + d['PACIENTE']
+                                    "Detalle Pago: " + d['DETALLE']
                                 ),
                                 m("h6",
-                                    "Monto: " + d['MONTO']
-                                ),
-                                m("h6",
-                                    "SubTotal: " + d['SUBTOTAL']
-                                ),
-                                m("h6",
-                                    "Retención: " + d['RETENCION']
+                                    "Monto Pago: " + d['MONTO']
                                 ),
 
 
