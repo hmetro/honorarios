@@ -2,11 +2,13 @@ var _modulos_ = [
     { id: 1, title: "Facturas Pagadas", icon: "coins", url: "#!/honorarios/facturas-pagadas" },
     { id: 2, title: "Facturas Pendientes", icon: "loop", url: "#!/honorarios/facturas-pendientes" },
     { id: 3, title: "Estado de Cuenta", icon: "doctor", url: "#!/honorarios/estado-de-cuenta" },
+    { id: 4, title: "Transferencias Realizadas", icon: "doctor", url: "#!/honorarios/transferencias" },
+
 ];
 
 const Modulos = {
     view: () => {
-        return _modulos_.map(function (i) {
+        return _modulos_.map(function(i) {
 
             if (i.id == 1) {
                 return m("div.col-sm-12.col-md-12.col-lg-6",
@@ -61,6 +63,25 @@ const Modulos = {
                 )
             }
 
+            if (i.id == 4) {
+                return m("div.col-sm-12.col-md-12.col-lg-6",
+                    m("a", {
+                        href: i.url,
+
+                    }, [
+                        m("div.single-service.type-1.radius-10.position-relative.service-wrapper.s-dp-10-60.m-mb-50", [
+                            m("div.service-circle.position-relative.mb-4.text-active.m-bg-4.rounded-circle.d-flex.align-items-center.justify-content-center",
+                                m("span.icofont-wallet.text-grad-1.fz-50"),
+                            ),
+                            m("h5.text-dark2.mb-3.position-relative.pt-2",
+                                i.title
+                            )
+                        ])
+                    ])
+                )
+            }
+
+
 
 
 
@@ -73,7 +94,6 @@ const Modulos = {
 const MenuPanelHonorarios = {
 
     view: () => {
-
         return [
             m("section.m-bg-1",
                 m("div.container",

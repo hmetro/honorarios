@@ -18,7 +18,7 @@ const DataProvider = {
         Loader.buttonShow = "";
         m.request({
                 method: "POST",
-                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pagadas?typeFilter=" + dataView.typeFilter + "&start=0&length=1000" + (dataView.typeFilter == 3 ? "&fechaDesde=" + PageHonorarios.fechaDesde + "&fechaHasta=" + PageHonorarios.fechaHasta : ""),
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-transferencias?typeFilter=" + dataView.typeFilter + "&start=0&length=1000" + (dataView.typeFilter == 3 ? "&fechaDesde=" + PageTrx.fechaDesde + "&fechaHasta=" + PageTrx.fechaHasta : ""),
                 body: {
                     searchField: DataProvider.searchField
                 },
@@ -29,7 +29,7 @@ const DataProvider = {
             .then(function(result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
-                PageHonorarios.codMedico = result.codMedico;
+                PageTrx.codMedico = result.codMedico;
                 DataProvider.data = result.data;
                 DataProvider.filterData();
 
@@ -101,10 +101,10 @@ const dataView = {
     oninit: DataProvider.loadData,
     downloadPlanilla: () => {
 
-        console.log('codMedico', PageHonorarios);
+        console.log('codMedico', PageTrx);
         console.log('dataView', dataView);
 
-        window.location = 'https://api.hospitalmetropolitano.org/h2/v0/controlador/descarga_documentos/preparar_planilla_pago.php?proveedor=' + PageHonorarios.codMedico + '&fecha_transaccion=' + dataView.plFechaTransaccion + '&numero_transaccion=' + dataView.plNumeroTransaccion + '&tipo_imprime=PAGOS';
+        window.location = 'https://api.hospitalmetropolitano.org/h2/v0/controlador/descarga_documentos/preparar_planilla_pago.php?proveedor=' + PageTrx.codMedico + '&fecha_transaccion=' + dataView.plFechaTransaccion + '&numero_transaccion=' + dataView.plNumeroTransaccion + '&tipo_imprime=PAGOS';
     },
     view: () => {
         return m('table.w-100.mt-5.' + dataView.show, [
@@ -115,7 +115,7 @@ const dataView = {
                     }, [
                         m("h4.mb-0", [
                                 m("i.icofont-file-alt.mr-1"),
-                                'N° de Factura: ' + d['FACTURA']
+                                'N° de Cta: ' + d['CTA_BANCARIA']
                             ]
 
                         ),
@@ -126,29 +126,29 @@ const dataView = {
                                 m("h6.mt-2",
                                     "Fecha Pago: " + d['FECHA']
                                 ),
-                                m("h6.mt-2",
-                                    "Paciente: " + d['PACIENTE']
-                                ),
-                                m("h6.mt-2",
-                                    "Detalle Pago: " + d['DETALLE']
+                                m("h6",
+                                    "N° de Transacción: " + d['NO_TRANSACCION']
                                 ),
                                 m("h6",
-                                    "Factura Total: " + d['MONTO']
-                                ),
-                                m("h6",
-                                    "Monto Pago: " + d['CANCELA']
+                                    "Monto: " + d['MONTO']
                                 ),
 
+                                m("h6",
+                                    "SubTotal: " + d['SUBTOTAL']
+                                ),
+                                m("h6",
+                                    "Retención: " + d['RETENCION']
+                                ),
 
                                 m("div.text-right", [
                                     m(".btn.medim-btn.solid-btn.mt-4.text-medium.radius-pill.text-active.text-uppercase.bg-transparent.position-relative", {
                                             onclick: () => {
-                                                dataView.plFechaTransaccion = d['FECHA'];
+                                                dataView.plFechaTransaccion = d['FECHA_PDF'];
                                                 dataView.plNumeroTransaccion = d['NO_TRANSACCION'];
                                                 dataView.downloadPlanilla();
                                             }
                                         },
-                                        " Ver Documento "
+                                        " Ver Planilla "
                                     )
                                 ])
 
@@ -332,22 +332,22 @@ const iPaciente = {
     }
 };
 
-const PageHonorarios = {
+const PageTrx = {
     codMedico: "",
-    showFechas: "d-none",
+    showFechas: "",
     showSearch: "",
     fechaDesde: "",
     fechaHasta: "",
     oninit: () => {
         Loader.show = "";
         Loader.buttonShow = "";
-        PageHonorarios.codMedico = Auth.codMedico;
+        PageTrx.codMedico = Auth.codMedico;
         if (!Auth.isLogin()) {
             return m.route.set('/auth');
         }
     },
     oncreate: () => {
-        document.title = "Facturas Pagadas | " + App.title;
+        document.title = "Mis Transferencias | " + App.title;
         submitBusqueda();
 
     },
@@ -360,7 +360,7 @@ const PageHonorarios = {
                         m("div.col-md-6.offset-md-3",
                             m("div.text-center.m-mt-70", [
                                 m("h2.m-0.text-dark",
-                                    "Facturas Pagadas "
+                                    "Transferencias Realizadas "
                                 ),
                                 m("span.icon-section-wave.d-inline-block.text-active.section-wave.mt-3.active")
                             ])
@@ -368,116 +368,30 @@ const PageHonorarios = {
                     ),
                     m("div.row.m-mt-30.m-mb-20",
                         m("div.col-md-12", [
-                            m("div.d-flex.align-items-left.position-relative.justify-content-left", [
-                                m("div.custom-control.custom-radio.m-mb-20.mr-2.fz-20", {
-                                    "style": {
-                                        "font-size": "large"
-                                    }
-                                }, [
-                                    m("input.custom-control-input[type='radio'][id='paciente'][name='typeShow'][value='paciente']", {
-                                        onclick: (e) => {
-                                            if (e.target.checked) {
-                                                dataView.typeFilter = 1;
-                                                PageHonorarios.showSearch = "";
-                                                PageHonorarios.showFechas = "d-none";
-                                            }
-                                        }
-
-                                    }),
-                                    m("label.custom-control-label[for='paciente']",
-                                        "Por Nombres y Apellidos"
-                                    )
-                                ]),
-                                m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2", {
-                                    "style": {
-                                        "font-size": "large"
-                                    }
-                                }, [
-                                    m("input.custom-control-input[type='radio'][id='factura'][name='typeShow'][value='factura']", {
-                                        onclick: (e) => {
-                                            if (e.target.checked) {
-                                                dataView.typeFilter = 2;
-                                                PageHonorarios.showSearch = "";
-                                                PageHonorarios.showFechas = "d-none";
-                                            }
-                                        }
-                                    }),
-                                    m("label.custom-control-label[for='factura']",
-                                        "Por N° de Factura"
-                                    )
-                                ]),
-                                m("div.custom-control.custom-radio.m-mb-20.ml-2.mr-2", {
-                                    "style": {
-                                        "font-size": "large"
-                                    }
-                                }, [
-                                    m("input.custom-control-input[type='radio'][id='fechasFacturas'][name='typeShow'][value='fechasFacturas']", {
-                                        onclick: (e) => {
-                                            if (e.target.checked) {
-                                                dataView.typeFilter = 3;
-                                                PageHonorarios.showSearch = "d-none";
-                                                PageHonorarios.showFechas = "";
-                                            }
-                                        }
-                                    }),
-                                    m("label.custom-control-label[for='fechasFacturas']",
-                                        "Por Fechas"
-                                    )
-                                ]),
 
 
-                            ]),
                             m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", {
-                                class: PageHonorarios.showSearch
-                            }, [
-                                m("input.form-control[type='text'][placeholder='Buscar']", {
-                                    oninput: function(e) {
-                                        e.target.value = e.target.value.toUpperCase();
-                                        DataProvider.searchField = e.target.value;
-                                    },
-                                    value: DataProvider.searchField,
-                                }),
-                                m("div.input-group-append",
-                                    m("i.icofont-close.p-2.mt-1", {
-
-                                        style: { "color": "rgba(108, 117, 125, 0.4) !important", "font-size": "xx-large" },
-                                        class: (DataProvider.searchField.length !== 0) ? "" : "d-none",
-                                        onclick: () => {
-                                            DataProvider.searchField = "";
-                                            DataProvider.fetch();
-                                        },
-                                    }),
-                                    m("button.btn[type='button'][id='actBuscar']", {
-                                            onclick: () => {
-                                                DataProvider.fetch();
-                                            },
-                                        },
-                                        "Buscar"
-                                    ),
-
-                                )
-                            ]),
-                            m("div.input-group.banenr-seach.bg-white.m-mt-30.mb-0", {
-                                class: PageHonorarios.showFechas
+                                class: PageTrx.showFechas
                             }, [
                                 m("label.d-inline", 'Desde:'),
                                 m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
                                     oninput: function(e) {
-                                        PageHonorarios.fechaDesde = e.target.value;
+                                        PageTrx.fechaDesde = e.target.value;
                                     },
-                                    value: PageHonorarios.fechaDesde,
+                                    value: PageTrx.fechaDesde,
                                 }),
                                 m("label.d-inline", 'Hasta:'),
                                 m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
                                     oninput: function(e) {
-                                        PageHonorarios.fechaHasta = e.target.value;
+                                        PageTrx.fechaHasta = e.target.value;
                                     },
-                                    value: PageHonorarios.fechaHasta,
+                                    value: PageTrx.fechaHasta,
                                 }),
                                 m("div.input-group-append",
 
                                     m("button.btn[type='button'][id='actBuscar']", {
                                             onclick: () => {
+                                                dataView.typeFilter = 3;
                                                 DataProvider.fetch();
                                             },
                                         },
@@ -526,4 +440,4 @@ function countWords(str) {
 }
 
 
-export default PageHonorarios;
+export default PageTrx;

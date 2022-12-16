@@ -24,18 +24,18 @@ const CuentaHonorarios = {
 
 
         m.request({
-            method: "POST",
-            url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pendientes?typeFilter=1",
-            headers: {
-                "Authorization": localStorage.accessToken,
-            },
-        })
-            .then(function (result) {
+                method: "POST",
+                url: "https://api.hospitalmetropolitano.org/h2/v1/mis-facturas-pendientes?typeFilter=1",
+                headers: {
+                    "Authorization": localStorage.accessToken,
+                },
+            })
+            .then(function(result) {
                 Loader.show = "d-none";
                 Loader.buttonShow = "d-none";
                 CuentaHonorarios.codMedico = result.codMedico;
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 CuentaHonorarios.fetch();
             })
     },
@@ -81,7 +81,7 @@ const CuentaHonorarios = {
                             m("label.d-inline", 'Desde:'),
 
                             m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
-                                oninput: function (e) {
+                                oninput: function(e) {
                                     CuentaHonorarios.fechaDesde = e.target.value;
                                 },
                                 value: CuentaHonorarios.fechaDesde,
@@ -89,7 +89,7 @@ const CuentaHonorarios = {
                             m("label.d-inline", 'Hasta:'),
 
                             m("input.form-control[type='date'][placeholder='Desde'][id='fechaDesde']", {
-                                oninput: function (e) {
+                                oninput: function(e) {
                                     CuentaHonorarios.fechaHasta = e.target.value;
                                 },
                                 value: CuentaHonorarios.fechaHasta,
@@ -97,11 +97,11 @@ const CuentaHonorarios = {
                             m("div.input-group-append",
 
                                 m("button.btn[type='button'][id='actDescargarEC']", {
-                                    onclick: () => {
-                                        console.log(CuentaHonorarios)
-                                        CuentaHonorarios.downloadEstadoCuenta();
+                                        onclick: () => {
+                                            console.log(CuentaHonorarios)
+                                            CuentaHonorarios.downloadEstadoCuenta();
+                                        },
                                     },
-                                },
                                     "Descargar"
                                 ),
 
@@ -129,7 +129,7 @@ const CuentaHonorarios = {
 };
 
 function submitBusqueda() {
-    document.onkeypress = function (e) {
+    document.onkeypress = function(e) {
         if (!e) e = window.event;
         var keyCode = e.keyCode || e.which;
         if (keyCode == "13") {

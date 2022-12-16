@@ -6,6 +6,7 @@ import Inicio from '../views/inicio/inicio'
 import InicioHonorarios from '../views/inicio/inicioHonorarios'
 import Pacientes from '../views/pacientes/pacientes';
 import FacturasPagadas from '../views/honorarios/honorarios';
+import Trxs from '../views/honorarios/transferencias';
 import FacturasPendientes from '../views/honorarios/pendientes';
 import Paciente from '../views/paciente/paciente';
 import Resultados from '../views/resultados/resultados';
@@ -25,6 +26,7 @@ const Routes = {
     '/pacientes': Pacientes, // Pacientes
     '/honorarios': InicioHonorarios, // InicioHonorarios
     '/honorarios/facturas-pagadas': FacturasPagadas, // FacturasPagadas
+    '/honorarios/transferencias': Trxs, // Trxs
     '/honorarios/facturas-pendientes': FacturasPendientes, // FacturasPendientes
     '/honorarios/estado-de-cuenta': CuentaHonorarios, // CommingSoon
     '/paciente/:nhc': Paciente, // Pacientes
